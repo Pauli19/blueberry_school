@@ -11,7 +11,7 @@ This project is an online school for long life learners.
 First, you might need to create a virtual environment.
 Creation of virtual environments is done by executing the command venv:
 ```
- python3 -m venv /path/to/new/virtual/environment 
+python3 -m venv /path/to/new/virtual/environment 
  ```
 or
 ```
@@ -19,6 +19,7 @@ python -m venv .venv
 ```
 
 After that, some dependencies need to be installed. Those dependencies are already included in:
+
 > Requirements.txt
 
 That can be done by executing, the command:
