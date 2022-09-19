@@ -2,9 +2,17 @@
 
 This project is an online school for long life learners.
 ## Getting Started
+
 ### Prerequisites:
 
-- Python 3.10.5
+#### Required:
+
+- [Python 3.10.5](https://www.python.org/downloads/)
+- [PostgreSQL 14](https://www.postgresql.org/download/)
+
+#### Optional:
+
+- [pgAdmin](https://www.pgadmin.org/download/)
 
 ### Installation
 
