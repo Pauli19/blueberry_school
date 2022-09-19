@@ -8,27 +8,44 @@ This project is an online school for long life learners.
 
 ### Installation
 
-First, you might need to create a virtual environment.
-Creation of virtual environments is done by executing the command venv:
+First, clone the repository:
+
 ```
-python3 -m venv /path/to/new/virtual/environment 
- ```
-or
+git clone git@github.com:Pauli19/blueberry_school.git
 ```
+
+Second, create a virtual environment inside the project's root directory:
+
+```
+cd blueberry_school
 python -m venv .venv 
 ```
+Third, activate the virtual environment.
 
-After that, some dependencies need to be installed. Those dependencies are already included in:
+For Windows:
 
-> Requirements.txt
+```
+.venv\Scripts\activate.bat
+```
 
-That can be done by executing, the command:
+For Mac/Linux:
 
-`pip install -r requirements.txt`
+```
+source .venv/bin/activate
+```
+
+Fourth, install the dependencies defined in [`requirements.txt`](./requirements.txt):
+
+```
+pip install -r requirements.txt
+```
 
 ## Usage
-Previous usage it is important to **check that the virtual environment is enabled**. 
-In order to run Flask the server, execute the following:
+
+**Note :** _make sure that the virtual environment is enabled_.
+
+In order to run the Flask server, execute the following command:
+
 ```
-Flask run
+flask --debug run
 ```
