@@ -9,4 +9,4 @@ def index():
 
 @app.errorhandler(404)
 def page_not_found(exc):
-	return render_template('404.html.jinja'), 400
+    return render_template('404.html.jinja'), 404
