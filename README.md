@@ -1,6 +1,7 @@
 # Blueberry School
 
-This project is an online school for long life learners.
+This project is an online school for lifelong learners.
+
 ## Getting Started
 
 ### Prerequisites:
