@@ -43,10 +43,10 @@ For Mac/Linux:
 source .venv/bin/activate
 ```
 
-Fourth, install the dependencies defined in [`requirements.txt`](./requirements.txt):
+Fourth, install the dependencies defined in [`requirements.txt`](./requirements.txt) and [`requirements-dev.txt`](./requirements-dev.txt):
 
 ```
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-dev.txt
 ```
 
 ## Usage
