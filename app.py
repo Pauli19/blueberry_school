@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
+app.secret_key = '1ad25ecccca57b1b93f2a9f2fa3254eb505e19a35a97135fd0638e840e6a168a'
 
 bootstrap = Bootstrap5(app)
 
