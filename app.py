@@ -1,4 +1,8 @@
-"""This module contains creation and configuration of the Flask app."""
+"""
+This module contains logic for the creation and configuration
+of the Flask app. In addition, it contains the view functions
+associated with the app, and 404 and 500 view functions.
+"""
 
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
