@@ -10,6 +10,7 @@ This project is an online school for lifelong learners.
 
 - [Python 3.10.5](https://www.python.org/downloads/)
 - [PostgreSQL 14](https://www.postgresql.org/download/)
+- [pre-commit](https://pre-commit.com/)
 
 #### Optional:
 
@@ -27,7 +28,7 @@ Second, create a virtual environment inside the project's root directory:
 
 ```
 cd blueberry_school
-python -m venv .venv 
+python -m venv .venv
 ```
 Third, activate the virtual environment.
 
@@ -47,6 +48,12 @@ Fourth, install the dependencies defined in [`requirements.txt`](./requirements.
 
 ```
 pip install -r requirements.txt -r requirements-dev.txt
+```
+
+Fifth, install the pre-commit script:
+
+```
+pre-commit install
 ```
 
 ## Usage
