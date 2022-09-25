@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
