@@ -1,0 +1,9 @@
+[tool.black]
+target-version = ['py310']
+
+[tool.isort]
+profile = "black"
+known_third_party = ["flask", "flask_bootstrap"]
+
+[tool.pylint.format]
+max-line-length = 88
