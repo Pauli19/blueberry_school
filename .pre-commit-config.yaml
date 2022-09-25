@@ -3,7 +3,7 @@ repos:
     rev: v4.3.0
     hooks:
     -   id: check-ast
-    -   id: check-byte-order-marker
+    -   id: fix-byte-order-marker
     -   id: check-case-conflict
     -   id: check-docstring-first
     -   id: check-executables-have-shebangs
@@ -14,7 +14,6 @@ repos:
     -   id: detect-private-key
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
-    -   id: mixed-line-ending
 -   repo: https://github.com/asottile/seed-isort-config
     rev: v2.2.0
     hooks:
