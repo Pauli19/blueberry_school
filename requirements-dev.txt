@@ -1,1 +1,2 @@
 flask-shell-ipython==0.4.1
+pylint==2.15.3
