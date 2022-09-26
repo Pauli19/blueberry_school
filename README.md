@@ -56,6 +56,14 @@ Fifth, install the pre-commit script:
 pre-commit install
 ```
 
+Sixth, create a file called `.env` based on [`.env_example`](./.env_example).
+
+```
+cp .env_example .env
+```
+
+Ask values for missing environment variables.
+
 ## Usage
 
 **Note :** _make sure that the virtual environment is enabled_.
