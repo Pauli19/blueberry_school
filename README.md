@@ -62,7 +62,7 @@ Sixth, create a file called `.env` based on [`.env_example`](./.env_example).
 cp .env_example .env
 ```
 
-Ask values for missing environment variables.
+Ask for the missing values of the environment variables.
 
 ## Usage
 
