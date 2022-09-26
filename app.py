@@ -4,11 +4,13 @@ of the Flask app. In addition, it contains the view functions
 associated with the app, 404, and 500 view functions.
 """
 
+import os
+
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 
 app = Flask(__name__)
-app.secret_key = "1ad25ecccca57b1b93f2a9f2fa3254eb505e19a35a97135fd0638e840e6a168a"
+app.secret_key = os.environ["SECRET_KEY"]
 
 bootstrap = Bootstrap5(app)
 

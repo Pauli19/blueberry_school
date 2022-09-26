@@ -63,5 +63,5 @@ pre-commit install
 In order to run the Flask server, execute the following command:
 
 ```
-flask --debug run
+dotenv run flask --debug run
 ```
