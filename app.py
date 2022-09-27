@@ -6,17 +6,35 @@ associated with the app, 404, and 500 view functions.
 
 import os
 
+import sqlalchemy as sa
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_utils import EmailType
 from werkzeug.exceptions import InternalServerError, NotFound
 
 app = Flask(__name__)
 app.secret_key = os.environ["SECRET_KEY"]
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["SQLALCHEMY_DATABASE_URI"]
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 bootstrap = Bootstrap5(app)
+
+
+# Models
+class User(db.Model):  # pylint: disable=too-few-public-methods
+    """This class is used to model users."""
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    first_name = sa.Column(sa.Unicode(255), nullable=False)
+    second_name = sa.Column(sa.Unicode(255))
+    email = sa.Column(EmailType, unique=True, nullable=False)
+    first_surname = sa.Column(sa.Unicode(255), nullable=False)
+    second_surname = sa.Column(sa.Unicode(255))
+
+
+# View Functions
 
 
 @app.get("/")
