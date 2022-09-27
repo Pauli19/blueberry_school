@@ -29,9 +29,9 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     id = sa.Column(sa.Integer, primary_key=True)
     first_name = sa.Column(sa.Unicode(255), nullable=False)
     second_name = sa.Column(sa.Unicode(255))
-    email = sa.Column(EmailType, unique=True, nullable=False)
     first_surname = sa.Column(sa.Unicode(255), nullable=False)
     second_surname = sa.Column(sa.Unicode(255))
+    email = sa.Column(EmailType, unique=True, nullable=False)
 
 
 # View Functions
