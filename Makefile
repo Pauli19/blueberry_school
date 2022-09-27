@@ -1,4 +1,4 @@
-install-deps: # install main and dev dependencies
+pip-install: # install main and dev dependencies
 	pip install -r requirements.txt -r requirements-dev.txt
 run: # run server in debug mode
 	dotenv run flask --debug run

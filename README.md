@@ -15,6 +15,7 @@ This project is an online school for lifelong learners.
 #### Optional:
 
 - [pgAdmin](https://www.pgadmin.org/download/)
+- [Makefile](https://www.gnu.org/software/make/)
 
 ### Installation
 
@@ -73,3 +74,13 @@ In order to run the Flask server, execute the following command:
 ```
 dotenv run flask --debug run
 ```
+
+## Makefile
+
+The following commands are available [`Makefile`](./Makefile).
+Make sure the virtual environment is active.
+
+* `install-deps` - install main and dev dependencies
+* `run` - run server in debug mode
+* `run-no-debug` - run server in non-debug mode
+* `shell` - start flask shell
