@@ -36,7 +36,7 @@ class utc_now(FunctionElement):  # pylint: disable=invalid-name,too-many-ancesto
 
 
 @compiles(utc_now, "postgresql")
-def pg_utcnow(
+def pg_utc_now(
     element: utc_now,  # pylint: disable=unused-argument
     compiler: SQLCompiler,  # pylint: disable=unused-argument
     **kwargs: Any,  # pylint: disable=unused-argument
