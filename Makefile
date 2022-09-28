@@ -1,4 +1,4 @@
-db-upgrade: # upgrades the database
+db-upgrade: # upgrade the database
 	dotenv run flask db upgrade
 pip-install: # install main and dev dependencies
 	pip install -r requirements.txt -r requirements-dev.txt
