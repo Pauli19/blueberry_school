@@ -92,7 +92,7 @@ In [1]: from app import db
 In [2]: db.create_all()
 ```
 
-Fourth, also inside the Flask's shell, run the script:
+Fourth, also inside the Flask's shell, run the script to populate the database:
 
 ```
 In [3]: run scripts/populate_db.py
