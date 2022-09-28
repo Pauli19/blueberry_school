@@ -41,7 +41,7 @@ def pg_utc_now(
     compiler: SQLCompiler,  # pylint: disable=unused-argument
     **kwargs: Any,  # pylint: disable=unused-argument
 ) -> str:
-    """Return a string representing a the current timestamp in UTC."""
+    """Return a string representing the current timestamp in UTC."""
     return "TIMEZONE('utc', CURRENT_TIMESTAMP)"
 
 
