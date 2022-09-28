@@ -10,6 +10,7 @@ from typing import Any
 import sqlalchemy as sa
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import EmailType
 from werkzeug.exceptions import InternalServerError, NotFound
@@ -20,6 +21,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["SQLALCHEMY_DATABASE_URI"]
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 bootstrap = Bootstrap5(app)
 
 
