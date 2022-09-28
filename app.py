@@ -55,6 +55,10 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     first_surname = sa.Column(sa.Unicode(255), nullable=False)
     second_surname = sa.Column(sa.Unicode(255))
     email = sa.Column(EmailType, unique=True, nullable=False)
+    created_at = sa.Column(sa.DateTime, default=utc_now(), nullable=False)
+    updated_at = sa.Column(
+        sa.DateTime, default=utc_now(), onupdate=utc_now(), nullable=False
+    )
 
 
 # Shell Context Processor
