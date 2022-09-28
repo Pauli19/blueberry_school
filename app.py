@@ -12,6 +12,9 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.sql.compiler import SQLCompiler
+from sqlalchemy.sql.expression import FunctionElement
 from sqlalchemy_utils import EmailType
 from werkzeug.exceptions import InternalServerError, NotFound
 
@@ -23,6 +26,23 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bootstrap = Bootstrap5(app)
+
+
+class utc_now(FunctionElement):  # pylint: disable=invalid-name,too-many-ancestors
+    """This class is used to define a DateTime column which timezone is UTC."""
+
+    type = sa.DateTime()
+    inherit_cache = True
+
+
+@compiles(utc_now, "postgresql")
+def pg_utcnow(
+    element: utc_now,  # pylint: disable=unused-argument
+    compiler: SQLCompiler,  # pylint: disable=unused-argument
+    **kwargs: Any,  # pylint: disable=unused-argument
+) -> str:
+    """Return a string representing a the current timestamp in UTC."""
+    return "TIMEZONE('utc', CURRENT_TIMESTAMP)"
 
 
 # Models
