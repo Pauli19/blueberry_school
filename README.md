@@ -77,26 +77,28 @@ dotenv run flask --debug run
 
 ## Database Initialization
 
-First, add yourself to the list `users` in [`scripts/populate_db.py`](./scripts/populate_db.py).
+First, create the database schema by running the following command:
 
-Second, open up the Flask's shell by running the following command:
+```
+dotenv run flask db upgrade
+```
+
+Second, add yourself to the list `users` in [`scripts/populate_db.py`](./scripts/populate_db.py).
+
+Third, start the Flask's shell:
 
 ```
 dotenv run flask shell
 ```
 
-Third, create database's tables by running the following command:
+Fourth, inside the Flask's shell, run the script to populate the database:
 
 ```
-In [1]: from app import db
-In [2]: db.create_all()
+In [1]: run scripts/populate_db.py
 ```
 
-Fourth, also inside the Flask's shell, run the script to populate the database:
+Fifth, create a new branch, commit the changes adding yourself and open up a Pull Request (PR).
 
-```
-In [3]: run scripts/populate_db.py
-```
 
 ## Makefile
 
