@@ -12,6 +12,9 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.sql.compiler import SQLCompiler
+from sqlalchemy.sql.expression import FunctionElement
 from sqlalchemy_utils import EmailType
 from werkzeug.exceptions import InternalServerError, NotFound
 
@@ -25,6 +28,23 @@ migrate = Migrate(app, db)
 bootstrap = Bootstrap5(app)
 
 
+class utc_now(FunctionElement):  # pylint: disable=invalid-name,too-many-ancestors
+    """This class is used to define a DateTime column which timezone is UTC."""
+
+    type = sa.DateTime()
+    inherit_cache = True
+
+
+@compiles(utc_now, "postgresql")
+def pg_utc_now(
+    element: utc_now,  # pylint: disable=unused-argument
+    compiler: SQLCompiler,  # pylint: disable=unused-argument
+    **kwargs: Any,  # pylint: disable=unused-argument
+) -> str:
+    """Return a string representing the current timestamp in UTC."""
+    return "TIMEZONE('utc', CURRENT_TIMESTAMP)"
+
+
 # Models
 class User(db.Model):  # pylint: disable=too-few-public-methods
     """This class is used to model users."""
@@ -35,13 +55,17 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     first_surname = sa.Column(sa.Unicode(255), nullable=False)
     second_surname = sa.Column(sa.Unicode(255))
     email = sa.Column(EmailType, unique=True, nullable=False)
+    created_at = sa.Column(sa.DateTime, default=utc_now(), nullable=False)
+    updated_at = sa.Column(
+        sa.DateTime, default=utc_now(), onupdate=utc_now(), nullable=False
+    )
 
 
 # Shell Context Processor
 @app.shell_context_processor
 def make_shell_context() -> dict[str, Any]:
     """Load items into the shell."""
-    return dict(db=db, User=User)
+    return dict(db=db, session=db.session, User=User)
 
 
 # View Functions
