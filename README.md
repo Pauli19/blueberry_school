@@ -75,6 +75,29 @@ In order to run the Flask server, execute the following command:
 dotenv run flask --debug run
 ```
 
+## Database Initialization
+
+First, add yourself to the list `users` in [`scripts/populate_db.py`](./scripts/populate_db.py).
+
+Second, open up the Flask's shell by running the following command:
+
+```
+dotenv run flask shell
+```
+
+Third, create database's tables by running the following command:
+
+```
+In [1]: from app import db
+In [2]: db.create_all()
+```
+
+Fourth, also inside the Flask's shell, run the script:
+
+```
+In [3]: run scripts/populate_db.py
+```
+
 ## Makefile
 
 The following commands are available in [`Makefile`](./Makefile).
