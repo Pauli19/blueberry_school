@@ -65,7 +65,7 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
 @app.shell_context_processor
 def make_shell_context() -> dict[str, Any]:
     """Load items into the shell."""
-    return dict(db=db, User=User)
+    return dict(db=db, session=db.session, User=User)
 
 
 # View Functions
