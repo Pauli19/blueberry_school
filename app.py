@@ -5,6 +5,7 @@ associated with the app, 404, and 500 view functions.
 """
 
 import os
+from typing import Any
 
 import sqlalchemy as sa
 from flask import Flask, render_template
@@ -34,9 +35,14 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     email = sa.Column(EmailType, unique=True, nullable=False)
 
 
+# Shell Context Processor
+@app.shell_context_processor
+def make_shell_context() -> dict[str, Any]:
+    """Load items into the shell."""
+    return dict(db=db, User=User)
+
+
 # View Functions
-
-
 @app.get("/")
 def index() -> str:
     """View function for "/" route."""
