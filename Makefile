@@ -1,7 +1,7 @@
-db-upgrade: # upgrade database
-	dotenv run flask --app school db upgrade
 db-downgrade: # downgrade database
 	dotenv run flask --app school db downgrade
+db-upgrade: # upgrade database
+	dotenv run flask --app school db upgrade
 pip-install: # install main and dev dependencies
 	pip install -r requirements.txt -r requirements-dev.txt
 run: # run server in debug mode
