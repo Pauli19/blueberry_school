@@ -1,6 +1,5 @@
 """
-This module contains view functions associated with the
-Blueprint `main`.
+This module contains view functions associated to `main` blueprint.
 """
 
 from flask import render_template
