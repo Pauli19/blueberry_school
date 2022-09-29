@@ -1,6 +1,6 @@
 """
-This package contains the implementation of the factory
-function to create and configure the Flask app.
+This package contains the implementation of a factory
+function to create and configure a Flask app.
 """
 from flask import Flask
 from flask_bootstrap import Bootstrap5
