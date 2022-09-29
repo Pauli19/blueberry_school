@@ -1,7 +1,6 @@
 """
-This module is the starting point for this Flask app.
-It creates a Flask app using a factory function. In addition,
-it implements a shell context processor.
+In this module, a Flask app is created using a factory function.
+In addition, a shell context processor is implemented.
 """
 
 from typing import Any
