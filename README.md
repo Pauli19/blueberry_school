@@ -77,13 +77,14 @@ dotenv run flask --app school --debug run
 
 ## Database Initialization
 
-First, create the database schema by running the following command:
+First, create a database using PostgreSQL called `school`.
+
+Second, make sure the virtual environment is enable, then create the database
+schema by running the following command:
 
 ```
 dotenv run flask --app school db upgrade
 ```
-
-Second, add yourself to the list `users` in [`scripts/populate_db.py`](./scripts/populate_db.py).
 
 Third, start the Flask's shell:
 
@@ -96,8 +97,6 @@ Fourth, inside the Flask's shell, run the script to populate the database:
 ```
 In [1]: run scripts/populate_db.py
 ```
-
-Fifth, create a new branch, commit the changes adding yourself and open up a Pull Request (PR).
 
 
 ## Makefile
