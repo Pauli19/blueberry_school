@@ -1,6 +1,4 @@
-"""
-This file contains a script to populate the database.
-"""
+"""This file contains a script to populate the database."""
 
 import os
 
