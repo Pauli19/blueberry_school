@@ -12,6 +12,7 @@ class UserFactory(SQLAlchemyModelFactory):
     class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
         model = User
         sqlalchemy_session = db.session
+        sqlalchemy_session_persistence = "commit"
 
     first_name = Faker("first_name")
     first_surname = Faker("last_name")
