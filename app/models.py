@@ -1,7 +1,4 @@
-"""
-This module contains models and other utilities to facilitate
-their implementation.
-"""
+"""This module contains models and database utilities."""
 
 from typing import Any
 
