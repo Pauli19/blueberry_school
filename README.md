@@ -106,11 +106,12 @@ The following commands are available in [`Makefile`](./Makefile).
 
 ### Commands
 
-* `db-upgrade` - upgrade the database
+* `db-upgrade` - upgrade database
+* `db-downgrade` - downgrade database
 * `pip-install` - install main and dev dependencies
 * `run` - run server in debug mode
 * `run-no-debug` - run server in non-debug mode
-* `shell` - start flask shell
+* `shell` - start Flask shell
 
 ### Execution
 
