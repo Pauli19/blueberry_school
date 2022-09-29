@@ -72,7 +72,7 @@ Ask for the missing values of the environment variables.
 In order to run the Flask server, execute the following command:
 
 ```
-dotenv run flask --debug run
+dotenv run flask --app school --debug run
 ```
 
 ## Database Initialization
@@ -80,7 +80,7 @@ dotenv run flask --debug run
 First, create the database schema by running the following command:
 
 ```
-dotenv run flask db upgrade
+dotenv run flask --app school db upgrade
 ```
 
 Second, add yourself to the list `users` in [`scripts/populate_db.py`](./scripts/populate_db.py).
@@ -88,7 +88,7 @@ Second, add yourself to the list `users` in [`scripts/populate_db.py`](./scripts
 Third, start the Flask's shell:
 
 ```
-dotenv run flask shell
+dotenv run flask --app school shell
 ```
 
 Fourth, inside the Flask's shell, run the script to populate the database:
@@ -106,11 +106,12 @@ The following commands are available in [`Makefile`](./Makefile).
 
 ### Commands
 
-* `db-upgrade` - upgrade the database
+* `db-downgrade` - downgrade database
+* `db-upgrade` - upgrade database
 * `pip-install` - install main and dev dependencies
 * `run` - run server in debug mode
 * `run-no-debug` - run server in non-debug mode
-* `shell` - start flask shell
+* `shell` - start Flask shell
 
 ### Execution
 
