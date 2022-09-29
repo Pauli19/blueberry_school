@@ -1,5 +1,5 @@
 """
-This package contains error and view functions associated
+This package contains error handlers and view functions associated
 to the Blueprint `main`.
 """
 # pylint: disable=cyclic-import
