@@ -2,7 +2,7 @@
 This file contains a script to populate the database.
 """
 
-from app import User, db
+from app.models import User, db
 
 users = [
     User(
