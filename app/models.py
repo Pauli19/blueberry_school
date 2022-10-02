@@ -42,3 +42,6 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     updated_at = sa.Column(
         sa.DateTime, default=utc_now(), onupdate=utc_now(), nullable=False
     )
+
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.first_surname} - {self.email}"
