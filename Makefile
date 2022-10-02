@@ -1,6 +1,6 @@
-coverage:
+coverage: # produce coverage report
 	TEST_MODE=true dotenv run pytest --cov=app tests
-coverage-html:
+coverage-html: # produce HTML coverage report
 	TEST_MODE=true dotenv run pytest --cov=app --cov-report=html tests
 db-downgrade: # downgrade database
 	dotenv run flask --app school db downgrade
