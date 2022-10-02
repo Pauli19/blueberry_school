@@ -10,3 +10,5 @@ run-no-debug: # run server in non-debug mode
 	dotenv run flask --app school run
 shell: # start Flask shell
 	dotenv run flask --app school shell
+test:
+	dotenv run pytest -v
