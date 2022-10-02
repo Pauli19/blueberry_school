@@ -16,3 +16,5 @@ shell: # start Flask shell
 	dotenv run flask --app school --debug shell
 test: # run tests
 	TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v tests
+test-no-capture: # run tests disabling capturing
+	TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v -s tests
