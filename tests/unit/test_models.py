@@ -8,9 +8,11 @@ def test_user_creation(app):  # pylint: disable=unused-argument
     GIVEN
         first_name is "John"
         first_surname is "Smith" and
-        email is "user@example.com""
+        email is "user@example.com"
     WHEN a User instance is created
     THEN User is created properly
+        - data is stored in the database
+        - information is set properly
     """
     first_name = "John"
     first_surname = "Smith"
