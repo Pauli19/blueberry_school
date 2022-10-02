@@ -1,5 +1,6 @@
 factory-boy==3.2.1
 flask-shell-ipython==0.4.1
 pylint==2.15.3
+pytest-cov==4.0.0
 pytest-flask==1.2.0
 python-dotenv[cli]==0.21.0
