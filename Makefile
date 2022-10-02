@@ -1,7 +1,7 @@
 coverage: # produce a coverage report
-	TEST_MODE=true dotenv run pytest --cov=app tests
+	TESTING=1 FLASK_DEBUG=1 dotenv run pytest --cov=app tests
 coverage-html: # produce an HTML coverage report
-	TEST_MODE=true dotenv run pytest --cov=app --cov-report=html tests
+	TESTING=1 FLASK_DEBUG=1 dotenv run pytest --cov=app --cov-report=html tests
 db-downgrade: # downgrade database
 	dotenv run flask --app school db downgrade
 db-upgrade: # upgrade database
@@ -15,4 +15,4 @@ run-no-debug: # run server in non-debug mode
 shell: # start Flask shell
 	dotenv run flask --app school --debug shell
 test: # run tests
-	TEST_MODE=true dotenv run pytest -v tests
+	TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v tests -s

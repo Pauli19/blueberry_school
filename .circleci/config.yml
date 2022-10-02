@@ -7,6 +7,7 @@ jobs:
       - image: cimg/python:3.10.7
         environment:
           SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://ubuntu@localhost/circle_test?sslmode=disable
+          TESTING: 1
       - image: cimg/postgres:14.5
         environment:
           POSTGRES_USER: ubuntu
@@ -23,7 +24,7 @@ jobs:
           name: Run tests
           command: |
             mkdir test-results
-            pytest -v --junitxml=test-results/junit.xml --cov=app --cov-report=html tests
+            pytest -v -s --junitxml=test-results/junit.xml --cov=app --cov-report=html tests
       - store_test_results:
           path: test-results
       - store_artifacts:
