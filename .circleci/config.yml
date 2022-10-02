@@ -24,7 +24,7 @@ jobs:
           name: Run tests
           command: |
             mkdir test-results
-            pytest -v -s --junitxml=test-results/junit.xml --cov=app --cov-report=html tests
+            pytest -v --junitxml=test-results/junit.xml --cov=app --cov-report=html tests
       - store_test_results:
           path: test-results
       - store_artifacts:
