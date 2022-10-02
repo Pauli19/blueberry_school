@@ -7,3 +7,6 @@ known_third_party = ["alembic", "factory", "flask", "flask_bootstrap", "flask_mi
 
 [tool.pylint.format]
 max-line-length = 88
+
+[tool.pytest.ini_options]
+python_files = ["tests.py", "test_*.py"]
