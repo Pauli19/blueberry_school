@@ -1,5 +1,26 @@
 """This module contains tests for models."""
 from app.models import User
+from factories import UserFactory
+
+
+def test_user_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        first_name is "John"
+        first_surname is "Smith" and
+        email is "user@example.com""
+    WHEN a User instance is created
+    THEN User is created properly
+    """
+    first_name = "John"
+    first_surname = "Smith"
+    email = "user@example.com"
+    user = UserFactory(first_name=first_name, first_surname=first_surname, email=email)
+
+    assert user.id is not None
+    assert user.first_name == first_name
+    assert user.first_surname == first_surname
+    assert user.email == email
 
 
 def test_user_str():
