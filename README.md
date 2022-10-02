@@ -105,6 +105,8 @@ The following commands are available in [`Makefile`](./Makefile).
 
 ### Commands
 
+* `coverage` - produce coverage report
+* `coverage-html` - produce HTML coverage report
 * `db-downgrade` - downgrade database
 * `db-upgrade` - upgrade database
 * `pip-install` - install main and dev dependencies
