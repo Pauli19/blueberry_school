@@ -21,7 +21,11 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: pytest -v
+          command: |
+            mkdir test-results
+            pytest -v --junitxml=test-results/junit.xml
+      - store_test_results:
+          path: test-results
 workflows:
   sample:
     jobs:
