@@ -37,3 +37,20 @@ def test_user_str():
     """
     user = User(first_name="John", first_surname="Smith", email="user@example.com")
     assert str(user) == "John Smith - user@example.com"
+
+
+def test_user_representation():
+    """
+    GIVEN
+        first_name is "John"
+        first_surname is "Smith" and
+        email is "user@example.com"
+    WHEN calling repr
+    THEN the returned string is
+        'User(first_name="John", first_surname="Smith", email="user@example.com")'
+    """
+    user = User(first_name="John", first_surname="Smith", email="user@example.com")
+    assert (
+        repr(user)
+        == 'User(first_name="John", first_surname="Smith", email="user@example.com")'
+    )

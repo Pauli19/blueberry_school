@@ -51,3 +51,10 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.first_surname} - {self.email}"
+
+    def __repr__(self) -> str:
+        return (
+            f'User(first_name="{self.first_name}", '
+            f'first_surname="{self.first_surname}", '
+            f'email="{self.email}")'
+        )
