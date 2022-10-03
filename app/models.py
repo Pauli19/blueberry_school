@@ -38,7 +38,6 @@ class BaseModel(db.Model):  # pylint: disable=too-few-public-methods
     )
 
 
-# Models
 class User(BaseModel):  # pylint: disable=too-few-public-methods
     """This class is used to model users."""
 
