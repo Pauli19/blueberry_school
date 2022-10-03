@@ -28,8 +28,18 @@ def pg_utc_now(
     return "TIMEZONE('utc', CURRENT_TIMESTAMP)"
 
 
+class BaseModel(db.Model):  # pylint: disable=too-few-public-methods
+    """This class represents a base abstract model."""
+
+    __abstract__ = True
+    created_at = sa.Column(sa.DateTime, default=utc_now(), nullable=False)
+    updated_at = sa.Column(
+        sa.DateTime, default=utc_now(), onupdate=utc_now(), nullable=False
+    )
+
+
 # Models
-class User(db.Model):  # pylint: disable=too-few-public-methods
+class User(BaseModel):  # pylint: disable=too-few-public-methods
     """This class is used to model users."""
 
     id = sa.Column(sa.Integer, primary_key=True)
@@ -38,10 +48,6 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     first_surname = sa.Column(sa.Unicode(255), nullable=False)
     second_surname = sa.Column(sa.Unicode(255))
     email = sa.Column(EmailType, unique=True, nullable=False)
-    created_at = sa.Column(sa.DateTime, default=utc_now(), nullable=False)
-    updated_at = sa.Column(
-        sa.DateTime, default=utc_now(), onupdate=utc_now(), nullable=False
-    )
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.first_surname} - {self.email}"
