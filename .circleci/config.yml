@@ -1,0 +1,35 @@
+version: 2.1
+orbs:
+  python: circleci/python@2.1.1
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.10.7
+        environment:
+          SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://ubuntu@localhost/circle_test?sslmode=disable
+          TESTING: 1
+      - image: cimg/postgres:14.5
+        environment:
+          POSTGRES_USER: ubuntu
+          POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: ''
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - python/install-packages:
+          pip-dependency-file: requirements-dev.txt
+          pkg-manager: pip
+      - run:
+          name: Run tests
+          command: |
+            mkdir test-results
+            pytest -v --junitxml=test-results/junit.xml --cov=app --cov-report=html tests
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: htmlcov
+workflows:
+  sample:
+    jobs:
+      - build-and-test

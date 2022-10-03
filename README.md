@@ -77,7 +77,7 @@ dotenv run flask --app school --debug run
 
 ## Database Initialization
 
-First, create a database using PostgreSQL called `school`.
+First, create two databases using PostgreSQL called `school` and `school_test`.
 
 Second, make sure the virtual environment is enable, then create the database
 schema by running the following command:
@@ -105,12 +105,16 @@ The following commands are available in [`Makefile`](./Makefile).
 
 ### Commands
 
+* `coverage` - produce a coverage report
+* `coverage-html` - produce an HTML coverage report
 * `db-downgrade` - downgrade database
 * `db-upgrade` - upgrade database
 * `pip-install` - install main and dev dependencies
 * `run` - run server in debug mode
 * `run-no-debug` - run server in non-debug mode
 * `shell` - start Flask shell
+* `test` - run tests
+* `test-no-capture` - run tests disabling capturing
 
 ### Execution
 
