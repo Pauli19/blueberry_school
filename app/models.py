@@ -62,9 +62,12 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     @property
     def full_name(self) -> str:
         """User's full name."""
-        return (
-            f"{self.first_name} "
-            f"{self.second_name} "
-            f"{self.first_surname} "
-            f"{self.second_surname}"
-        )
+        if self.second_name is not None and self.second_surname is not None:
+            return (
+                f"{self.first_name} "
+                f"{self.second_name} "
+                f"{self.first_surname} "
+                f"{self.second_surname}"
+            )
+
+        return f"{self.first_name} {self.first_surname}"

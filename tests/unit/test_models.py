@@ -56,7 +56,7 @@ def test_user_representation():
     assert repr(user) == expected_repr
 
 
-def test_user_full_name():
+def test_user_full_name_both_names_and_both_surnames():
     """
     GIVEN
         first_name is "John"
@@ -74,3 +74,17 @@ def test_user_full_name():
         second_surname="Black",
     )
     assert user.full_name == "John James Smith Black"
+
+
+def test_user_full_name_only_first_name_and_first_surname():
+    """
+    GIVEN
+        first_name is "John" and
+        first_surname is "Smith"
+    WHEN getting full_name
+    THEN the returned string is
+        "John Smith"
+    """
+    user = User(first_name="John", first_surname="Smith")
+
+    assert user.full_name == "John Smith"
