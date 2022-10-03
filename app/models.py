@@ -62,11 +62,10 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     @property
     def full_name(self) -> str:
         """User's full name."""
-        name = self.first_name
-        if self.second_name is not None:
-            name = f"{name} {self.second_name}"
-        name = f"{name} {self.first_surname}"
-        if self.second_surname is not None:
-            name = f"{name} {self.second_surname}"
-
-        return name
+        names = [
+            self.first_name,
+            self.second_name,
+            self.first_surname,
+            self.second_surname,
+        ]
+        return " ".join(name for name in names if name is not None)
