@@ -47,6 +47,7 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     first_surname = sa.Column(sa.Unicode(255), nullable=False)
     second_surname = sa.Column(sa.Unicode(255))
     email = sa.Column(EmailType, unique=True, nullable=False)
+    password_hash = sa.Column(sa.Unicode(255))
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.first_surname} - {self.email}"
