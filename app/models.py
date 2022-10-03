@@ -58,3 +58,13 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
             f'first_surname="{self.first_surname}", '
             f'email="{self.email}")'
         )
+
+    @property
+    def full_name(self) -> str:
+        """User's full name."""
+        return (
+            f"{self.first_name} "
+            f"{self.second_name} "
+            f"{self.first_surname} "
+            f"{self.second_surname}"
+        )

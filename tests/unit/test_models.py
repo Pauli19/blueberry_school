@@ -50,5 +50,27 @@ def test_user_representation():
         'User(first_name="John", first_surname="Smith", email="user@example.com")'
     """
     user = User(first_name="John", first_surname="Smith", email="user@example.com")
-    expected_repr = 'User(first_name="John", first_surname="Smith", email="user@example.com")'
+    expected_repr = (
+        'User(first_name="John", first_surname="Smith", email="user@example.com")'
+    )
     assert repr(user) == expected_repr
+
+
+def test_user_full_name():
+    """
+    GIVEN
+        first_name is "John"
+        second_name is "James"
+        first_surname is "Smith" and
+        second_surname is "Black"
+    WHEN getting full_name
+    THEN the returned string is
+        "John James Smith Black"
+    """
+    user = User(
+        first_name="John",
+        second_name="James",
+        first_surname="Smith",
+        second_surname="Black",
+    )
+    assert user.full_name == "John James Smith Black"
