@@ -50,7 +50,5 @@ def test_user_representation():
         'User(first_name="John", first_surname="Smith", email="user@example.com")'
     """
     user = User(first_name="John", first_surname="Smith", email="user@example.com")
-    assert (
-        repr(user)
-        == 'User(first_name="John", first_surname="Smith", email="user@example.com")'
-    )
+    expected_repr = 'User(first_name="John", first_surname="Smith", email="user@example.com")'
+    assert repr(user) == expected_repr
