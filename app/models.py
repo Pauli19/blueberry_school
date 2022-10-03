@@ -70,4 +70,10 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
                 f"{self.second_surname}"
             )
 
+        if self.second_name is None and self.second_surname is not None:
+            return f"{self.first_name} " f"{self.first_surname} {self.second_surname}"
+
+        if self.second_surname is None and self.second_name is not None:
+            return f"{self.first_name} {self.second_name} " f"{self.first_surname}"
+
         return f"{self.first_name} {self.first_surname}"

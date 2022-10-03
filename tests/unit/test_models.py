@@ -88,3 +88,39 @@ def test_user_full_name_only_first_name_and_first_surname():
     user = User(first_name="John", first_surname="Smith")
 
     assert user.full_name == "John Smith"
+
+
+def test_user_full_name_no_second_name():
+    """
+    GIVEN
+        first_name is "John"
+        first_surname is "Smith" and
+        second_surname is "Black"
+    WHEN getting full_name
+    THEN the returned string is
+        "John Smith Black"
+    """
+    user = User(
+        first_name="John",
+        first_surname="Smith",
+        second_surname="Black",
+    )
+    assert user.full_name == "John Smith Black"
+
+
+def test_user_full_name_no_second_surname():
+    """
+    GIVEN
+        first_name is "John"
+        second_name is "James"
+        first_surname is "Smith" and
+    WHEN getting full_name
+    THEN the returned string is
+        "John James Smith"
+    """
+    user = User(
+        first_name="John",
+        second_name="James",
+        first_surname="Smith",
+    )
+    assert user.full_name == "John James Smith"
