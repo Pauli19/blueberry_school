@@ -69,3 +69,8 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
             self.second_surname,
         ]
         return " ".join(name for name in names if name is not None)
+
+    @property
+    def password(self) -> str:
+        """User's password."""
+        raise AttributeError("password is not a readable attribute")

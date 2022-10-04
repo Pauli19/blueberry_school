@@ -103,3 +103,20 @@ def test_user_full_name(user, expected_full_name):
     THEN property is equal to expected_full_name
     """
     assert user.full_name == expected_full_name
+
+
+def test_user_password_not_readable():
+    """
+    GIVEN a User instance which
+        first_name is "John"
+        last_name is "Smith"
+        and email is "user@example.com"
+    WHEN trying to access password
+    THEN verify that
+        an AttributeError exception is raised and
+                exception message is "password is not a readable attribute"
+    """
+    user = User(first_name="John", first_surname="Smith", email="user@example.com")
+    message = "password is not a readable attribute"
+    with pytest.raises(AttributeError, match=message):
+        user.password  # pylint: disable=pointless-statement
