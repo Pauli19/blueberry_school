@@ -120,3 +120,14 @@ def test_user_password_not_readable():
     message = "password is not a readable attribute"
     with pytest.raises(AttributeError, match=message):
         user.password  # pylint: disable=pointless-statement
+
+
+def test_user_password_is_hashed():
+    """
+    GIVEN a User instance
+    WHEN user's password is set
+    THEN user's password_hash is not None
+    """
+    user = User()
+    user.password = "this-is-a-password"
+    assert user.password_hash is not None

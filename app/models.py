@@ -7,6 +7,7 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
 from sqlalchemy_utils import EmailType
+from werkzeug.security import generate_password_hash
 
 from . import db
 
@@ -74,3 +75,8 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     def password(self) -> str:
         """User's password."""
         raise AttributeError("password is not a readable attribute")
+
+    @password.setter
+    def password(self, password: str) -> None:
+        """Hash User's password and set User's password_hash."""
+        self.password_hash = generate_password_hash(password)
