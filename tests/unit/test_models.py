@@ -113,8 +113,8 @@ def test_user_password_not_readable():
         and email is "user@example.com"
     WHEN trying to access password
     THEN verify that
-        an AttributeError exception is raised and
-                exception message is "password is not a readable attribute"
+        - an AttributeError exception is raised
+        - exception message is "password is not a readable attribute"
     """
     user = User(first_name="John", first_surname="Smith", email="user@example.com")
     message = "password is not a readable attribute"
