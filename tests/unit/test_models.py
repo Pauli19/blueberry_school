@@ -61,7 +61,7 @@ def test_user_representation():
 @pytest.mark.parametrize(
     "user,expected_full_name",
     [
-        (
+        pytest.param(
             User(
                 first_name="John",
                 second_name="James",
@@ -69,24 +69,31 @@ def test_user_representation():
                 second_surname="Black",
             ),
             "John James Smith Black",
+            id="all-names",
         ),
-        (
+        pytest.param(
             User(
                 first_name="John",
                 second_name="James",
                 first_surname="Smith",
             ),
             "John James Smith",
+            id="two-names-first-surname",
         ),
-        (
+        pytest.param(
             User(
                 first_name="John",
                 first_surname="Smith",
                 second_surname="Black",
             ),
             "John Smith Black",
+            id="first-name-two-surnames",
         ),
-        (User(first_name="John", first_surname="Smith"), "John Smith"),
+        pytest.param(
+            User(first_name="John", first_surname="Smith"),
+            "John Smith",
+            id="first-name-first-surname",
+        ),
     ],
 )
 def test_user_full_name(user, expected_full_name):
