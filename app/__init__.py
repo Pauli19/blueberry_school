@@ -28,8 +28,10 @@ def create_app() -> Flask:
     migrate.init_app(app, db)
 
     # TODO: improve blueprint registration
+    from .auth import auth as auth_blueprint  # pylint: disable=import-outside-toplevel
     from .main import main as main_blueprint  # pylint: disable=import-outside-toplevel
 
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
     return app
