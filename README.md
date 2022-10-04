@@ -108,6 +108,7 @@ The following commands are available in [`Makefile`](./Makefile).
 * `coverage` - produce a coverage report
 * `coverage-html` - produce an HTML coverage report
 * `db-downgrade` - downgrade database
+* `db-migrate` - autogenerates a revision script (migration), `message` must be passed.
 * `db-upgrade` - upgrade database
 * `pip-install` - install main and dev dependencies
 * `run` - run server in debug mode

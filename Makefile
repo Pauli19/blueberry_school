@@ -4,6 +4,8 @@ coverage-html: # produce an HTML coverage report
 	TESTING=1 FLASK_DEBUG=1 dotenv run pytest --cov=app --cov-report=html tests
 db-downgrade: # downgrade database
 	dotenv run flask --app school db downgrade
+db-migrate: # autogenerates a revision script (migration), `message` must be passed.
+	dotenv run flask --app school db migrate -m "$(message)"
 db-upgrade: # upgrade database
 	dotenv run flask --app school db upgrade
 pip-install: # install main and dev dependencies
