@@ -1,7 +1,7 @@
 """This module contains tests for models."""
 import pytest
 
-from app.models import User
+from app.models import User, load_user
 from factories import UserFactory
 
 
@@ -131,3 +131,18 @@ def test_user_password_is_hashed():
     user = User()
     user.password = "this-is-a-password"
     assert user.password_hash is not None
+
+
+def test_load_user(app):  # pylint: disable=unused-argument
+    """
+    GIVEN a User instance
+    WHEN calling load_user with User instance's id
+    THEN User instance is the same as loaded User instance
+    """
+    first_name = "John"
+    first_surname = "Smith"
+    email = "user@example.com"
+    user = UserFactory(first_name=first_name, first_surname=first_surname, email=email)
+
+    loaded_user = load_user(user.id)
+    assert user == loaded_user
