@@ -148,24 +148,16 @@ def test_load_user(app):  # pylint: disable=unused-argument
     assert user == loaded_user
 
 
-def test_user_verify_password_correct():
+def test_user_verify_password():
     """
     GIVEN a User instance with password
-    WHEN verifying password with correct password
-    THEN User's verify_password method returns True
+    WHEN verifying password
+    THEN User's verify_password method returns
+        - True when the password is verified
+        - False when the password is not verified
     """
     password = "this-is-a-password"
     user = User(password=password)
 
     assert user.verify_password(password)
-
-
-def test_user_verify_password_incorrect():
-    """
-    GIVEN a User instance with password
-    WHEN verifying password with incorrect password
-    THEN User's verify_password method returns False
-    """
-    user = User(password="this-is-a-password")
-
     assert not user.verify_password("this-is-another-password")
