@@ -19,7 +19,7 @@ def login_get() -> str:
 @auth.get("/logout")
 @login_required
 def logout() -> Response:
-    """View function for "logout" route."""
+    """View function for "/logout" route."""
     logout_user()
     flash("You have been logged out.")
     return redirect(url_for("main.index"))
