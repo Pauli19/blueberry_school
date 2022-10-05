@@ -29,6 +29,7 @@
   <body>
     {% block content %}
     <div class="container">
+      {# Navigation bar #}
       <nav class="navbar bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="{{ url_for('main.index') }}">
@@ -48,6 +49,8 @@
           </ul>
         </div>
       </nav>
+
+      {# Flash messages #}
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <div class="row d-flex justify-content-center">
@@ -73,6 +76,8 @@
         </div>
         {% endif %}
       {% endwith %}
+
+      {# Page content #}
       {% block page_content %}{% endblock %}
     </div>
     {% endblock %}
