@@ -8,7 +8,7 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
 from sqlalchemy_utils import EmailType
-from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from . import db, login_manager
 
@@ -81,6 +81,10 @@ class User(UserMixin, BaseModel):  # pylint: disable=too-few-public-methods
     def password(self, password: str) -> None:
         """Hash User's password and set User's password_hash."""
         self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password: str) -> bool:
+        """Verify User's password"""
+        return check_password_hash(self.password_hash, password)
 
 
 @login_manager.user_loader
