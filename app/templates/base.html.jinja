@@ -41,7 +41,7 @@
               {% if current_user.is_authenticated %}
               <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
               {% else %}
-                {% if url_for(request.endpoint) != url_for('auth.login_get') %}
+                {% if request.endpoint is not none and url_for(request.endpoint) != url_for('auth.login_get') %}
                 <a class="btn btn-primary btn-md" href="{{ url_for('auth.login_get') }}">Log In</a>
                 {% endif %}
               {% endif %}
