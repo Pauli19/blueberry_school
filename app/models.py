@@ -3,6 +3,7 @@
 from typing import Any
 
 import sqlalchemy as sa
+from flask_login import UserMixin
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
@@ -39,7 +40,7 @@ class BaseModel(db.Model):  # pylint: disable=too-few-public-methods
     )
 
 
-class User(BaseModel):  # pylint: disable=too-few-public-methods
+class User(UserMixin, BaseModel):  # pylint: disable=too-few-public-methods
     """This class is used to model users."""
 
     id = sa.Column(sa.Integer, primary_key=True)
