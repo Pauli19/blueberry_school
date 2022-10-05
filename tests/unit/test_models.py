@@ -143,6 +143,6 @@ def test_load_user(app):  # pylint: disable=unused-argument
     first_surname = "Smith"
     email = "user@example.com"
     user = UserFactory(first_name=first_name, first_surname=first_surname, email=email)
-
     loaded_user = load_user(user.id)
+
     assert user == loaded_user
