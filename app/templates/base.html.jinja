@@ -29,31 +29,55 @@
   <body>
     {% block content %}
     <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-lg-8">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                {% with categories = ['primary', 'success', 'warning', 'danger'] %}
-                  <div class="alert alert-{{ category if category in categories else 'dark' }} alert-dismissible fade show" role="alert">
-                    {% with icon = {
-                      'primary': 'info-circle-fill',
-                      'success': 'check-circle-fill',
-                      'warning': 'exclamation-triangle-fill',
-                      'danger': 'x-octagon-fill',
-                      }.get(category, 'info-square-fill')
-                    %}
-                      <i class="bi bi-{{ icon }}"></i>
-                    {% endwith %}
-                    <span class="ms-2">{{ message }}</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                {% endwith %}
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
+      {# Navigation bar #}
+      <nav class="navbar bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{{ url_for('main.index') }}">
+            <img src="{{ url_for('static', filename='images/logos/blueberry.png')}}" alt="Logo" width="45" height="45" class="align-middle">
+            <span class="align-middle">Blueberry School</span>
+          </a>
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+              {% if current_user.is_authenticated %}
+              <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+              {% else %}
+                {% if url_for(request.endpoint) != url_for('auth.login_get') %}
+                <a class="btn btn-primary btn-md" href="{{ url_for('auth.login_get') }}">Log In</a>
+                {% endif %}
+              {% endif %}
+            </li>
+          </ul>
         </div>
-      </div>
+      </nav>
+
+      {# Flash messages #}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8">
+            {% for category, message in messages %}
+              {% with categories = ['primary', 'success', 'warning', 'danger'] %}
+                <div class="alert alert-{{ category if category in categories else 'dark' }} alert-dismissible fade show" role="alert">
+                  {% with icon = {
+                    'primary': 'info-circle-fill',
+                    'success': 'check-circle-fill',
+                    'warning': 'exclamation-triangle-fill',
+                    'danger': 'x-octagon-fill',
+                    }.get(category, 'info-square-fill')
+                  %}
+                    <i class="bi bi-{{ icon }}"></i>
+                  {% endwith %}
+                  <span class="ms-2">{{ message }}</span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endwith %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      {% endwith %}
+
+      {# Page content #}
       {% block page_content %}{% endblock %}
     </div>
     {% endblock %}
