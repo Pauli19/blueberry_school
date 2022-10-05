@@ -3,13 +3,14 @@
 from typing import Any
 
 import sqlalchemy as sa
+from flask_login import UserMixin
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
 from sqlalchemy_utils import EmailType
 from werkzeug.security import generate_password_hash
 
-from . import db
+from . import db, login_manager
 
 
 class utc_now(FunctionElement):  # pylint: disable=invalid-name,too-many-ancestors
@@ -39,7 +40,7 @@ class BaseModel(db.Model):  # pylint: disable=too-few-public-methods
     )
 
 
-class User(BaseModel):  # pylint: disable=too-few-public-methods
+class User(UserMixin, BaseModel):  # pylint: disable=too-few-public-methods
     """This class is used to model users."""
 
     id = sa.Column(sa.Integer, primary_key=True)
@@ -80,3 +81,9 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     def password(self, password: str) -> None:
         """Hash User's password and set User's password_hash."""
         self.password_hash = generate_password_hash(password)
+
+
+@login_manager.user_loader
+def load_user(user_id: str) -> User | None:
+    """Retrieve a User instance whose id is user_id."""
+    return User.query.get(int(user_id))
