@@ -1,4 +1,4 @@
-"""This module contains forms."""
+"""This module contains forms for `auth` blueprint."""
 
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, EmailField, PasswordField, SubmitField
