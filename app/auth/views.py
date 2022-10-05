@@ -8,6 +8,6 @@ from . import auth
 
 
 @auth.get("/login")
-def login() -> str:
+def login_get() -> str:
     """View function for "/login" route."""
     return render_template("auth/login.html.jinja")
