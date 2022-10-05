@@ -85,5 +85,5 @@ class User(UserMixin, BaseModel):  # pylint: disable=too-few-public-methods
 
 @login_manager.user_loader
 def load_user(user_id: str) -> User | None:
-    """Retrieve a user which id is user_id."""
+    """Retrieve a User instance whose id is user_id."""
     return User.query.get(int(user_id))
