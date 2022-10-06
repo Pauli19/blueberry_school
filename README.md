@@ -114,8 +114,8 @@ The following commands are available in [`Makefile`](./Makefile).
 * `run` - run server in debug mode
 * `run-no-debug` - run server in non-debug mode
 * `shell` - start Flask shell
-* `test` - run tests, `file_or_dir` is optional, if not passed all tests are run.
-* `test-no-capture` - run tests disabling capturing, `file_or_dir` is optional, if not passed all tests are run.
+* `test` - run tests, `target` is optional, if not passed all tests are run.
+* `test-no-capture` - run tests disabling capturing, `target` is optional, if not passed all tests are run.
 
 ### Execution
 
