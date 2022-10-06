@@ -11,7 +11,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from config import Config
 
-# pylint: disable=fixme
+# pylint: disable=fixme,import-outside-toplevel
 
 bootstrap = Bootstrap5()
 db = SQLAlchemy()
@@ -32,10 +32,12 @@ def create_app() -> Flask:
     migrate.init_app(app, db)
 
     # TODO: improve blueprint registration
-    from .auth import auth as auth_blueprint  # pylint: disable=import-outside-toplevel
-    from .main import main as main_blueprint  # pylint: disable=import-outside-toplevel
+    from .admin import admin as admin_blueprint
+    from .auth import auth as auth_blueprint
+    from .main import main as main_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(auth_blueprint, url_prefix="/auth")
+    app.register_blueprint(admin_blueprint, url_prefix="/admin")
 
     return app
