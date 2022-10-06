@@ -2,6 +2,7 @@
 
 from flask import url_for
 from flask.testing import FlaskClient
+from flask_login import login_user
 
 from app.auth.forms import LoginForm
 from factories import UserFactory
@@ -65,3 +66,32 @@ def test_user_with_right_credentials_is_logged_in(client: FlaskClient):
 
     assert response.status_code == 200
     assert response.request.path == url_for("admin.index")
+
+
+def test_anonymous_user_log_out(client: FlaskClient):
+    """
+    GIVEN an anonymous user
+    WHEN user tries to logout
+    THEN redirection to login_get view occurs
+    """
+    url = url_for("auth.logout")
+    response = client.get(url, follow_redirects=True)
+
+    assert response.status_code == 200
+    assert response.request.path == url_for("auth.login_get")
+
+
+def test_logged_in_user_logs_out(client: FlaskClient):
+    """
+    GIVEN a user that is logged in
+    WHEN user tries to logout
+    THEN user is logged out and redirected to main.index view
+    """
+    user = UserFactory()
+    login_user(user)
+
+    logout_url = url_for("auth.logout")
+    response = client.get(logout_url, follow_redirects=True)
+
+    assert response.status_code == 200
+    assert response.request.path == url_for("main.index")
