@@ -15,3 +15,4 @@ class Config:  # pylint: disable=too-few-public-methods
     SQLALCHEMY_DATABASE_URI = f"{DB_URI}_test" if LOCAL_TEST else DB_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = TESTING
+    WTF_CSRF_ENABLED = not TESTING
