@@ -8,6 +8,20 @@ from app.auth.forms import LoginForm
 from factories import UserFactory
 
 
+def test_invalid_login_form_cannot_login(client: FlaskClient):
+    """
+    GIVEN an invalid form
+    WHEN trying to login
+    THEN redirection to login page occurs
+    """
+    url = url_for("auth.login_post")
+    form = LoginForm(email="fake-user@example.com")
+    response = client.post(url, data=form.data, follow_redirects=True)
+
+    assert response.status_code == 200
+    assert response.request.path == url_for("auth.login_get")
+
+
 def test_email_no_user_cannot_login(client: FlaskClient):
     """
     GIVEN an email that is not associated with a user
