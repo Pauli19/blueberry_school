@@ -21,7 +21,7 @@ def test_email_no_user_cannot_login(client: FlaskClient):
     assert response.request.path == url_for("auth.login_get")
 
 
-def test_user_with_wrong_credentials_cannot_login(client):
+def test_user_with_wrong_credentials_cannot_login(client: FlaskClient):
     """
     GIVEN a user that exists in the database
     WHEN trying to login with wrong credentials
@@ -36,7 +36,7 @@ def test_user_with_wrong_credentials_cannot_login(client):
     assert response.request.path == url_for("auth.login_get")
 
 
-def test_user_with_right_credentials_is_logged_in(client):
+def test_user_with_right_credentials_is_logged_in(client: FlaskClient):
     """
     GIVEN a user that exists in the database
     WHEN trying to login with correct credentials
