@@ -21,7 +21,7 @@ test: # run tests, `file_or_dir` is optional, if not passed all tests are run.
 		echo "Running all tests"; \
 		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v tests; \
 	else \
-		echo "Running test $(file_or_dir)"; \
+		echo "Running $(file_or_dir)"; \
 		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v "${file_or_dir}"; \
 	fi
 test-no-capture: # run tests disabling capturing, `file_or_dir` is optional, if not passed all tests are run.
@@ -29,6 +29,6 @@ test-no-capture: # run tests disabling capturing, `file_or_dir` is optional, if 
 		echo "Running all tests"; \
 		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v -s tests; \
 	else \
-		echo "Running test $(file_or_dir)"; \
+		echo "Running $(file_or_dir)"; \
 		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v -s "${file_or_dir}"; \
 	fi
