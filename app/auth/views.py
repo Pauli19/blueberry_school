@@ -19,7 +19,7 @@ def login_get() -> str:
 
 
 @auth.post("/login")
-def login_post():
+def login_post() -> Response:
     """View function for "/login" route when method is POST."""
     form = LoginForm()
     if not form.validate():
