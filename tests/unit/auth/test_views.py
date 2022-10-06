@@ -86,7 +86,7 @@ def test_anonymous_user_log_out(client: FlaskClient):
     """
     GIVEN an anonymous user
     WHEN user tries to logout
-    THEN redirection to login_get view occurs
+    THEN redirection to login page occurs
     """
     url = url_for("auth.logout")
     response = client.get(url, follow_redirects=True)
@@ -99,7 +99,7 @@ def test_logged_in_user_logs_out(client: FlaskClient):
     """
     GIVEN a user that is logged in
     WHEN user tries to logout
-    THEN user is logged out and redirected to main.index view
+    THEN user is logged out and redirected to index page
     """
     user = UserFactory()
     login_user(user)
