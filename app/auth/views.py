@@ -1,5 +1,5 @@
 """
-This module contains view functions associated to `auth` blueprint.
+This module contains view functions associated with `auth` blueprint.
 """
 
 from flask import Response, flash, redirect, render_template, url_for

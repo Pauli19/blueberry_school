@@ -1,5 +1,5 @@
 """
-This package contains view functions associated to `auth` blueprint.
+This package contains view functions associated with `auth` blueprint.
 """
 
 # pylint: disable=cyclic-import

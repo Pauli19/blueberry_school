@@ -1,5 +1,5 @@
 """
-This package contains view functions associated to `admin` blueprint.
+This package contains view functions associated with `admin` blueprint.
 """
 
 # pylint: disable=cyclic-import
