@@ -21,6 +21,21 @@ def test_email_no_user_cannot_login(client: FlaskClient):
     assert response.request.path == url_for("auth.login_get")
 
 
+def test_user_without_password_cannot_login(client: FlaskClient):
+    """
+    GIVEN a user that exists in the database without a password
+    WHEN trying to login
+    THEN redirection to login page occurs
+    """
+    user = UserFactory()
+    url = url_for("auth.login_post")
+    form = LoginForm(email=user.email, password="pass123")
+    response = client.post(url, data=form.data, follow_redirects=True)
+
+    assert response.status_code == 200
+    assert response.request.path == url_for("auth.login_get")
+
+
 def test_user_with_wrong_credentials_cannot_login(client: FlaskClient):
     """
     GIVEN a user that exists in the database
