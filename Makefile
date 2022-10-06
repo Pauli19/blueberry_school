@@ -16,19 +16,19 @@ run-no-debug: # run server in non-debug mode
 	dotenv run flask --app school run
 shell: # start Flask shell
 	dotenv run flask --app school --debug shell
-test: # run tests, `file_or_dir` is optional, if not passed all tests are run.
-	if [ -z "$(file_or_dir)" ]; then \
+test: # run tests, `target` is optional, if not passed all tests are run.
+	if [ -z "$(target)" ]; then \
 		echo "Running all tests"; \
 		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v tests; \
 	else \
-		echo "Running $(file_or_dir)"; \
-		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v "${file_or_dir}"; \
+		echo "Running $(target)"; \
+		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v "${target}"; \
 	fi
-test-no-capture: # run tests disabling capturing, `file_or_dir` is optional, if not passed all tests are run.
-	if [ -z "$(file_or_dir)" ]; then \
+test-no-capture: # run tests disabling capturing, `target` is optional, if not passed all tests are run.
+	if [ -z "$(target)" ]; then \
 		echo "Running all tests"; \
 		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v -s tests; \
 	else \
-		echo "Running $(file_or_dir)"; \
-		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v -s "${file_or_dir}"; \
+		echo "Running $(target)"; \
+		TESTING=1 FLASK_DEBUG=1 dotenv run pytest -v -s "${target}"; \
 	fi
