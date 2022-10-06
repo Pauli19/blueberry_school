@@ -1,4 +1,4 @@
-"""This file contains tests for views of `auth` blueprint."""
+"""This file contains tests for the view functions of `auth` blueprint."""
 
 from flask import url_for
 from flask.testing import FlaskClient
