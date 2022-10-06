@@ -2,7 +2,7 @@
 This module contains view functions associated with `auth` blueprint.
 """
 
-from flask import Response, flash, redirect, render_template, url_for
+from flask import Response, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
 
 from app.models import User
@@ -34,7 +34,11 @@ def login_post():
         return redirect(url_for("auth.login_get"))
 
     login_user(user, form.remember_me.data)
-    return redirect(url_for("admin.index"))
+    _next = request.args.get("next")
+    if _next is None or not _next.startswith("/"):
+        _next = url_for("admin.index")
+
+    return redirect(_next)
 
 
 @auth.get("/logout")
