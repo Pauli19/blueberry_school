@@ -25,12 +25,11 @@ def login_post():
     if not form.validate():
         return redirect(url_for("auth.login_get"))
 
-    user: User = User.query.filter_by(email=form.email.data).first()
-    if (
-        user is None
-        or user.password_hash is None
-        or not user.verify_password(form.password.data)
-    ):
+    user: User = User.query.filter(
+        User.email == form.email.data, User.password_hash.is_not(None)
+    ).first()
+
+    if user is None or not user.verify_password(form.password.data):
         flash("Invalid username or password.", "danger")
         return redirect(url_for("auth.login_get"))
 
