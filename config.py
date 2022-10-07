@@ -17,3 +17,4 @@ class Config:  # pylint: disable=too-few-public-methods
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = TESTING
     WTF_CSRF_ENABLED = not TESTING
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
