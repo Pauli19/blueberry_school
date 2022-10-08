@@ -6,9 +6,8 @@ from flask import Response, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
 from sqlalchemy import select
 
-from app.models import User
-
 from .. import db
+from ..models import User
 from . import auth
 from .forms import LoginForm
 

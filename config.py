@@ -13,10 +13,12 @@ class Config:  # pylint: disable=too-few-public-methods
     """This class represents a basic configuration for a Flask app."""
 
     SECRET_KEY = os.environ["SECRET_KEY"]
+    TESTING = TESTING
+    WTF_CSRF_ENABLED = not TESTING
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
+
+    # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = f"{DB_URI}_test" if LOCAL_TEST else DB_URI
     SQLALCHEMY_ECHO = not TESTING
     SQLALCHEMY_RECORD_QUERIES = ENABLED_FOR_DEV
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    TESTING = TESTING
-    WTF_CSRF_ENABLED = not TESTING
-    DEBUG_TB_INTERCEPT_REDIRECTS = False
