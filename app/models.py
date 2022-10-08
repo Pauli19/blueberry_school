@@ -4,6 +4,7 @@ from typing import Any
 
 import sqlalchemy as sa
 from flask_login import UserMixin
+from sqlalchemy import select
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
@@ -90,4 +91,6 @@ class User(UserMixin, BaseModel):  # pylint: disable=too-few-public-methods
 @login_manager.user_loader
 def load_user(user_id: str) -> User | None:
     """Retrieve a User instance whose id is user_id."""
-    return User.query.get(int(user_id))
+    return db.session.execute(
+        select(User).where(User.id == user_id)
+    ).scalar_one_or_none()
