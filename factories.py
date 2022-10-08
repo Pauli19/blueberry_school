@@ -1,6 +1,6 @@
 """This module contains factories to facilitate creating model instances."""
 
-from factory import Faker
+from factory import Faker, LazyAttribute
 from factory.alchemy import SQLAlchemyModelFactory
 
 from app.models import User, db
@@ -16,4 +16,4 @@ class UserFactory(SQLAlchemyModelFactory):
 
     first_name = Faker("first_name")
     first_surname = Faker("last_name")
-    email = Faker("email")
+    email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
