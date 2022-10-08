@@ -8,7 +8,7 @@ from flask_login import login_required
 from . import admin
 
 
-@admin.get("/admin")
+@admin.get("/")
 @login_required
 def index() -> str:
     """View function for "/admin" route when method is GET."""

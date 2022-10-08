@@ -7,6 +7,7 @@ known_third_party = ["alembic", "factory", "flask", "flask_bootstrap", "flask_lo
 
 [tool.pylint.format]
 max-line-length = 88
+ignored-classes=["scoped_session"]
 
 [tool.pytest.ini_options]
 python_files = ["tests.py", "test_*.py"]

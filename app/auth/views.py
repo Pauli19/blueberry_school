@@ -4,9 +4,10 @@ This module contains view functions associated with `auth` blueprint.
 
 from flask import Response, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user
+from sqlalchemy import select
 
-from app.models import User
-
+from .. import db
+from ..models import User
 from . import auth
 from .forms import LoginForm
 
@@ -25,9 +26,11 @@ def login_post() -> Response:
     if not form.validate():
         return redirect(url_for("auth.login_get"))
 
-    user: User = User.query.filter(
-        User.email == form.email.data, User.password_hash.is_not(None)
-    ).first()
+    user: User = db.session.execute(
+        select(User).where(
+            (User.email == form.email.data) & User.password_hash.is_not(None)
+        )
+    ).scalar_one_or_none()
 
     if user is None or not user.verify_password(form.password.data):
         flash("Invalid username or password.", "danger")
