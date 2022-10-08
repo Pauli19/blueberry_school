@@ -5,6 +5,7 @@ import os
 DEBUG = os.getenv("FLASK_DEBUG") == "1"
 TESTING = os.getenv("TESTING") == "1"
 LOCAL_TEST = TESTING and DEBUG
+ENABLE_FLASK_DEBUG_TOOLBAR = DEBUG and not TESTING
 DB_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
 
 
@@ -16,3 +17,4 @@ class Config:  # pylint: disable=too-few-public-methods
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = TESTING
     WTF_CSRF_ENABLED = not TESTING
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
