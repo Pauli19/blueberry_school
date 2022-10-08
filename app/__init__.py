@@ -9,7 +9,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from config import ENABLE_FLASK_DEBUG_TOOLBAR, Config
+from config import ENABLED_FOR_DEV, Config
 
 # pylint: disable=fixme,import-outside-toplevel
 
@@ -19,7 +19,7 @@ login_manager = LoginManager()
 login_manager.login_view = "auth.login_get"
 migrate = Migrate()
 
-if ENABLE_FLASK_DEBUG_TOOLBAR:
+if ENABLED_FOR_DEV:
     from flask_debugtoolbar import DebugToolbarExtension
 
     toolbar = DebugToolbarExtension()
@@ -36,7 +36,7 @@ def create_app() -> Flask:
     login_manager.init_app(app)
     migrate.init_app(app, db)
 
-    if ENABLE_FLASK_DEBUG_TOOLBAR:
+    if ENABLED_FOR_DEV:
         toolbar.init_app(app)
 
     # TODO: improve blueprint registration
