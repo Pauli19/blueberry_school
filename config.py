@@ -21,4 +21,3 @@ class Config:  # pylint: disable=too-few-public-methods
     SQLALCHEMY_DATABASE_URI = f"{DB_URI}_test" if LOCAL_TEST else DB_URI
     SQLALCHEMY_ECHO = not TESTING
     SQLALCHEMY_RECORD_QUERIES = ENABLED_FOR_DEV
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
