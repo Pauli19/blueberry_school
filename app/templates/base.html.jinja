@@ -79,6 +79,23 @@
 
       {# Page content #}
       {% block page_content %}{% endblock %}
+
+      {# Footer #}
+      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        {# Credits #}
+        <p class="col-md-4 mb-0 text-muted">© 2022 Sauria, Inc</p>
+        {# Logo #}
+        <a href="{{ url_for('main.index') }}" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+          <img src="{{ url_for('static', filename='images/logos/blueberry.png')}}" alt="Blueberry School" width="30" height="30" class="align-middle">
+        </a>
+        {# List of icons #}
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+          <li class="ms-3"><a class="text-muted" href="#"><i class="bi bi-whatsapp"></i></a></li>
+          <li class="ms-3"><a class="text-muted" href="#"><i class="bi bi-instagram"></i></a></li>
+          <li class="ms-3"><a class="text-muted" href="#"><i class="bi bi-linkedin"></i></a></li>
+        </ul>
+        </ul>
+      </footer>
     </div>
     {% endblock %}
 
