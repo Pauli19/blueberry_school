@@ -35,8 +35,8 @@ def test_user_str():
         first_name is "John"
         first_surname is "Smith" and
         email is "user@example.com"
-    WHEN converted to string
-    THEN string is
+    WHEN converted to a string
+    THEN the string is
         "John Smith - user@example.com"
     """
     user = User(first_name="John", first_surname="Smith", email="user@example.com")
