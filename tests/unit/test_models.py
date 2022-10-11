@@ -172,7 +172,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
         first_name is "Ben"
         first_surname is "Hazlewood"
         email is "benhazlewood@example.com"
-        birth_date is '1995, 1, 1'
+        birth_date is '1995-01-01'
     WHEN a Student instance is created
     THEN Student is created properly
         - data is stored in the database
