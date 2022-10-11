@@ -1,8 +1,10 @@
 """This module contains tests for models."""
+import datetime
+
 import pytest
 
-from app.models import User, load_user
-from factories import UserFactory
+from app.models import Student, User, load_user
+from factories import StudentFactory, UserFactory
 
 
 def test_user_creation(app):  # pylint: disable=unused-argument
@@ -161,3 +163,88 @@ def test_user_verify_password():
 
     assert user.verify_password(password)
     assert not user.verify_password("this-is-another-password")
+
+
+def test_student_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        identity_document is "1020304050"
+        first_name is "Ben"
+        first_surname is "Hazlewood"
+        email is "benhazlewood@example.com"
+        birth_date is '1995, 1, 1'
+    WHEN a Student instance is created
+    THEN Student is created properly
+        - data is stored in the database
+        - information is set properly
+    """
+    identity_document = "1020304050"
+    first_name = "Ben"
+    first_surname = "Hazlewood"
+    email = "benhazlewood@example.com"
+    birth_date = datetime.date(1995, 1, 1)
+    student = StudentFactory(
+        identity_document=identity_document,
+        first_name=first_name,
+        first_surname=first_surname,
+        email=email,
+        birth_date=birth_date,
+    )
+
+    assert student.id is not None
+    assert student.identity_document == identity_document
+    assert student.first_name == first_name
+    assert student.first_surname == first_surname
+    assert student.email == email
+    assert student.birth_date == birth_date
+
+
+def test_student_str():
+    """
+    GIVEN a Student instance which
+        identity_document is "1020304050"
+        first_name is "Ben"
+        first_surname is "Hazlewood"
+        email is "benhazlewood@example.com"
+        birth_date is '1995-01-01'
+    WHEN converted to string
+    THEN string is
+        " 1020304050 - Ben Hazlewood"
+    """
+    student = Student(
+        identity_document="1020304050",
+        first_name="Ben",
+        first_surname="Hazlewood",
+        email="benhazlewood@example.com",
+        birth_date=datetime.date(1995, 1, 1),
+    )
+    assert str(student) == "1020304050 - Ben Hazlewood"
+
+
+def test_student_representation():
+    """
+    GIVEN a Student instance which
+        identity_document is "1020304050"
+        first_name is "Ben"
+        first_surname is "Hazlewood"
+        email is "benhazlewood@example.com"
+        birth_date is "1995-01-01"
+    WHEN calling repr
+    THEN the returned string is
+        'Student(
+            identity_document="1020304050",
+            first_name="Ben",
+            first_surname="Hazlewood")'
+    """
+    student = Student(
+        identity_document="1020304050",
+        first_name="Ben",
+        first_surname="Hazlewood",
+        email="benhazlewood@example.com",
+        birth_date=datetime.date(1995, 1, 1),
+    )
+    expected_repr = (
+        'Student(identity_document="1020304050", '
+        'first_name="Ben", first_surname="Hazlewood")'
+    )
+    assert repr(student) == expected_repr

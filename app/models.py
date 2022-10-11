@@ -110,4 +110,16 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
     birth_date = sa.Column(sa.Date, nullable=False)
     _phone_number = sa.Column(sa.Unicode(255))
     phone_country_code = sa.Column(sa.Unicode(8))
-    phone_number = composite(PhoneNumber, _phone_number, phone_country_code)
+    phone_number = composite(
+        PhoneNumber, _phone_number, phone_country_code, deferred=True
+    )
+
+    def __str__(self) -> str:
+        return f"{self.identity_document} - {self.first_name} {self.first_surname}"
+
+    def __repr__(self) -> str:
+        return (
+            f'Student(identity_document="{self.identity_document}", '
+            f'first_name="{self.first_name}", '
+            f'first_surname="{self.first_surname}")'
+        )
