@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
-from sqlalchemy_utils import EmailType
+from sqlalchemy_utils import EmailType, PhoneNumber
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from . import db, login_manager
@@ -94,3 +94,19 @@ def load_user(user_id: str) -> User | None:
     return db.session.execute(
         select(User).where(User.id == user_id)
     ).scalar_one_or_none()
+
+
+class Student(BaseModel):  # pylint: disable=too-few-public-methods
+    """This class is used to model students."""
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    identity_document = sa.Column(sa.Unicode(255), unique=True, nullable=False)
+    first_name = sa.Column(sa.Unicode(255), nullable=False)
+    second_name = sa.Column(sa.Unicode(255))
+    first_surname = sa.Column(sa.Unicode(255), nullable=False)
+    second_surname = sa.Column(sa.Unicode(255))
+    email = sa.Column(EmailType, unique=True, nullable=False)
+    birth_date = sa.Column(sa.Date, nullable=False)
+    phone_number = sa.Column(PhoneNumber)
+    class_id = sa.Column(sa.Integer)
+    representative_id = sa.Column(sa.Integer)
