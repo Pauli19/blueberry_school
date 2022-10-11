@@ -207,7 +207,7 @@ def test_student_str():
         first_surname is "Hazlewood"
         email is "benhazlewood@example.com"
         birth_date is '1995-01-01'
-    WHEN converted to string
+    WHEN converted to a string
     THEN string is
         " 1020304050 - Ben Hazlewood"
     """
