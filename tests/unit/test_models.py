@@ -213,8 +213,6 @@ def test_student_str():
         identity_document="1020304050",
         first_name="Ben",
         first_surname="Hazlewood",
-        email="benhazlewood@example.com",
-        birth_date=datetime.date(1995, 1, 1),
     )
     assert str(student) == "1020304050 - Ben Hazlewood"
 
@@ -236,8 +234,6 @@ def test_student_representation():
         identity_document="1020304050",
         first_name="Ben",
         first_surname="Hazlewood",
-        email="benhazlewood@example.com",
-        birth_date=datetime.date(1995, 1, 1),
     )
     expected_repr = (
         'Student(identity_document="1020304050", '
