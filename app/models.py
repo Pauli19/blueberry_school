@@ -6,10 +6,9 @@ import sqlalchemy as sa
 from flask_login import UserMixin
 from sqlalchemy import select
 from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.orm import composite
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
-from sqlalchemy_utils import EmailType, PhoneNumber
+from sqlalchemy_utils import EmailType, PhoneNumberType
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from . import db, login_manager
@@ -108,11 +107,7 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
     second_surname = sa.Column(sa.Unicode(255))
     email = sa.Column(EmailType, unique=True, nullable=False)
     birth_date = sa.Column(sa.Date, nullable=False)
-    _phone_number = sa.Column(sa.Unicode(255))
-    phone_country_code = sa.Column(sa.Unicode(8))
-    phone_number = composite(
-        PhoneNumber, _phone_number, phone_country_code, deferred=True
-    )
+    phone_number = sa.Column(PhoneNumberType())
 
     def __str__(self) -> str:
         return f"{self.identity_document} - {self.first_name} {self.first_surname}"

@@ -205,8 +205,6 @@ def test_student_str():
         identity_document is "1020304050"
         first_name is "Ben"
         first_surname is "Hazlewood"
-        email is "benhazlewood@example.com"
-        birth_date is '1995-01-01'
     WHEN converted to a string
     THEN the string is
         "1020304050 - Ben Hazlewood"
@@ -227,8 +225,6 @@ def test_student_representation():
         identity_document is "1020304050"
         first_name is "Ben"
         first_surname is "Hazlewood"
-        email is "benhazlewood@example.com"
-        birth_date is "1995-01-01"
     WHEN calling repr
     THEN the returned string is
         'Student(
