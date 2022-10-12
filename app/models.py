@@ -118,3 +118,6 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
             f'first_name="{self.first_name}", '
             f'first_surname="{self.first_surname}")'
         )
+
+
+models = [User, Student]

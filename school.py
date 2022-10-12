@@ -6,7 +6,8 @@ In addition, a shell context processor is implemented.
 from typing import Any
 
 from app import create_app, db
-from app.models import Student, User
+from app.models import models
+from factories import factories
 
 app = create_app()
 
@@ -15,4 +16,6 @@ app = create_app()
 @app.shell_context_processor
 def make_shell_context() -> dict[str, Any]:
     """Load items into the shell."""
-    return dict(db=db, session=db.session, User=User, Student=Student)
+    factory_dict = {cls.__name__: cls for cls in factories}
+    model_dict = {cls.__name__: cls for cls in models}
+    return factory_dict | model_dict | dict(db=db, session=db.session)

@@ -36,3 +36,6 @@ class StudentFactory(SQLAlchemyModelFactory):
     birth_date = fuzzy.FuzzyDate(
         start_date=datetime.date(1980, 1, 1), end_date=datetime.date(2012, 1, 1)
     )
+
+
+factories = [UserFactory, StudentFactory]
