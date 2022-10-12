@@ -4,6 +4,7 @@ import os
 
 DEBUG = os.getenv("FLASK_DEBUG") == "1"
 TESTING = os.getenv("TESTING") == "1"
+SQL_ECHO = os.getenv("SQL_ECHO") == "1"
 LOCAL_TEST = TESTING and DEBUG
 ENABLED_FOR_DEV = DEBUG and not TESTING
 DB_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
@@ -19,5 +20,5 @@ class Config:  # pylint: disable=too-few-public-methods
 
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = f"{DB_URI}_test" if LOCAL_TEST else DB_URI
-    SQLALCHEMY_ECHO = not TESTING
+    SQLALCHEMY_ECHO = SQL_ECHO
     SQLALCHEMY_RECORD_QUERIES = ENABLED_FOR_DEV

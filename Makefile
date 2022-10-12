@@ -11,9 +11,9 @@ db-upgrade: # upgrade database
 pip-install: # install main and dev dependencies
 	pip install -r requirements.txt -r requirements-dev.txt
 run: # run server in debug mode
-	dotenv run flask --app school --debug run
+	SQL_ECHO=1 dotenv run flask --app school --debug run
 run-no-debug: # run server in non-debug mode
-	dotenv run flask --app school run
+	SQL_ECHO=1 dotenv run flask --app school run
 shell: # start Flask shell
 	dotenv run flask --app school --debug shell
 test: # run tests, `target` is optional, if not passed all tests are run.
