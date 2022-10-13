@@ -49,7 +49,7 @@ class RepresentativeFactory(SQLAlchemyModelFactory):
     identity_document = fuzzy.FuzzyText(length=10, prefix="1", chars="1234567890")
     first_name = Faker("first_name")
     first_surname = Faker("last_name")
-    phone_number = fuzzy.FuzzyText(length=13, prefix="+593", chars="1234567890")
+    phone_number = fuzzy.FuzzyText(length=13, prefix="+5939", chars="1234567890")
 
 
 factories = [UserFactory, StudentFactory, RepresentativeFactory]
