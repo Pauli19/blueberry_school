@@ -120,4 +120,17 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
         )
 
 
-models = [User, Student]
+class Representative(BaseModel):  # pylint: disable=too-few-public-methods
+    """This class is used to model students' Representatives."""
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    identity_document = sa.Column(sa.Unicode(255), unique=True, nullable=False)
+    first_name = sa.Column(sa.Unicode(255), nullable=False)
+    second_name = sa.Column(sa.Unicode(255))
+    first_surname = sa.Column(sa.Unicode(255), nullable=False)
+    second_surname = sa.Column(sa.Unicode(255))
+    email = sa.Column(EmailType, unique=True)
+    phone_number = sa.Column(PhoneNumberType())
+
+
+models = [User, Student, Representative]
