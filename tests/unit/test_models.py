@@ -288,3 +288,26 @@ def test_representative_str():
         first_surname="Perry",
     )
     assert str(representative) == "1020304050 - Katy Perry"
+
+
+def test_representative_representation():
+    """
+    GIVEN a representative instance which
+        identity_document is "1020304050"
+        first_name is "Katy"
+        first_surname is "Perry"
+    WHEN calling repr
+    THEN the returned string is
+        'Representative(
+            identity_document="1020304050"
+            first_name="Katy",
+            first_surname="Perry")'
+    """
+    representative = Representative(
+        identity_document="1020304050", first_name="Katy", first_surname="Perry"
+    )
+    expected_repr = (
+        'Representative(identity_document="1020304050", '
+        'first_name="Katy", first_surname="Perry")'
+    )
+    assert repr(representative) == expected_repr

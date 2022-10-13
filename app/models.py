@@ -135,5 +135,12 @@ class Representative(BaseModel):  # pylint: disable=too-few-public-methods
     def __str__(self) -> str:
         return f"{self.identity_document} - {self.first_name} {self.first_surname}"
 
+    def __repr__(self) -> str:
+        return (
+            f'Representative(identity_document="{self.identity_document}", '
+            f'first_name="{self.first_name}", '
+            f'first_surname="{self.first_surname}")'
+        )
+
 
 models = [User, Student, Representative]
