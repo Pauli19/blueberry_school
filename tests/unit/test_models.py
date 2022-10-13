@@ -4,7 +4,7 @@ import datetime
 import pytest
 
 from app.models import Student, User, load_user
-from factories import StudentFactory, UserFactory
+from factories import RepresentativeFactory, StudentFactory, UserFactory
 
 
 def test_user_creation(app):  # pylint: disable=unused-argument
@@ -240,3 +240,33 @@ def test_student_representation():
         'first_name="Ben", first_surname="Hazlewood")'
     )
     assert repr(student) == expected_repr
+
+
+def test_representative_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        identity_document is "1020304050"
+        first_name is "Katy"
+        first_surname is "Perry"
+        phone_number is "+593987654321"
+    WHEN a Representative instance is created
+    THEN Representative is created properly
+        - data is stored in the database
+        - information is set properly
+    """
+    identity_document = "1020304050"
+    first_name = "Katy"
+    first_surname = "Perry"
+    phone_number = "+593987654321"
+    representative = RepresentativeFactory(
+        identity_document=identity_document,
+        first_name=first_name,
+        first_surname=first_surname,
+        phone_number=phone_number,
+    )
+
+    assert representative.id is not None
+    assert representative.identity_document == identity_document
+    assert representative.first_name == first_name
+    assert representative.first_surname == first_surname
+    assert representative.phone_number.e164 == phone_number
