@@ -3,8 +3,8 @@ import datetime
 
 import pytest
 
-from app.models import Student, User, load_user
-from factories import StudentFactory, UserFactory
+from app.models import Representative, Student, User, load_user
+from factories import RepresentativeFactory, StudentFactory, UserFactory
 
 
 def test_user_creation(app):  # pylint: disable=unused-argument
@@ -240,3 +240,74 @@ def test_student_representation():
         'first_name="Ben", first_surname="Hazlewood")'
     )
     assert repr(student) == expected_repr
+
+
+def test_representative_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        identity_document is "1020304050"
+        first_name is "Katy"
+        first_surname is "Perry"
+        phone_number is "+593987654321"
+    WHEN a Representative instance is created
+    THEN Representative is created properly
+        - data is stored in the database
+        - information is set properly
+    """
+    identity_document = "1020304050"
+    first_name = "Katy"
+    first_surname = "Perry"
+    phone_number = "+593987654321"
+    representative = RepresentativeFactory(
+        identity_document=identity_document,
+        first_name=first_name,
+        first_surname=first_surname,
+        phone_number=phone_number,
+    )
+
+    assert representative.id is not None
+    assert representative.identity_document == identity_document
+    assert representative.first_name == first_name
+    assert representative.first_surname == first_surname
+    assert representative.phone_number.e164 == phone_number
+
+
+def test_representative_str():
+    """
+    GIVEN a Representative instance which
+        identity_document is "1020304050"
+        first_name is "Katy"
+        first_surname is "Perry"
+    WHEN when converted to a string
+    THEN the string is
+        "1020304050 - Katy Perry"
+    """
+    representative = Representative(
+        identity_document="1020304050",
+        first_name="Katy",
+        first_surname="Perry",
+    )
+    assert str(representative) == "1020304050 - Katy Perry"
+
+
+def test_representative_representation():
+    """
+    GIVEN a Representative instance which
+        identity_document is "1020304050"
+        first_name is "Katy"
+        first_surname is "Perry"
+    WHEN calling repr
+    THEN the returned string is
+        'Representative(
+            identity_document="1020304050"
+            first_name="Katy",
+            first_surname="Perry")'
+    """
+    representative = Representative(
+        identity_document="1020304050", first_name="Katy", first_surname="Perry"
+    )
+    expected_repr = (
+        'Representative(identity_document="1020304050", '
+        'first_name="Katy", first_surname="Perry")'
+    )
+    assert repr(representative) == expected_repr
