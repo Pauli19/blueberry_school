@@ -292,7 +292,7 @@ def test_representative_str():
 
 def test_representative_representation():
     """
-    GIVEN a representative instance which
+    GIVEN a Representative instance which
         identity_document is "1020304050"
         first_name is "Katy"
         first_surname is "Perry"
