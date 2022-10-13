@@ -29,7 +29,7 @@ class StudentFactory(SQLAlchemyModelFactory):
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "commit"
 
-    identity_document = fuzzy.FuzzyText(length=10, prefix="1", chars="1234567890")
+    identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
     first_name = Faker("first_name")
     first_surname = Faker("last_name")
     email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
