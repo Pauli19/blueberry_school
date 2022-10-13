@@ -121,7 +121,7 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
 
 
 class Representative(BaseModel):  # pylint: disable=too-few-public-methods
-    """This class is used to model students' representatives."""
+    """This class is used to model students' Representatives."""
 
     id = sa.Column(sa.Integer, primary_key=True)
     identity_document = sa.Column(sa.Unicode(255), unique=True, nullable=False)
