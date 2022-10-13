@@ -132,5 +132,8 @@ class Representative(BaseModel):  # pylint: disable=too-few-public-methods
     email = sa.Column(EmailType, unique=True)
     phone_number = sa.Column(PhoneNumberType(), nullable=False)
 
+    def __str__(self) -> str:
+        return f"{self.identity_document} - {self.first_name} {self.first_surname}"
+
 
 models = [User, Student, Representative]

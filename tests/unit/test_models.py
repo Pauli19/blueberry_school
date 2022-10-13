@@ -3,7 +3,7 @@ import datetime
 
 import pytest
 
-from app.models import Student, User, load_user
+from app.models import Representative, Student, User, load_user
 from factories import RepresentativeFactory, StudentFactory, UserFactory
 
 
@@ -270,3 +270,21 @@ def test_representative_creation(app):  # pylint: disable=unused-argument
     assert representative.first_name == first_name
     assert representative.first_surname == first_surname
     assert representative.phone_number.e164 == phone_number
+
+
+def test_representative_str():
+    """
+    GIVEN a Representative instance which
+        identity_document is "1020304050"
+        first_name is "Katy"
+        first_surname is "Perry"
+    WHEN when converted to a string
+    THEN the string is
+        "1020304050 - Katy Perry"
+    """
+    representative = Representative(
+        identity_document="1020304050",
+        first_name="Katy",
+        first_surname="Perry",
+    )
+    assert str(representative) == "1020304050 - Katy Perry"
