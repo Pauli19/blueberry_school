@@ -130,7 +130,7 @@ class Representative(BaseModel):  # pylint: disable=too-few-public-methods
     first_surname = sa.Column(sa.Unicode(255), nullable=False)
     second_surname = sa.Column(sa.Unicode(255))
     email = sa.Column(EmailType, unique=True)
-    phone_number = sa.Column(PhoneNumberType())
+    phone_number = sa.Column(PhoneNumberType(), nullable=False)
 
 
 models = [User, Student, Representative]
