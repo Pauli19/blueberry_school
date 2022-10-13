@@ -5,7 +5,7 @@ import datetime
 from factory import Faker, LazyAttribute, fuzzy
 from factory.alchemy import SQLAlchemyModelFactory
 
-from app.models import Student, User, db
+from app.models import Representative, Student, User, db
 
 
 class UserFactory(SQLAlchemyModelFactory):
@@ -38,4 +38,18 @@ class StudentFactory(SQLAlchemyModelFactory):
     )
 
 
-factories = [UserFactory, StudentFactory]
+class RepresentativeFactory(SQLAlchemyModelFactory):
+    """This is a factory to create Representative instances."""
+
+    class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
+        model = Representative
+        sqlalchemy_session = db.session
+        sqlalchemy_session_persistence = "commit"
+
+    identity_document = fuzzy.FuzzyText(length=10, prefix="1", chars="1234567890")
+    first_name = Faker("first_name")
+    first_surname = Faker("last_name")
+    phone_number = fuzzy.FuzzyText(length=13, prefix="+593", chars="1234567890")
+
+
+factories = [UserFactory, StudentFactory, RepresentativeFactory]
