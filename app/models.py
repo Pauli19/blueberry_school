@@ -223,7 +223,7 @@ class Class(BaseModel):  # pylint: disable=too-few-public-methods
 
     cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"))
     cycle = relationship("Cycle", back_populates="classes")
-    students = relationship("Student", back_populates="class")
+    students = relationship("Student", back_populates="class_")
 
 
 models = [User, Student, Representative, Cycle, Class]
