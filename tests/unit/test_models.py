@@ -411,9 +411,7 @@ def test_cycle_representation():
         end_date is "2022-12-01"
     WHEN calling repr
     THEN the returned string is
-        'Cycle(
-            month="November",
-            year=2022)'
+        'Cycle(month="November", year=2022)'
     """
     cycle = Cycle(
         month="November",
