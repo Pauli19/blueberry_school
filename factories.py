@@ -61,7 +61,7 @@ class CycleFactory(SQLAlchemyModelFactory):
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "commit"
 
-    month = fuzzy.FuzzyChoice(choices=[month.name for month in Month])
+    month = fuzzy.FuzzyChoice(choices=list(Month))
     year = fuzzy.FuzzyInteger(low=2022, high=2050)
     start_date = fuzzy.FuzzyDate(
         start_date=datetime.date(2022, 11, 1), end_date=datetime.date(2050, 12, 31)

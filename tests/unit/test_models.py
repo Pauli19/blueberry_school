@@ -3,8 +3,8 @@ import datetime
 
 import pytest
 
-from app.models import Cycle, Representative, Student, User, load_user
-from factories import RepresentativeFactory, StudentFactory, UserFactory
+from app.models import Cycle, Month, Representative, Student, User, load_user
+from factories import CycleFactory, RepresentativeFactory, StudentFactory, UserFactory
 
 
 def test_user_creation(app):  # pylint: disable=unused-argument
@@ -349,6 +349,37 @@ def test_representative_representation():
         'first_name="Katy", first_surname="Perry")'
     )
     assert repr(representative) == expected_repr
+
+
+def test_cycle_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        month is "JULY"
+        year is 2023
+        start_date is "2022-11-01"
+        end_date is "2022-11-30"
+    WHEN a Cycle instance is created
+    THEN Cycle is created properly
+        - data is stored in the database
+        - information is set properly
+    """
+    month = Month.JULY
+    year = 2023
+    start_date = datetime.date(2022, 11, 1)
+    end_date = datetime.date(2022, 11, 30)
+
+    cycle = CycleFactory(
+        month=month,
+        year=year,
+        start_date=start_date,
+        end_date=end_date,
+    )
+
+    assert cycle.id is not None
+    assert cycle.month == month
+    assert cycle.year == year
+    assert cycle.start_date == start_date
+    assert cycle.end_date == end_date
 
 
 def test_cycle_str():
