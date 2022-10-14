@@ -113,6 +113,8 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
 
     representative_id = sa.Column(sa.Integer, sa.ForeignKey("representative.id"))
     representative = relationship("Representative", back_populates="students")
+    class_id = sa.Column(sa.Integer, sa.ForeignKey("class.id"))
+    class_ = relationship("Class", back_populates="students")
 
     def __str__(self) -> str:
         return f"{self.identity_document} - {self.first_name} {self.first_surname}"
@@ -176,6 +178,8 @@ class Cycle(BaseModel):  # pylint: disable=too-few-public-methods
     start_date = sa.Column(sa.Date, nullable=False)
     end_date = sa.Column(sa.Date, nullable=False)
 
+    classes = relationship("Class", back_populates="cycle")
+
     def __str__(self) -> str:
         return f"{self.month} - {self.year}"
 
@@ -183,4 +187,43 @@ class Cycle(BaseModel):  # pylint: disable=too-few-public-methods
         return f'Cycle(month="{self.month}", year={self.year})'
 
 
-models = [User, Student, Representative, Cycle]
+class Mode(str, Enum):  # pylint: disable=too-few-public-methods
+    """This enumeration is used to represent class modes."""
+
+    NORMAL = "Normal"
+    INTENSIVE = "Intensive"
+
+
+class Level(str, Enum):  # pylint: disable=too-few-public-methods
+    """This enumeration is used to represent class levels."""
+
+    L1 = "L1"
+    L2 = "L2"
+    L3 = "L3"
+
+
+class SubLevel(str, Enum):  # pylint: disable=too-few-public-methods
+    """This enumeration is used to represent class sub levels."""
+
+    P1 = "P1"
+    P2 = "P2"
+    P3 = "P3"
+    P4 = "P4"
+
+
+class Class(BaseModel):  # pylint: disable=too-few-public-methods
+    """This class is used to model classes."""
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    mode = sa.Column(sa.Enum(Mode), nullable=False)
+    start_at = sa.Column(sa.DateTime, nullable=False)
+    end_at = sa.Column(sa.DateTime, nullable=False)
+    level = sa.Column(sa.Enum(Level), nullable=False)
+    sub_level = sa.Column(sa.Enum(SubLevel), nullable=False)
+
+    cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"))
+    cycle = relationship("Cycle", backpopulates="classes")
+    students = relationship("Student", backpopulates="class")
+
+
+models = [User, Student, Representative, Cycle, Class]
