@@ -369,3 +369,24 @@ def test_cycle_str():
         end_date=datetime.date(2022, 12, 1),
     )
     assert str(cycle) == "November - 2022"
+
+
+def test_cycle_representation():
+    """
+    GIVEN a Cycle instance which
+        month is "November"
+        year is 2022
+        start_date is "2022-10-31"
+        end_date is "2022-12-01"
+    WHEN calling repr
+    THEN the returned string is
+        'Cycle(
+            month="November",
+            year=2022)'
+    """
+    cycle = Cycle(
+        month="November",
+        year=2022,
+    )
+    expected_repr = 'Cycle(month="November", year=2022)'
+    assert repr(cycle) == expected_repr
