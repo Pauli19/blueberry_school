@@ -151,7 +151,7 @@ class Representative(BaseModel):  # pylint: disable=too-few-public-methods
 
 
 class Month(str, Enum):  # pylint: disable=too-few-public-methods
-    """This class is used to model months"""
+    """This enumeration is used to represent months."""
 
     JANUARY = "January"
     FEBRUARY = "February"
