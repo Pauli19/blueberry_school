@@ -228,7 +228,6 @@ def test_student_creation_with_representative(app):  # pylint: disable=unused-ar
         representative=representative,
     )
 
-    assert representative.id is not None
     assert student.id is not None
     assert student.identity_document == identity_document
     assert student.first_name == first_name
