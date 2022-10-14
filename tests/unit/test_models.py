@@ -391,7 +391,7 @@ def test_cycle_str():
     THEN the string is
         "November - 2022"
     """
-    cycle = Cycle(month="November", year=2022)
+    cycle = Cycle(month=Month.NOVEMBER, year=2022)
 
     assert str(cycle) == "November - 2022"
 
