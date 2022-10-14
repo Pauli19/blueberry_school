@@ -63,18 +63,25 @@ class CycleFactory(SQLAlchemyModelFactory):
 
     month = fuzzy.FuzzyChoice(choices=list(Month))
     year = fuzzy.FuzzyInteger(low=2022, high=2050)
-    start_date = fuzzy.FuzzyDate(
-        start_date=datetime.date(2022, 11, 1), end_date=datetime.date(2050, 12, 31)
-    )
+
+    @lazy_attribute
+    def start_date(self) -> datetime.date:
+        """
+        Cycle's start_date. This value is generated based on Cycle's
+        month and year. The date's day corresponds to the first day of
+        the randomly generated month.
+        """
+        month = list(Month).index(self.month) + 1
+        return datetime.datetime(self.year, month, 1)
 
     @lazy_attribute
     def end_date(self) -> datetime.date:
         """
-        Cycle's end_date. This value is greater than Cycle's start_date.
+        Cycle's end_date. This value generated based on Cycle's start_date.
         There is a difference of 28 to 31 days, randomly picked, between
         end_date and start_date.
         """
-        delta_days = random.randrange(28, 31)
+        delta_days = random.randrange(28, 30)
         return self.start_date + datetime.timedelta(days=delta_days)
 
 

@@ -385,7 +385,7 @@ def test_cycle_creation(app):  # pylint: disable=unused-argument
 def test_cycle_str():
     """
     GIVEN a Cycle instance which
-        month is "November"
+        month is "NOVEMBER"
         year is 2022
     WHEN converted to a string
     THEN the string is
@@ -399,7 +399,7 @@ def test_cycle_str():
 def test_cycle_representation():
     """
     GIVEN a Cycle instance which
-        month is "November"
+        month is "NOVEMBER"
         year is 2022
     WHEN calling repr
     THEN the returned string is
