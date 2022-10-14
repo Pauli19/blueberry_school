@@ -363,7 +363,7 @@ def test_cycle_str():
         "November - 2022"
     """
     cycle = Cycle(
-        month="NOVEMBER",
+        month="November",
         year=2022,
         start_date=datetime.date(2022, 10, 31),
         end_date=datetime.date(2022, 12, 1),
