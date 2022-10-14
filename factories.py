@@ -1,11 +1,12 @@
 """This module contains factories to facilitate creating model instances."""
 
 import datetime
+import random
 
-from factory import Faker, LazyAttribute, fuzzy
+from factory import Faker, LazyAttribute, fuzzy, lazy_attribute
 from factory.alchemy import SQLAlchemyModelFactory
 
-from app.models import Representative, Student, User, db
+from app.models import Cycle, Month, Representative, Student, User, db
 
 
 class UserFactory(SQLAlchemyModelFactory):
@@ -52,4 +53,29 @@ class RepresentativeFactory(SQLAlchemyModelFactory):
     phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
 
 
-factories = [UserFactory, StudentFactory, RepresentativeFactory]
+class CycleFactory(SQLAlchemyModelFactory):
+    """This is a factory to create Cycle instances"""
+
+    class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
+        model = Cycle
+        sqlalchemy_session = db.session
+        sqlalchemy_session_persistence = "commit"
+
+    month = fuzzy.FuzzyChoice(choices=[month.name for month in Month])
+    year = fuzzy.FuzzyInteger(low=2022, high=2050)
+    start_date = fuzzy.FuzzyDate(
+        start_date=datetime.date(2022, 11, 1), end_date=datetime.date(2050, 12, 31)
+    )
+
+    @lazy_attribute
+    def end_date(self) -> datetime.date:
+        """
+        Cycle's end_date. This value is greater than Cycle's start_date.
+        There is a difference of 28 to 31 days, randomly picked, between
+        end_date and start_date.
+        """
+        delta_days = random.randrange(28, 31)
+        return self.start_date + datetime.timedelta(days=delta_days)
+
+
+factories = [UserFactory, StudentFactory, RepresentativeFactory, CycleFactory]
