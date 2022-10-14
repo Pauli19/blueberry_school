@@ -355,7 +355,7 @@ def test_cycle_creation(app):  # pylint: disable=unused-argument
     """
     GIVEN
         month is "JULY"
-        year is 2023
+        year is 2022
         start_date is "2022-11-01"
         end_date is "2022-11-30"
     WHEN a Cycle instance is created
@@ -364,7 +364,7 @@ def test_cycle_creation(app):  # pylint: disable=unused-argument
         - information is set properly
     """
     month = Month.JULY
-    year = 2023
+    year = 2022
     start_date = datetime.date(2022, 11, 1)
     end_date = datetime.date(2022, 11, 30)
 
