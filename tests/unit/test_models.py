@@ -363,7 +363,7 @@ def test_cycle_creation(app):  # pylint: disable=unused-argument
         - data is stored in the database
         - information is set properly
     """
-    month = Month.JULY
+    month = Month.NOVEMBER
     year = 2022
     start_date = datetime.date(2022, 11, 1)
     end_date = datetime.date(2022, 11, 30)
