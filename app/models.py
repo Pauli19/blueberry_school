@@ -222,8 +222,8 @@ class Class(BaseModel):  # pylint: disable=too-few-public-methods
     sub_level = sa.Column(sa.Enum(SubLevel), nullable=False)
 
     cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"))
-    cycle = relationship("Cycle", backpopulates="classes")
-    students = relationship("Student", backpopulates="class")
+    cycle = relationship("Cycle", back_populates="classes")
+    students = relationship("Student", back_populates="class")
 
 
 models = [User, Student, Representative, Cycle, Class]
