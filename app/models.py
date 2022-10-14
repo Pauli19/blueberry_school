@@ -176,5 +176,8 @@ class Cycle(BaseModel):  # pylint: disable=too-few-public-methods
     start_date = sa.Column(sa.Date, nullable=False)
     end_date = sa.Column(sa.Date, nullable=False)
 
+    def __str__(self) -> str:
+        return f"{self.month} - {self.year}"
+
 
 models = [User, Student, Representative, Cycle]
