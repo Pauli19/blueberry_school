@@ -216,8 +216,8 @@ class Class(BaseModel):  # pylint: disable=too-few-public-methods
 
     id = sa.Column(sa.Integer, primary_key=True)
     mode = sa.Column(sa.Enum(Mode), nullable=False)
-    start_at = sa.Column(sa.DateTime, nullable=False)
-    end_at = sa.Column(sa.DateTime, nullable=False)
+    start_at = sa.Column(sa.Time, nullable=False)
+    end_at = sa.Column(sa.Time, nullable=False)
     level = sa.Column(sa.Enum(Level), nullable=False)
     sub_level = sa.Column(sa.Enum(SubLevel), nullable=False)
 
