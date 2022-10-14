@@ -1,4 +1,4 @@
-"""student model
+"""Student model
 
 Revision ID: 7d25b57a9821
 Revises: a0cd0feb8bb9

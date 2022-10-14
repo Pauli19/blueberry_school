@@ -6,6 +6,7 @@ import sqlalchemy as sa
 from flask_login import UserMixin
 from sqlalchemy import select
 from sqlalchemy.ext.compiler import compiles
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.compiler import SQLCompiler
 from sqlalchemy.sql.expression import FunctionElement
 from sqlalchemy_utils import EmailType, PhoneNumberType
@@ -109,6 +110,9 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
     birth_date = sa.Column(sa.Date, nullable=False)
     phone_number = sa.Column(PhoneNumberType())
 
+    representative_id = sa.Column(sa.Integer, sa.ForeignKey("representative.id"))
+    representative = relationship("Representative", back_populates="students")
+
     def __str__(self) -> str:
         return f"{self.identity_document} - {self.first_name} {self.first_surname}"
 
@@ -131,6 +135,8 @@ class Representative(BaseModel):  # pylint: disable=too-few-public-methods
     second_surname = sa.Column(sa.Unicode(255))
     email = sa.Column(EmailType, unique=True)
     phone_number = sa.Column(PhoneNumberType(), nullable=False)
+
+    students = relationship("Student", back_populates="representative")
 
     def __str__(self) -> str:
         return f"{self.identity_document} - {self.first_name} {self.first_surname}"

@@ -1,4 +1,4 @@
-"""representative model
+"""Representative model
 
 Revision ID: 1823b06c8d8d
 Revises: 7d25b57a9821
