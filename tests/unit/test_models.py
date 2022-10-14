@@ -354,7 +354,7 @@ def test_representative_representation():
 def test_cycle_creation(app):  # pylint: disable=unused-argument
     """
     GIVEN
-        month is "JULY"
+        month is "NOVEMBER"
         year is 2022
         start_date is "2022-11-01"
         end_date is "2022-11-30"
@@ -387,18 +387,12 @@ def test_cycle_str():
     GIVEN a Cycle instance which
         month is "November"
         year is 2022
-        start_date is "2022-10-31"
-        end_date is "2022-12-01"
     WHEN converted to a string
     THEN the string is
         "November - 2022"
     """
-    cycle = Cycle(
-        month="November",
-        year=2022,
-        start_date=datetime.date(2022, 10, 31),
-        end_date=datetime.date(2022, 12, 1),
-    )
+    cycle = Cycle(month="November", year=2022)
+
     assert str(cycle) == "November - 2022"
 
 
@@ -407,15 +401,11 @@ def test_cycle_representation():
     GIVEN a Cycle instance which
         month is "November"
         year is 2022
-        start_date is "2022-10-31"
-        end_date is "2022-12-01"
     WHEN calling repr
     THEN the returned string is
         'Cycle(month="November", year=2022)'
     """
-    cycle = Cycle(
-        month="November",
-        year=2022,
-    )
+    cycle = Cycle(month=Month.NOVEMBER, year=2022)
     expected_repr = 'Cycle(month="November", year=2022)'
+
     assert repr(cycle) == expected_repr
