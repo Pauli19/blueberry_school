@@ -172,7 +172,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
         first_name is "Ben"
         first_surname is "Hazlewood"
         email is "benhazlewood@example.com"
-        birth_date is '1995-01-01'
+        birth_date is "1995-01-01"
     WHEN a Student instance is created
     THEN Student is created properly
         - data is stored in the database
@@ -197,6 +197,45 @@ def test_student_creation(app):  # pylint: disable=unused-argument
     assert student.first_surname == first_surname
     assert student.email == email
     assert student.birth_date == birth_date
+
+
+def test_student_creation_with_representative(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        identity_document is "1020304050"
+        first_name is "Ben"
+        first_surname is "Hazlewood"
+        email is "benhazlewood@example.com"
+        birth_date is "1995-01-01"
+        and an associated representative
+    WHEN a Student instance is created
+    THEN Student is created properly
+        - data is stored in the databse
+        - information is set properly
+    """
+    identity_document = "1020304050"
+    first_name = "Ben"
+    first_surname = "Hazlewood"
+    email = "benhazlewood@example.com"
+    birth_date = datetime.date(1995, 1, 1)
+    representative = RepresentativeFactory()
+    student: Student = Student(
+        identity_document=identity_document,
+        first_name=first_name,
+        first_surname=first_surname,
+        email=email,
+        birth_date=birth_date,
+        representative=representative,
+    )
+
+    assert representative.id is not None
+    assert student.id is not None
+    assert student.identity_document == identity_document
+    assert student.first_name == first_name
+    assert student.first_surname == first_surname
+    assert student.email == email
+    assert student.birth_date == birth_date
+    assert student.representative == representative
 
 
 def test_student_str():
