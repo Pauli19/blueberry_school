@@ -78,10 +78,10 @@ class CycleFactory(SQLAlchemyModelFactory):
     def end_date(self) -> datetime.date:
         """
         Cycle's end_date. This value generated based on Cycle's start_date.
-        There is a difference of 28 to 31 days, randomly picked, between
+        There is a difference of 25 to 30 days, randomly picked, between
         end_date and start_date.
         """
-        delta_days = random.randrange(28, 30)
+        delta_days = random.randrange(25, 31)
         return self.start_date + datetime.timedelta(days=delta_days)
 
 
