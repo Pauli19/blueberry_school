@@ -1,5 +1,6 @@
 """This module contains models and database utilities."""
 
+from enum import Enum
 from typing import Any
 
 import sqlalchemy as sa
@@ -149,4 +150,31 @@ class Representative(BaseModel):  # pylint: disable=too-few-public-methods
         )
 
 
-models = [User, Student, Representative]
+class Month(str, Enum):  # pylint: disable=too-few-public-methods
+    """This class is used to model months"""
+
+    JANUARY = "January"
+    FEBRUARY = "February"
+    MARCH = "March"
+    APRIL = "April"
+    MAY = "May"
+    JUNE = "June"
+    JULY = "July"
+    AUGUST = "August"
+    SEPTEMBER = "September"
+    OCTOBER = "October"
+    NOVEMBER = "November"
+    DECEMBER = "December"
+
+
+class Cycle(BaseModel):  # pylint: disable=too-few-public-methods
+    """This class is used to model cycles."""
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    month = sa.Column(sa.Enum(Month), nullable=False)
+    year = sa.Column(sa.Integer, nullable=False)
+    start_date = sa.Column(sa.Date, nullable=False)
+    end_date = sa.Column(sa.Date, nullable=False)
+
+
+models = [User, Student, Representative, Cycle]
