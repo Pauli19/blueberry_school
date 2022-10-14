@@ -3,7 +3,7 @@ import datetime
 
 import pytest
 
-from app.models import Representative, Student, User, load_user
+from app.models import Cycle, Representative, Student, User, load_user
 from factories import RepresentativeFactory, StudentFactory, UserFactory
 
 
@@ -349,3 +349,23 @@ def test_representative_representation():
         'first_name="Katy", first_surname="Perry")'
     )
     assert repr(representative) == expected_repr
+
+
+def test_cycle_str():
+    """
+    GIVEN a Cycle instance which
+        month is "November"
+        year is 2022
+        start_date is "2022-10-31"
+        end_date is "2022-12-01"
+    WHEN converted to a string
+    THEN the string is
+        "November - 2022"
+    """
+    cycle = Cycle(
+        month="NOVEMBER",
+        year=2022,
+        start_date=datetime.date(2022, 10, 31),
+        end_date=datetime.date(2022, 12, 1),
+    )
+    assert str(cycle) == "November - 2022"
