@@ -532,36 +532,13 @@ def test_payment_creation(app):  # pylint: disable=unused-argument
     assert payment.cycle == cycle
 
 
-def test_payment_str():
-    """
-    GIVEN a Payment instance which
-        amount is 99.99
-    WHEN converted to a string
-    THEN the string is "$99.99"
-    """
-    payment = Payment(amount=Decimal("99.99"))
-    assert str(payment) == "$99.99"
-
-
-def test_payment_representation():
-    """
-    GIVEN a Payment instance which
-        amount is 99.99
-    WHEN calling repr
-    THEN the returned string is
-        'Payment(amount="$99.99")'
-    """
-    payment = Payment(amount=Decimal("99.99"))
-    assert repr(payment) == 'Payment(amount="$99.99")'
-
-
 @pytest.mark.parametrize(
-    "payment,expected_payment_str",
+    "payment,expected_str",
     [
         pytest.param(
             Payment(amount=Decimal("99.99")),
             "$99.99",
-            id="just-payment",
+            id="payment-without-discount",
         ),
         pytest.param(
             Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
@@ -570,22 +547,22 @@ def test_payment_representation():
         ),
     ],
 )
-def test_payment_str_options(payment, expected_payment_str):
+def test_payment_str(payment, expected_str):
     """
-    GIVEN a payment instance
-    WHEN getting its property payment_options_str
-    THEN property is equal to expected_payment_str
+    GIVEN a Payment instance which amount is 99.99
+    WHEN converted to a string
+    THEN property is equal to expected_str
     """
-    assert payment.payment_options_str == expected_payment_str
+    assert str(payment) == expected_str
 
 
 @pytest.mark.parametrize(
-    "payment,expected_payment_repr",
+    "payment,expected_repr",
     [
         pytest.param(
             Payment(amount=Decimal("99.99")),
             'Payment(amount="$99.99")',
-            id="just-payment",
+            id="payment-without-discount",
         ),
         pytest.param(
             Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
@@ -594,10 +571,10 @@ def test_payment_str_options(payment, expected_payment_str):
         ),
     ],
 )
-def test_payment_repr_options(payment, expected_payment_repr):
+def test_payment_representation(payment, expected_repr):
     """
-    GIVEN a payment instance
-    WHEN getting its property payment_options_repr
-    THEN property is equal to expected_payment_repr
+    GIVEN a Payment instance which amount is 99.99
+    WHEN calling repr
+    THEN the returned string is equal to expected_repr
     """
-    assert payment.payment_options_repr == expected_payment_repr
+    assert repr(payment) == expected_repr
