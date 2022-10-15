@@ -225,5 +225,8 @@ class Class(BaseModel):  # pylint: disable=too-few-public-methods
     cycle = relationship("Cycle", back_populates="classes")
     students = relationship("Student", back_populates="class_")
 
+    def __str__(self) -> str:
+        return f"{self.level}{self.sub_level} {self.mode}"
+
 
 models = [User, Student, Representative, Cycle, Class]

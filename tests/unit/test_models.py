@@ -458,8 +458,27 @@ def test_class_creation(app):  # pylint: disable=unused-argument
     )
 
     assert class_.id is not None
+    assert class_.mode == mode
     assert class_.start_at == start_at
     assert class_.end_at == end_at
     assert class_.level == level
     assert class_.sub_level == sub_level
     assert class_.cycle == cycle
+
+
+def test_class_str():
+    """
+    GIVEN a class instance which
+        mode = "Normal"
+        level = "L1"
+        sub_level = "P1"
+    WHEN converted to a string
+    THEN the string is
+        "L1P1 Normal"
+    """
+    class_ = Class(
+        mode=Mode.NORMAL,
+        level=Level.L1,
+        sub_level=SubLevel.P1,
+    )
+    assert str(class_) == "L1P1 Normal"
