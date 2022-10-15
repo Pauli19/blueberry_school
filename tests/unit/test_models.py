@@ -492,10 +492,7 @@ def test_class_repr():
         sub_level = "P1"
     WHEN calling repr
     THEN the returned string is
-        'Class(
-            level="L1",
-            sub_level="P1",
-            mode="Normal")'
+        'Class(level="L1", sub_level="P1", mode="Normal")'
     """
     class_ = Class(
         mode=Mode.NORMAL,
