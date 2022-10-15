@@ -3,8 +3,25 @@ import datetime
 
 import pytest
 
-from app.models import Cycle, Month, Representative, Student, User, load_user
-from factories import CycleFactory, RepresentativeFactory, StudentFactory, UserFactory
+from app.models import (
+    Class,
+    Cycle,
+    Level,
+    Mode,
+    Month,
+    Representative,
+    Student,
+    SubLevel,
+    User,
+    load_user,
+)
+from factories import (
+    ClassFactory,
+    CycleFactory,
+    RepresentativeFactory,
+    StudentFactory,
+    UserFactory,
+)
 
 
 def test_user_creation(app):  # pylint: disable=unused-argument
@@ -409,3 +426,40 @@ def test_cycle_representation():
     expected_repr = 'Cycle(month="November", year=2022)'
 
     assert repr(cycle) == expected_repr
+
+
+def test_class_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        mode = "Normal"
+        start_at = "20:00"
+        end_at = "21:00"
+        level = "L1"
+        sub_level = "P1"
+        and an associated cycle
+    WHEN a Class instance is created
+    THEN Class is created properly
+        - data is stored in the databse
+        - information is set properly
+    """
+    mode = Mode.NORMAL
+    start_at = datetime.time(20, 0)
+    end_at = datetime.time(21, 0)
+    level = Level.L1
+    sub_level = SubLevel.P1
+    cycle = CycleFactory()
+    class_: Class = ClassFactory(
+        mode=mode,
+        start_at=start_at,
+        end_at=end_at,
+        level=level,
+        sub_level=sub_level,
+        cycle=cycle,
+    )
+
+    assert class_.id is not None
+    assert class_.start_at == start_at
+    assert class_.end_at == end_at
+    assert class_.level == level
+    assert class_.sub_level == sub_level
+    assert class_.cycle == cycle
