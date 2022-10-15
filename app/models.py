@@ -258,8 +258,8 @@ class Payment(BaseModel):  # pylint: disable=too-few-public-methods
 
     def __repr__(self) -> str:
         if self.discount is not None:
-            return f'Payment(amount="${self.amount}", discount="${self.discount}")'
-        return f'Payment(amount="${self.amount}")'
+            return f"Payment(amount=${self.amount}, discount=${self.discount})"
+        return f"Payment(amount=${self.amount})"
 
 
 models = [User, Student, Representative, Cycle, Class, Payment]

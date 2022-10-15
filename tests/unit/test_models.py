@@ -561,12 +561,12 @@ def test_payment_str(payment, expected_str):
     [
         pytest.param(
             Payment(amount=Decimal("99.99")),
-            'Payment(amount="$99.99")',
+            "Payment(amount=$99.99)",
             id="payment-without-discount",
         ),
         pytest.param(
             Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
-            'Payment(amount="$99.99", discount="$10.00")',
+            "Payment(amount=$99.99, discount=$10.00)",
             id="payment-with-discount",
         ),
     ],
