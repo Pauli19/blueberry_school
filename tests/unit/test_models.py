@@ -1,5 +1,6 @@
 """This module contains tests for models."""
 import datetime
+from decimal import Decimal
 
 import pytest
 
@@ -18,6 +19,7 @@ from app.models import (
 from factories import (
     ClassFactory,
     CycleFactory,
+    PaymentFactory,
     RepresentativeFactory,
     StudentFactory,
     UserFactory,
@@ -501,3 +503,18 @@ def test_class_repr():
     )
     expected_repr = 'Class(level="L1", sub_level="P1", mode="Normal")'
     assert repr(class_) == expected_repr
+
+
+def test_payment_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN amount is 99.99
+    WHEN a Payment instance is created
+    THEN Payment is created properly
+        - data is stored in the database
+        - information is set properly
+    """
+    amount = Decimal("99.99")
+    payment = PaymentFactory(amount=amount)
+
+    assert payment.id is not None
+    assert payment.amount == amount
