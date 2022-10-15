@@ -113,8 +113,6 @@ class ClassFactory(SQLAlchemyModelFactory):
     def start_at(self) -> datetime.time:
         """
         Class' start_at. This value is randomly generated.
-        The hour's minutes corresponds to zero because a
-        class must start at an o'clock time.
         """
         hour = random.randrange(17, 21)
         return datetime.time(hour)
