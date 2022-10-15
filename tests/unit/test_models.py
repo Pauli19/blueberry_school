@@ -579,6 +579,7 @@ def test_payment_str_options(payment, expected_payment_str):
         pytest.param(
             Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
             'Payment(amount="$99.99", discount="$10.00")',
+            id="payment-with-discount",
         ),
     ],
 )
