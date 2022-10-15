@@ -354,7 +354,7 @@ def test_representative_representation():
     WHEN calling repr
     THEN the returned string is
         'Representative(
-            identity_document="1020304050"
+            identity_document="1020304050",
             first_name="Katy",
             first_surname="Perry")'
     """
@@ -482,3 +482,25 @@ def test_class_str():
         sub_level=SubLevel.P1,
     )
     assert str(class_) == "L1P1 Normal"
+
+
+def test_class_repr():
+    """
+    GIVEN a class instance which
+        mode = "Normal"
+        level = "L1"
+        sub_level = "P1"
+    WHEN calling repr
+    THEN the returned string is
+        'Class(
+            level="L1",
+            sub_level="P1",
+            mode="Normal")'
+    """
+    class_ = Class(
+        mode=Mode.NORMAL,
+        level=Level.L1,
+        sub_level=SubLevel.P1,
+    )
+    expected_repr = 'Class(level="L1", sub_level="P1", mode="Normal")'
+    assert repr(class_) == expected_repr

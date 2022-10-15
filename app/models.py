@@ -228,5 +228,12 @@ class Class(BaseModel):  # pylint: disable=too-few-public-methods
     def __str__(self) -> str:
         return f"{self.level}{self.sub_level} {self.mode}"
 
+    def __repr__(self) -> str:
+        return (
+            f'Class(level="{self.level}", '
+            f'sub_level="{self.sub_level}", '
+            f'mode="{self.mode}")'
+        )
+
 
 models = [User, Student, Representative, Cycle, Class]
