@@ -112,7 +112,8 @@ class ClassFactory(SQLAlchemyModelFactory):
     @lazy_attribute
     def start_at(self) -> datetime.time:
         """
-        Class' start_at. This value is randomly generated.
+        Class' start_at. A time between 17H00 and 20H00 (inclusive) with 1 hour
+        of step is randomly generated.
         """
         hour = random.randrange(17, 21)
         return datetime.time(hour)
