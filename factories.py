@@ -3,10 +3,21 @@
 import datetime
 import random
 
-from factory import Faker, LazyAttribute, fuzzy, lazy_attribute
+from factory import Faker, LazyAttribute, SubFactory, fuzzy, lazy_attribute
 from factory.alchemy import SQLAlchemyModelFactory
 
-from app.models import Cycle, Month, Representative, Student, User, db
+from app.models import (
+    Class,
+    Cycle,
+    Level,
+    Mode,
+    Month,
+    Representative,
+    Student,
+    SubLevel,
+    User,
+    db,
+)
 
 
 class UserFactory(SQLAlchemyModelFactory):
@@ -85,4 +96,50 @@ class CycleFactory(SQLAlchemyModelFactory):
         return self.start_date + datetime.timedelta(days=delta_days)
 
 
-factories = [UserFactory, StudentFactory, RepresentativeFactory, CycleFactory]
+class ClassFactory(SQLAlchemyModelFactory):
+    """This is a factory to create Classes Instances."""
+
+    class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
+        model = Class
+        sqlalchemy_session = db.session
+        sqlalchemy_session_persistence = "commit"
+
+    mode = fuzzy.FuzzyChoice(choices=list(Mode))
+    level = fuzzy.FuzzyChoice(choices=list(Level))
+    sub_level = fuzzy.FuzzyChoice(choices=list(SubLevel))
+    cycle = SubFactory(CycleFactory)
+
+    @lazy_attribute
+    def start_at(self) -> datetime.time:
+        """
+        Class' start_at. A time between 17H00 and 20H00 (inclusive) with 1 hour
+        of step is randomly generated.
+        """
+        hour = random.randrange(17, 21)
+        return datetime.time(hour)
+
+    @lazy_attribute
+    def end_at(self) -> datetime.time:
+        """
+        Class' end_at. This value is generated based on Class' start_at.
+        There is a difference of one hour between end_at and start_at.
+        """
+        start = datetime.datetime(
+            2000,
+            1,
+            1,
+            hour=self.start_at.hour,
+            minute=self.start_at.minute,
+            second=self.start_at.second,
+        )
+        end = start + datetime.timedelta(hours=1)
+        return end.time()
+
+
+factories = [
+    UserFactory,
+    StudentFactory,
+    RepresentativeFactory,
+    CycleFactory,
+    ClassFactory,
+]
