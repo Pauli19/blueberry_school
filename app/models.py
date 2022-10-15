@@ -223,7 +223,7 @@ class Class(BaseModel):  # pylint: disable=too-few-public-methods
     level = sa.Column(sa.Enum(Level), nullable=False)
     sub_level = sa.Column(sa.Enum(SubLevel), nullable=False)
 
-    cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"))
+    cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"), nullable=False)
     cycle = relationship("Cycle", back_populates="classes")
     students = relationship("Student", back_populates="class_")
 
@@ -246,9 +246,9 @@ class Payment(BaseModel):  # pylint: disable=too-few-public-methods
     discount = sa.Column(sa.Numeric(10, 2))
     description = sa.Column(sa.Unicode(255))
 
-    student_id = sa.Column(sa.Integer, sa.ForeignKey("student.id"))
+    student_id = sa.Column(sa.Integer, sa.ForeignKey("student.id"), nullable=False)
     student = relationship("Student", back_populates="payments")
-    cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"))
+    cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"), nullable=False)
     cycle = relationship("Cycle", back_populates="payments")
 
     def __str__(self) -> str:

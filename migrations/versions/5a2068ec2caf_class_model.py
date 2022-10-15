@@ -25,7 +25,7 @@ def upgrade():
     sa.Column('end_at', sa.Time(), nullable=False),
     sa.Column('level', sa.Enum('L1', 'L2', 'L3', name='level'), nullable=False),
     sa.Column('sub_level', sa.Enum('P1', 'P2', 'P3', 'P4', name='sub_level'), nullable=False),
-    sa.Column('cycle_id', sa.Integer(), nullable=True),
+    sa.Column('cycle_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['cycle_id'], ['cycle.id'], name=op.f('fk_class_cycle_id_cycle')),
