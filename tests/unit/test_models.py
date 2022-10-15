@@ -10,6 +10,7 @@ from app.models import (
     Level,
     Mode,
     Month,
+    Payment,
     Representative,
     Student,
     SubLevel,
@@ -518,3 +519,73 @@ def test_payment_creation(app):  # pylint: disable=unused-argument
 
     assert payment.id is not None
     assert payment.amount == amount
+
+
+def test_payment_str():
+    """
+    GIVEN a Payment instance which
+        amount is 99.99
+    WHEN converted to a string
+    THEN the string is "$99.99"
+    """
+    payment = Payment(amount=Decimal("99.99"))
+    assert str(payment) == "$99.99"
+
+
+def test_payment_representation():
+    """
+    GIVEN a Payment instance which
+        amount is 99.99
+    WHEN calling repr
+    THEN the returned string is
+        'Payment(amount="$99.99")'
+    """
+    payment = Payment(amount=Decimal("99.99"))
+    assert repr(payment) == 'Payment(amount="$99.99")'
+
+
+@pytest.mark.parametrize(
+    "payment,expected_payment_str",
+    [
+        pytest.param(
+            Payment(amount=Decimal("99.99")),
+            "$99.99",
+            id="just-payment",
+        ),
+        pytest.param(
+            Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
+            "$89.99 = $99.99 - $10.00",
+            id="payment-with-discount",
+        ),
+    ],
+)
+def test_payment_str_options(payment, expected_payment_str):
+    """
+    GIVEN a payment instance
+    WHEN getting its property payment_options_str
+    THEN property is equal to expected_payment_str
+    """
+    assert payment.payment_options_str == expected_payment_str
+
+
+@pytest.mark.parametrize(
+    "payment,expected_payment_repr",
+    [
+        pytest.param(
+            Payment(amount=Decimal("99.99")),
+            'Payment(amount="$99.99")',
+            id="just-payment",
+        ),
+        pytest.param(
+            Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
+            'Payment(amount="$99.99", discount="$10.00")',
+        ),
+    ],
+)
+def test_payment_repr_options(payment, expected_payment_repr):
+    """
+    GIVEN a payment instance
+    WHEN getting its property payment_options_repr
+    THEN property is equal to expected_payment_repr
+    """
+    assert payment.payment_options_repr == expected_payment_repr

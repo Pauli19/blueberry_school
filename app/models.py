@@ -251,5 +251,27 @@ class Payment(BaseModel):  # pylint: disable=too-few-public-methods
     cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"))
     cycle = relationship("Cycle", back_populates="payments")
 
+    def __str__(self) -> str:
+        return f"${self.amount}"
+
+    def __repr__(self) -> str:
+        return f'Payment(amount="${self.amount}")'
+
+    @property
+    def payment_options_str(self) -> str:
+        """Payment's options."""
+
+        if self.amount is not None and self.discount is not None:
+            return f"${self.amount - self.discount} = ${self.amount} - ${self.discount}"
+        return f"${self.amount}"
+
+    @property
+    def payment_options_repr(self) -> str:
+        """Representation Payment's options."""
+
+        if self.amount is not None and self.discount is not None:
+            return f'Payment(amount="${self.amount}", discount="${self.discount}")'
+        return f'Payment(amount="${self.amount}")'
+
 
 models = [User, Student, Representative, Cycle, Class, Payment]
