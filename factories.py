@@ -12,6 +12,7 @@ from app.models import (
     Level,
     Mode,
     Month,
+    Payment,
     Representative,
     Student,
     SubLevel,
@@ -97,7 +98,7 @@ class CycleFactory(SQLAlchemyModelFactory):
 
 
 class ClassFactory(SQLAlchemyModelFactory):
-    """This is a factory to create Classes Instances."""
+    """This is a factory to create Class instances."""
 
     class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
         model = Class
@@ -136,10 +137,24 @@ class ClassFactory(SQLAlchemyModelFactory):
         return end.time()
 
 
+class PaymentFactory(SQLAlchemyModelFactory):
+    """This is a factory to create Payment instances."""
+
+    class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
+        model = Payment
+        sqlalchemy_session = db.session
+        sqlalchemy_session_persistence = "commit"
+
+    amount = fuzzy.FuzzyDecimal(80.0, 1000.0)
+    student = SubFactory(StudentFactory)
+    cycle = SubFactory(CycleFactory)
+
+
 factories = [
     UserFactory,
     StudentFactory,
     RepresentativeFactory,
     CycleFactory,
     ClassFactory,
+    PaymentFactory,
 ]

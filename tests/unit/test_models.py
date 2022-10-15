@@ -1,5 +1,6 @@
 """This module contains tests for models."""
 import datetime
+from decimal import Decimal
 
 import pytest
 
@@ -9,6 +10,7 @@ from app.models import (
     Level,
     Mode,
     Month,
+    Payment,
     Representative,
     Student,
     SubLevel,
@@ -18,6 +20,7 @@ from app.models import (
 from factories import (
     ClassFactory,
     CycleFactory,
+    PaymentFactory,
     RepresentativeFactory,
     StudentFactory,
     UserFactory,
@@ -501,3 +504,77 @@ def test_class_repr():
     )
     expected_repr = 'Class(level="L1", sub_level="P1", mode="Normal")'
     assert repr(class_) == expected_repr
+
+
+def test_payment_creation(app):  # pylint: disable=unused-argument
+    """
+    GIVEN
+        amount is 99.99
+        an associated student
+        and an associated cycle
+    WHEN a Payment instance is created
+    THEN Payment is created properly
+        - data is stored in the database
+        - information is set properly
+    """
+    amount = Decimal("99.99")
+    student = StudentFactory()
+    cycle = CycleFactory()
+    payment: Payment = PaymentFactory(
+        amount=amount,
+        student=student,
+        cycle=cycle,
+    )
+
+    assert payment.id is not None
+    assert payment.amount == amount
+    assert payment.student == student
+    assert payment.cycle == cycle
+
+
+@pytest.mark.parametrize(
+    "payment,expected_str",
+    [
+        pytest.param(
+            Payment(amount=Decimal("99.99")),
+            "$99.99",
+            id="payment-without-discount",
+        ),
+        pytest.param(
+            Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
+            "$89.99 = $99.99 - $10.00",
+            id="payment-with-discount",
+        ),
+    ],
+)
+def test_payment_str(payment, expected_str):
+    """
+    GIVEN a Payment instance which amount is 99.99
+    WHEN converted to a string
+    THEN property is equal to expected_str
+    """
+    assert str(payment) == expected_str
+
+
+@pytest.mark.parametrize(
+    "payment,expected_repr",
+    [
+        pytest.param(
+            Payment(amount=Decimal("99.99")),
+            "Payment(amount=$99.99)",
+            id="payment-without-discount",
+        ),
+        pytest.param(
+            Payment(amount=Decimal("99.99"), discount=Decimal("10.00")),
+            "Payment(amount=$99.99, discount=$10.00)",
+            id="payment-with-discount",
+        ),
+    ],
+)
+def test_payment_representation(payment, expected_repr):
+    """
+    GIVEN a Payment instance which amount is 99.99
+    WHEN calling repr
+    THEN the returned string is equal to expected_repr
+    """
+    assert repr(payment) == expected_repr
