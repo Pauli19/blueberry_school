@@ -252,7 +252,7 @@ class Payment(BaseModel):  # pylint: disable=too-few-public-methods
     cycle = relationship("Cycle", back_populates="payments")
 
     def __str__(self) -> str:
-        if self.amount is not None and self.discount is not None:
+        if self.discount is not None:
             return f"${self.amount - self.discount} = ${self.amount} - ${self.discount}"
         return f"${self.amount}"
 
