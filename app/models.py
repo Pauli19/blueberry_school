@@ -115,6 +115,7 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
     representative = relationship("Representative", back_populates="students")
     class_id = sa.Column(sa.Integer, sa.ForeignKey("class.id"))
     class_ = relationship("Class", back_populates="students")
+    payments = relationship("Payment", back_populates="student")
 
     def __str__(self) -> str:
         return f"{self.identity_document} - {self.first_name} {self.first_surname}"
@@ -179,6 +180,7 @@ class Cycle(BaseModel):  # pylint: disable=too-few-public-methods
     end_date = sa.Column(sa.Date, nullable=False)
 
     classes = relationship("Class", back_populates="cycle")
+    payments = relationship("Payment", back_populates="cycle")
 
     def __str__(self) -> str:
         return f"{self.month} - {self.year}"
@@ -234,6 +236,20 @@ class Class(BaseModel):  # pylint: disable=too-few-public-methods
             f'sub_level="{self.sub_level}", '
             f'mode="{self.mode}")'
         )
+
+
+class Payment(BaseModel):  # pylint: disable=too-few-public-methods
+    """This class is used to model payments."""
+
+    id = sa.Column(sa.Integer, primary_key=True)
+    amount = sa.Column(sa.Numeric(10, 2), nullable=False)
+    discount = sa.Column(sa.Numeric(10, 2))
+    description = sa.Column(sa.Unicode(255))
+
+    student_id = sa.Column(sa.Integer, sa.ForeignKey("student.id"))
+    student = relationship("Student", back_populates="payments")
+    cycle_id = sa.Column(sa.Integer, sa.ForeignKey("cycle.id"))
+    cycle = relationship("Cycle", back_populates="payments")
 
 
 models = [User, Student, Representative, Cycle, Class]
