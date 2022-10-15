@@ -252,4 +252,4 @@ class Payment(BaseModel):  # pylint: disable=too-few-public-methods
     cycle = relationship("Cycle", back_populates="payments")
 
 
-models = [User, Student, Representative, Cycle, Class]
+models = [User, Student, Representative, Cycle, Class, Payment]
