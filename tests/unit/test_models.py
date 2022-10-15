@@ -508,17 +508,28 @@ def test_class_repr():
 
 def test_payment_creation(app):  # pylint: disable=unused-argument
     """
-    GIVEN amount is 99.99
+    GIVEN
+        amount is 99.99
+        an associated student
+        and an associated cycle
     WHEN a Payment instance is created
     THEN Payment is created properly
         - data is stored in the database
         - information is set properly
     """
     amount = Decimal("99.99")
-    payment = PaymentFactory(amount=amount)
+    student = StudentFactory()
+    cycle = CycleFactory()
+    payment: Payment = PaymentFactory(
+        amount=amount,
+        student=student,
+        cycle=cycle,
+    )
 
     assert payment.id is not None
     assert payment.amount == amount
+    assert payment.student == student
+    assert payment.cycle == cycle
 
 
 def test_payment_str():
