@@ -1,0 +1,31 @@
+{% extends "base.html.jinja" %}
+
+{% block title %}Admin - Representative{% endblock %}
+
+{% block page_content %}
+<h1>Representative Table</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Identity Document</th>
+      <th scope="col">First Name</th>
+      <th scope="col">First Surname</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for representative in representatives %}
+      <tr>
+        <td>{{ representative.id }}</td>
+        <td>{{ representative.identity_document }}</td>
+        <td>{{ representative.first_name }}</td>
+        <td>{{ representative.first_surname }}</td>
+        <td>{{ representative.email  if representative.email else '' }}</td>
+        <td>{{ representative.phone_number }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
