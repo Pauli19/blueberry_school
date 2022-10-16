@@ -7,7 +7,7 @@ from flask_login import login_required
 from sqlalchemy import select
 
 from .. import db
-from ..models import Class, Cycle, Representative, Student
+from ..models import Class, Cycle, Payment, Representative, Student
 from . import admin
 
 
@@ -75,3 +75,16 @@ def class_table() -> str:
     )
 
     return render_template("admin/class/table-view.html.jinja", classes=classes)
+
+
+@admin.get("/payment")
+@login_required
+def payment_table() -> str:
+    """View function for "/payment" route when method is GET."""
+    payments = (
+        db.session.execute(select(Payment).order_by(Payment.created_at.desc()))
+        .scalars()
+        .all()
+    )
+
+    return render_template("admin/payment/table-view.html.jinja", payments=payments)
