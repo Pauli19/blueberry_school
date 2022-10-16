@@ -7,7 +7,7 @@ from flask_login import login_required
 from sqlalchemy import select
 
 from .. import db
-from ..models import Cycle, Representative, Student
+from ..models import Class, Cycle, Representative, Student
 from . import admin
 
 
@@ -62,3 +62,16 @@ def cycle_table() -> str:
         "admin/cycle/table-view.html.jinja",
         cycles=cycles,
     )
+
+
+@admin.get("/class")
+@login_required
+def class_table() -> str:
+    """View function for "/class" route when method is GET."""
+    classes = (
+        db.session.execute(select(Class).order_by(Class.created_at.desc()))
+        .scalars()
+        .all()
+    )
+
+    return render_template("admin/class/table-view.html.jinja", classes=classes)
