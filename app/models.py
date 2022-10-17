@@ -114,6 +114,7 @@ class Student(BaseModel):  # pylint: disable=too-few-public-methods
     second_name = sa.Column(sa.Unicode(255))
     first_surname = sa.Column(sa.Unicode(255), nullable=False)
     second_surname = sa.Column(sa.Unicode(255))
+    sex = sa.Column(sa.Enum(Sex), nullable=False)
     email = sa.Column(EmailType, unique=True, nullable=False)
     birth_date = sa.Column(sa.Date, nullable=False)
     phone_number = sa.Column(PhoneNumberType())
