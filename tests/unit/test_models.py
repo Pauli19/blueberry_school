@@ -409,11 +409,11 @@ def test_cycle_str():
         year is 2022
     WHEN converted to a string
     THEN the string is
-        "November - 2022"
+        "November 2022"
     """
     cycle = Cycle(month=Month.NOVEMBER, year=2022)
 
-    assert str(cycle) == "November - 2022"
+    assert str(cycle) == "November 2022"
 
 
 def test_cycle_representation():
