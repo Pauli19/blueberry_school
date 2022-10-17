@@ -44,22 +44,14 @@ class UserFactory(SQLAlchemyModelFactory):
     email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
 
 
-class StudentFactory(SQLAlchemyModelFactory):
-    """This is a factory to create Student instances."""
-
-    class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
-        model = Student
-        sqlalchemy_session = db.session
-        sqlalchemy_session_persistence = "commit"
+class PersonFactory(SQLAlchemyModelFactory):
+    """This is an abstract factory to generate basic fields for a person."""
 
     identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
     first_surname = Faker("last_name")
     sex = fuzzy.FuzzyChoice(choices=list(Sex))
     email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
     phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
-    birth_date = fuzzy.FuzzyDate(
-        start_date=datetime.date(1980, 1, 1), end_date=datetime.date(2012, 1, 1)
-    )
 
     @lazy_attribute
     def first_name(self) -> str:
@@ -81,20 +73,26 @@ class StudentFactory(SQLAlchemyModelFactory):
         return None
 
 
-class RepresentativeFactory(SQLAlchemyModelFactory):
+class StudentFactory(PersonFactory):
+    """This is a factory to create Student instances."""
+
+    class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
+        model = Student
+        sqlalchemy_session = db.session
+        sqlalchemy_session_persistence = "commit"
+
+    birth_date = fuzzy.FuzzyDate(
+        start_date=datetime.date(1980, 1, 1), end_date=datetime.date(2012, 1, 1)
+    )
+
+
+class RepresentativeFactory(PersonFactory):
     """This is a factory to create Representative instances."""
 
     class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
         model = Representative
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "commit"
-
-    identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
-    first_name = Faker("first_name")
-    first_surname = Faker("last_name")
-    sex = fuzzy.FuzzyChoice(choices=list(Sex))
-    email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
-    phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
 
 
 class CycleFactory(SQLAlchemyModelFactory):
