@@ -98,6 +98,13 @@ def load_user(user_id: str) -> User | None:
     ).scalar_one_or_none()
 
 
+class Sex(str, Enum):  # pylint: disable=too-few-public-methods
+    """This enumeration is used to represent biological sex."""
+
+    FEMALE = "Female"
+    MALE = "Male"
+
+
 class Student(BaseModel):  # pylint: disable=too-few-public-methods
     """This class is used to model students."""
 
