@@ -26,6 +26,7 @@ def upgrade():
     sa.Column('second_name', sa.Unicode(length=255), nullable=True),
     sa.Column('first_surname', sa.Unicode(length=255), nullable=False),
     sa.Column('second_surname', sa.Unicode(length=255), nullable=True),
+    sa.Column('sex', sa.Enum('FEMALE', 'MALE', name='sex'), nullable=False),
     sa.Column('email', sqlalchemy_utils.types.email.EmailType(length=255), nullable=False),
     sa.Column('birth_date', sa.Date(), nullable=False),
     sa.Column('phone_number', sqlalchemy_utils.types.phone_number.PhoneNumberType(length=20), nullable=True),
