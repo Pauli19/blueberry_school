@@ -36,11 +36,11 @@
             <img src="{{ url_for('static', filename='images/logos/blueberry.png')}}" alt="Logo" width="45" height="45" class="align-middle">
             <span class="align-middle">Blueberry School</span>
           </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           {% if current_user.is_authenticated %}
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="collapse navbar-collapse" id="navbarItems">
             <ul class="navbar-nav">
               <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.student_table') }}">Student</a></li>
               <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.representative_table') }}">Representative</a></li>
