@@ -12,6 +12,7 @@ from app.models import (
     Month,
     Payment,
     Representative,
+    Sex,
     Student,
     SubLevel,
     User,
@@ -191,6 +192,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
         identity_document is "1020304050"
         first_name is "Ben"
         first_surname is "Hazlewood"
+        sex is Sex.MALE
         email is "benhazlewood@example.com"
         phone_number is "+593987654321"
         birth_date is "1995-01-01"
@@ -202,6 +204,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
     identity_document = "1020304050"
     first_name = "Ben"
     first_surname = "Hazlewood"
+    sex = Sex.MALE
     email = "benhazlewood@example.com"
     phone_number = "+593987654321"
     birth_date = datetime.date(1995, 1, 1)
@@ -209,6 +212,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
         identity_document=identity_document,
         first_name=first_name,
         first_surname=first_surname,
+        sex=sex,
         email=email,
         phone_number=phone_number,
         birth_date=birth_date,
@@ -218,6 +222,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
     assert student.identity_document == identity_document
     assert student.first_name == first_name
     assert student.first_surname == first_surname
+    assert student.sex == sex
     assert student.email == email
     assert student.phone_number.e164 == phone_number
     assert student.birth_date == birth_date
@@ -229,6 +234,7 @@ def test_student_creation_with_representative(app):  # pylint: disable=unused-ar
         identity_document is "1020304050"
         first_name is "Ben"
         first_surname is "Hazlewood"
+        sex is Sex.MALE
         email is "benhazlewood@example.com"
         birth_date is "1995-01-01"
         and an associated representative
@@ -240,6 +246,7 @@ def test_student_creation_with_representative(app):  # pylint: disable=unused-ar
     identity_document = "1020304050"
     first_name = "Ben"
     first_surname = "Hazlewood"
+    sex = Sex.MALE
     email = "benhazlewood@example.com"
     birth_date = datetime.date(1995, 1, 1)
     representative = RepresentativeFactory()
@@ -247,6 +254,7 @@ def test_student_creation_with_representative(app):  # pylint: disable=unused-ar
         identity_document=identity_document,
         first_name=first_name,
         first_surname=first_surname,
+        sex=sex,
         email=email,
         birth_date=birth_date,
         representative=representative,
@@ -256,6 +264,7 @@ def test_student_creation_with_representative(app):  # pylint: disable=unused-ar
     assert student.identity_document == identity_document
     assert student.first_name == first_name
     assert student.first_surname == first_surname
+    assert student.sex == sex
     assert student.email == email
     assert student.birth_date == birth_date
     assert student.representative == representative
