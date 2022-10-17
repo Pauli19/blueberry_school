@@ -72,6 +72,13 @@ class StudentFactory(SQLAlchemyModelFactory):
             return get_name(self.sex)
         return None
 
+    @lazy_attribute
+    def second_surname(self) -> str | None:
+        """Generated second surname."""
+        if random.random() < 0.5:
+            return fake.last_name()
+        return None
+
 
 class RepresentativeFactory(SQLAlchemyModelFactory):
     """This is a factory to create Representative instances."""
