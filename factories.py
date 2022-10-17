@@ -2,6 +2,7 @@
 
 import datetime
 import random
+from decimal import Decimal
 
 import faker
 from factory import Faker, LazyAttribute, SubFactory, fuzzy, lazy_attribute
@@ -179,6 +180,13 @@ class PaymentFactory(SQLAlchemyModelFactory):
     amount = fuzzy.FuzzyDecimal(80.0, 1000.0)
     student = SubFactory(StudentFactory)
     cycle = SubFactory(CycleFactory)
+
+    @lazy_attribute
+    def discount(self) -> Decimal | None:
+        """Generated disccount."""
+        if random.random() < 0.5:
+            return fake.pydecimal(min_value=90, max_value=100, right_digits=2)
+        return None
 
 
 factories = [
