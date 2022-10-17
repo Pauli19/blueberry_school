@@ -2,7 +2,9 @@
 
 import datetime
 import random
+from decimal import Decimal
 
+import faker
 from factory import Faker, LazyAttribute, SubFactory, fuzzy, lazy_attribute
 from factory.alchemy import SQLAlchemyModelFactory
 
@@ -21,6 +23,13 @@ from app.models import (
     db,
 )
 
+fake = faker.Faker()
+
+
+def get_name(sex: Sex) -> str:
+    """Generate a name based on sex."""
+    return fake.first_name_female() if sex == Sex.FEMALE else fake.first_name_male()
+
 
 class UserFactory(SQLAlchemyModelFactory):
     """This is a factory to create User instances."""
@@ -35,7 +44,36 @@ class UserFactory(SQLAlchemyModelFactory):
     email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
 
 
-class StudentFactory(SQLAlchemyModelFactory):
+class PersonFactory(SQLAlchemyModelFactory):
+    """This is an abstract factory to generate basic fields for a person."""
+
+    identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
+    first_surname = Faker("last_name")
+    sex = fuzzy.FuzzyChoice(choices=list(Sex))
+    email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
+    phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
+
+    @lazy_attribute
+    def first_name(self) -> str:
+        """Generated first name."""
+        return get_name(self.sex)
+
+    @lazy_attribute
+    def second_name(self) -> str | None:
+        """Generated second name."""
+        if random.random() < 0.5:
+            return get_name(self.sex)
+        return None
+
+    @lazy_attribute
+    def second_surname(self) -> str | None:
+        """Generated second surname."""
+        if random.random() < 0.5:
+            return fake.last_name()
+        return None
+
+
+class StudentFactory(PersonFactory):
     """This is a factory to create Student instances."""
 
     class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
@@ -43,31 +81,18 @@ class StudentFactory(SQLAlchemyModelFactory):
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "commit"
 
-    identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
-    first_name = Faker("first_name")
-    first_surname = Faker("last_name")
-    sex = fuzzy.FuzzyChoice(choices=list(Sex))
-    email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
-    phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
     birth_date = fuzzy.FuzzyDate(
         start_date=datetime.date(1980, 1, 1), end_date=datetime.date(2012, 1, 1)
     )
 
 
-class RepresentativeFactory(SQLAlchemyModelFactory):
+class RepresentativeFactory(PersonFactory):
     """This is a factory to create Representative instances."""
 
     class Meta:  # pylint: disable=missing-class-docstring,too-few-public-methods
         model = Representative
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "commit"
-
-    identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
-    first_name = Faker("first_name")
-    first_surname = Faker("last_name")
-    sex = fuzzy.FuzzyChoice(choices=list(Sex))
-    email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
-    phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
 
 
 class CycleFactory(SQLAlchemyModelFactory):
@@ -150,9 +175,16 @@ class PaymentFactory(SQLAlchemyModelFactory):
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "commit"
 
-    amount = fuzzy.FuzzyDecimal(80.0, 1000.0)
+    amount = fuzzy.FuzzyDecimal(90, 100)
     student = SubFactory(StudentFactory)
     cycle = SubFactory(CycleFactory)
+
+    @lazy_attribute
+    def discount(self) -> Decimal | None:
+        """Generated disccount."""
+        if random.random() < 0.5:
+            return fake.pydecimal(min_value=30, max_value=50, right_digits=2)
+        return None
 
 
 factories = [

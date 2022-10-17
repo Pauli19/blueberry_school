@@ -3,7 +3,7 @@ target-version = ['py310']
 
 [tool.isort]
 profile = "black"
-known_third_party = ["alembic", "factory", "flask", "flask_bootstrap", "flask_login", "flask_migrate", "flask_sqlalchemy", "flask_wtf", "pytest", "sqlalchemy", "sqlalchemy_utils", "werkzeug", "wtforms"]
+known_third_party = ["alembic", "factory", "faker", "flask", "flask_bootstrap", "flask_login", "flask_migrate", "flask_sqlalchemy", "flask_wtf", "pytest", "sqlalchemy", "sqlalchemy_utils", "werkzeug", "wtforms"]
 
 [tool.pylint.format]
 max-line-length = 88
