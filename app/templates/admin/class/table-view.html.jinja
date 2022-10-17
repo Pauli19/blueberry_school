@@ -4,30 +4,32 @@
 
 {% block page_content %}
 <h1>Class Table</h1>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Mode</th>
-      <th scope="col">Start at</th>
-      <th scope="col">End at</th>
-      <th scope="col">Level</th>
-      <th scope="col">Sub Level</th>
-      <th scope="col">Cycle</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for class_ in classes %}
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Mode</th>
+        <th scope="col">Start at</th>
+        <th scope="col">End at</th>
+        <th scope="col">Level</th>
+        <th scope="col">Sub Level</th>
+        <th scope="col">Cycle</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for class_ in classes %}
       <tr>
         <td>{{ class_.id }}</td>
         <td>{{ class_.mode.value }}</td>
         <td>{{ class_.start_at }}</td>
         <td>{{ class_.end_at }}</td>
-        <td>{{ class_.level.value  }}</td>
+        <td>{{ class_.level.value }}</td>
         <td>{{ class_.sub_level.value }}</td>
         <td>{{ class_.cycle }}</td>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
