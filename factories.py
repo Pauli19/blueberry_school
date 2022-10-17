@@ -3,6 +3,7 @@
 import datetime
 import random
 
+import faker
 from factory import Faker, LazyAttribute, SubFactory, fuzzy, lazy_attribute
 from factory.alchemy import SQLAlchemyModelFactory
 
@@ -20,6 +21,13 @@ from app.models import (
     User,
     db,
 )
+
+fake = faker.Faker()
+
+
+def get_name(sex: Sex) -> str:
+    """Generate a name based on sex."""
+    return fake.first_name_female() if sex == Sex.FEMALE else fake.first_name_male()
 
 
 class UserFactory(SQLAlchemyModelFactory):
@@ -44,7 +52,6 @@ class StudentFactory(SQLAlchemyModelFactory):
         sqlalchemy_session_persistence = "commit"
 
     identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
-    first_name = Faker("first_name")
     first_surname = Faker("last_name")
     sex = fuzzy.FuzzyChoice(choices=list(Sex))
     email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
@@ -52,6 +59,18 @@ class StudentFactory(SQLAlchemyModelFactory):
     birth_date = fuzzy.FuzzyDate(
         start_date=datetime.date(1980, 1, 1), end_date=datetime.date(2012, 1, 1)
     )
+
+    @lazy_attribute
+    def first_name(self) -> str:
+        """Generated first name."""
+        return get_name(self.sex)
+
+    @lazy_attribute
+    def second_name(self) -> str | None:
+        """Generated second name."""
+        if random.random() < 0.5:
+            return get_name(self.sex)
+        return None
 
 
 class RepresentativeFactory(SQLAlchemyModelFactory):
