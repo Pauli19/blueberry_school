@@ -46,6 +46,7 @@ class StudentFactory(SQLAlchemyModelFactory):
     first_name = Faker("first_name")
     first_surname = Faker("last_name")
     email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
+    phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
     birth_date = fuzzy.FuzzyDate(
         start_date=datetime.date(1980, 1, 1), end_date=datetime.date(2012, 1, 1)
     )
@@ -62,6 +63,7 @@ class RepresentativeFactory(SQLAlchemyModelFactory):
     identity_document = fuzzy.FuzzyText(length=9, prefix="1", chars="1234567890")
     first_name = Faker("first_name")
     first_surname = Faker("last_name")
+    email = LazyAttribute(lambda o: f"{o.first_name}{o.first_surname}@example.com")
     phone_number = fuzzy.FuzzyText(length=8, prefix="+5939", chars="1234567890")
 
 
