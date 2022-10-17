@@ -175,7 +175,7 @@ class PaymentFactory(SQLAlchemyModelFactory):
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "commit"
 
-    amount = fuzzy.FuzzyDecimal(80.0, 1000.0)
+    amount = fuzzy.FuzzyDecimal(90, 100)
     student = SubFactory(StudentFactory)
     cycle = SubFactory(CycleFactory)
 
@@ -183,7 +183,7 @@ class PaymentFactory(SQLAlchemyModelFactory):
     def discount(self) -> Decimal | None:
         """Generated disccount."""
         if random.random() < 0.5:
-            return fake.pydecimal(min_value=90, max_value=100, right_digits=2)
+            return fake.pydecimal(min_value=30, max_value=50, right_digits=2)
         return None
 
 
