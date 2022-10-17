@@ -183,7 +183,7 @@ class Cycle(BaseModel):  # pylint: disable=too-few-public-methods
     payments = relationship("Payment", back_populates="cycle")
 
     def __str__(self) -> str:
-        return f"{self.month} - {self.year}"
+        return f"{self.month} {self.year}"
 
     def __repr__(self) -> str:
         return f'Cycle(month="{self.month}", year={self.year})'

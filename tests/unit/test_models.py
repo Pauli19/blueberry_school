@@ -192,6 +192,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
         first_name is "Ben"
         first_surname is "Hazlewood"
         email is "benhazlewood@example.com"
+        phone_number is "+593987654321"
         birth_date is "1995-01-01"
     WHEN a Student instance is created
     THEN Student is created properly
@@ -202,12 +203,14 @@ def test_student_creation(app):  # pylint: disable=unused-argument
     first_name = "Ben"
     first_surname = "Hazlewood"
     email = "benhazlewood@example.com"
+    phone_number = "+593987654321"
     birth_date = datetime.date(1995, 1, 1)
     student = StudentFactory(
         identity_document=identity_document,
         first_name=first_name,
         first_surname=first_surname,
         email=email,
+        phone_number=phone_number,
         birth_date=birth_date,
     )
 
@@ -216,6 +219,7 @@ def test_student_creation(app):  # pylint: disable=unused-argument
     assert student.first_name == first_name
     assert student.first_surname == first_surname
     assert student.email == email
+    assert student.phone_number.e164 == phone_number
     assert student.birth_date == birth_date
 
 
@@ -306,6 +310,7 @@ def test_representative_creation(app):  # pylint: disable=unused-argument
         identity_document is "1020304050"
         first_name is "Katy"
         first_surname is "Perry"
+        email is "katyperry@example.com"
         phone_number is "+593987654321"
     WHEN a Representative instance is created
     THEN Representative is created properly
@@ -315,11 +320,13 @@ def test_representative_creation(app):  # pylint: disable=unused-argument
     identity_document = "1020304050"
     first_name = "Katy"
     first_surname = "Perry"
+    email = "katyperry@example.com"
     phone_number = "+593987654321"
     representative = RepresentativeFactory(
         identity_document=identity_document,
         first_name=first_name,
         first_surname=first_surname,
+        email=email,
         phone_number=phone_number,
     )
 
@@ -327,6 +334,7 @@ def test_representative_creation(app):  # pylint: disable=unused-argument
     assert representative.identity_document == identity_document
     assert representative.first_name == first_name
     assert representative.first_surname == first_surname
+    assert representative.email == email
     assert representative.phone_number.e164 == phone_number
 
 
@@ -409,11 +417,11 @@ def test_cycle_str():
         year is 2022
     WHEN converted to a string
     THEN the string is
-        "November - 2022"
+        "November 2022"
     """
     cycle = Cycle(month=Month.NOVEMBER, year=2022)
 
-    assert str(cycle) == "November - 2022"
+    assert str(cycle) == "November 2022"
 
 
 def test_cycle_representation():
