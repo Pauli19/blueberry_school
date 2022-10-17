@@ -319,6 +319,7 @@ def test_representative_creation(app):  # pylint: disable=unused-argument
         identity_document is "1020304050"
         first_name is "Katy"
         first_surname is "Perry"
+        sex is Sex.FEMALE
         email is "katyperry@example.com"
         phone_number is "+593987654321"
     WHEN a Representative instance is created
@@ -329,12 +330,14 @@ def test_representative_creation(app):  # pylint: disable=unused-argument
     identity_document = "1020304050"
     first_name = "Katy"
     first_surname = "Perry"
+    sex = Sex.FEMALE
     email = "katyperry@example.com"
     phone_number = "+593987654321"
     representative = RepresentativeFactory(
         identity_document=identity_document,
         first_name=first_name,
         first_surname=first_surname,
+        sex=sex,
         email=email,
         phone_number=phone_number,
     )
@@ -343,6 +346,7 @@ def test_representative_creation(app):  # pylint: disable=unused-argument
     assert representative.identity_document == identity_document
     assert representative.first_name == first_name
     assert representative.first_surname == first_surname
+    assert representative.sex == sex
     assert representative.email == email
     assert representative.phone_number.e164 == phone_number
 
