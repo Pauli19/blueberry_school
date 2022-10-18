@@ -94,7 +94,7 @@ def class_table() -> str:
 
 @admin.get("/class/<int:class_id>")
 @login_required
-def class_view(class_id) -> str:
+def class_view(class_id: int) -> str:
     """View function for "/class/<int:class_id>" route when the method is GET."""
     class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
     cycle = class_.cycle
