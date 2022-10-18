@@ -45,7 +45,7 @@
     </div>
     <div class="row">
       <div class="col-lg-2 text-start my-2 fw-bold">Class</div>
-      <div class="col-lg-4 text-start my-2">{{ class_ }}</div>
+      <div class="col-lg-4 text-start my-2"><a class="text-muted" href="{{ url_for('admin.class_view', class_id=class_.id) }}">{{ class_ }}</a></div>
     </div>
   {% endif %}
   {# Representative Information #}
