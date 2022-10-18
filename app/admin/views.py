@@ -33,7 +33,7 @@ def student_table() -> str:
 
 @admin.get("/student/<int:student_id>")
 @login_required
-def student_view(student_id) -> str:
+def student_view(student_id: int) -> str:
     """View function for "/student/<int:student_id>" route when method is GET."""
     student = db.one_or_404(select(Student).where(Student.id == student_id))
     representative = student.representative
