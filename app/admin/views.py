@@ -31,6 +31,14 @@ def student_table() -> str:
     return render_template("admin/student/table-view.html.jinja", students=students)
 
 
+@admin.get("/student/<int:student_id>")
+@login_required
+def student_view(student_id) -> str:
+    """View function for "/student/<int:student_id>" route when method is GET."""
+    student = db.one_or_404(select(Student).where(Student.id == student_id))
+    return render_template("admin/student/student.html.jinja", student=student)
+
+
 @admin.get("/representative")
 @login_required
 def representative_table() -> str:
