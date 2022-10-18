@@ -20,7 +20,13 @@
     <tbody>
       {% for student in students %}
       <tr>
-        <td><ul class="list-unstyled"><li><a class="text-muted" href="{{ url_for('admin.student_view', student_id=student.id) }}"><i class="bi bi-eye"></i></a></li></ul></td>
+        <td>
+          <ul class="list-unstyled">
+            <li>
+              <a class="text-muted" href="{{ url_for('admin.student_view', student_id=student.id) }}"><i class="bi bi-eye"></i></a>
+            </li>
+          </ul>
+        </td>
         <td>{{ student.id }}</td>
         <td>{{ student.identity_document }}</td>
         <td>{{ student.first_name }}</td>
