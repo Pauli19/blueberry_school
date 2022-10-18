@@ -1,0 +1,71 @@
+{% extends "base.html.jinja" %}
+
+{% block title %}Admin - Class{% endblock %}
+
+{% block page_content %}
+<div class="grid text-center" style="--bs-rows: 6; --bs-columns: 4;">
+  {# Class information #}
+  <div class="row">
+    <div class="col-lg-1 text-start my-3"><i class="bi bi-clock-fill"></i></div>
+    <div class="col-lg-3 text-start my-3">Class information</div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 text-start my-2 fw-bold">Class</div>
+    <div class="col-lg-4 text-start my-2">{{ class_ }}</div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 text-start my-2 fw-bold">Start at</div>
+    <div class="col-lg-4 text-start my-2">{{ class_.start_at }}</div>
+    <div class="col-lg-2 text-start my-2 fw-bold">End at</div>
+    <div class="col-lg-4 text-start my-2">{{ class_.end_at }}</div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2 text-start my-2 fw-bold">Level</div>
+    <div class="col-lg-4 text-start my-2">{{ class_.level.value }}</div>
+    <div class="col-lg-2 text-start my-2 fw-bold">Sub Level</div>
+    <div class="col-lg-4 text-start my-2">{{ class_.sub_level.value }}</div>
+  </div>
+  {# Cycle information #}
+  <div class="row">
+    <div class="col-lg-2 text-start my-2 fw-bold">Mode</div>
+    <div class="col-lg-4 text-start my-2">{{ class_.mode.value }}</div>
+    <div class="col-lg-2 text-start my-2 fw-bold">Cycle</div>
+    <div class="col-lg-4 text-start my-2">{{ cycle }}</div>
+  </div>
+  {# Students information #}
+  {% if students is not none %}
+    <div class="row">
+      <div class="col-lg-1 text-start my-3"><i class="bi bi-people-fill"></i></div>
+      <div class="col-lg-3 text-start my-3">Students information</div>
+    </div>
+    {# Table #}
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">ID</th>
+        <th scope="col">Identity Document</th>
+        <th scope="col">First Name</th>
+        <th scope="col">First Surname</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone Number</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for student in students %}
+    <tr>
+      <td><ul class="list-unstyled"><li><a class="text-muted" href="{{ url_for('admin.student_view', student_id=student.id) }}"><i class="bi bi-eye"></i></a></li></ul></td>
+      <td>{{ student.id }}</td>
+      <td>{{ student.identity_document }}</td>
+      <td>{{ student.first_name }}</td>
+      <td>{{ student.first_surname }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.phone_number if student.phone_number else '' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  {% endif %}
+
+{% endblock %}

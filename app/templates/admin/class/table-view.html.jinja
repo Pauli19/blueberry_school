@@ -8,6 +8,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+        <th scope="col"></th>
         <th scope="col">ID</th>
         <th scope="col">Mode</th>
         <th scope="col">Start at</th>
@@ -20,6 +21,7 @@
     <tbody>
       {% for class_ in classes %}
       <tr>
+        <td><ul class="list-unstyled"><li><a class="text-muted" href="{{ url_for('admin.class_view', class_id=class_.id) }}"><i class="bi bi-eye"></i></a></li></ul></td>
         <td>{{ class_.id }}</td>
         <td>{{ class_.mode.value }}</td>
         <td>{{ class_.start_at }}</td>
