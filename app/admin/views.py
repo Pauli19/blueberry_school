@@ -92,6 +92,18 @@ def class_table() -> str:
     return render_template("admin/class/table-view.html.jinja", classes=classes)
 
 
+@admin.get("/class/<int:class_id>")
+@login_required
+def class_view(class_id: int) -> str:
+    """View function for "/class/<int:class_id>" route when the method is GET."""
+    class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
+    cycle = class_.cycle
+    students = class_.students
+    return render_template(
+        "admin/class/class.html.jinja", class_=class_, cycle=cycle, students=students
+    )
+
+
 @admin.get("/payment")
 @login_required
 def payment_table() -> str:
