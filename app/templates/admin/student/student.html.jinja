@@ -4,8 +4,10 @@
 
 {% block page_content %}
 <div class="grid text-center" style="--bs-rows: 6; --bs-columns: 4;">
+  {# Student information #}
   <div class="row">
     <div class="col-lg-1 text-start my-3"><i class="bi bi-person-fill"></i></div>
+    <div class="col-lg-3 text-start my-3">Student information</div>
   </div>
   <div class="row">
     <div class="col-lg-2 text-start my-2 fw-bold">Identity Document</div>
@@ -35,5 +37,45 @@
     <div class="col-lg-2 text-start my-2 fw-bold">Phone Number</div>
     <div class="col-lg-4 text-start my-2">{{ student.phone_number }}</div>
   </div>
+  {# Class Information #}
+  {% if student.class_id is not none %}
+    <div class="row">
+      <div class="col-lg-1 text-start my-3"><i class="bi bi-clock-fill"></i></div>
+      <div class="col-lg-3 text-start my-3">Class information</div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 text-start my-2 fw-bold">Class</div>
+      <div class="col-lg-4 text-start my-2">{{ class_ }}</div>
+    </div>
+  {% endif %}
+  {# Representative Information #}
+  {% if student.representative_id is not none %}
+    <div class="row">
+      <div class="col-lg-1 text-start my-3"><i class="bi bi-people-fill"></i></div>
+      <div class="col-lg-3 text-start my-3">Representative information</div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 text-start my-2 fw-bold">Identity Document</div>
+      <div class="col-lg-4 text-start my-2">{{ representative.identity_document }}</div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 text-start my-2 fw-bold">First Name</div>
+      <div class="col-lg-4 text-start my-2">{{ representative.first_name }}</div>
+      <div class="col-lg-2 text-start my-2 fw-bold">Second Name</div>
+      <div class="col-lg-4 text-start my-2">{{ representative.second_name if representative.second_name else '' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 text-start my-2 fw-bold">First Surname</div>
+      <div class="col-lg-4 text-start my-2">{{ representative.first_surname }}</div>
+      <div class="col-lg-2 text-start my-2 fw-bold">Second Surname</div>
+      <div class="col-lg-4 text-start my-2">{{ representative.second_surname if representative.second_surname else '' }}</div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2 text-start my-2 fw-bold">Email</div>
+      <div class="col-lg-4 text-start my-2">{{ representative.email }}</div>
+      <div class="col-lg-2 text-start my-2 fw-bold">Phone Number</div>
+      <div class="col-lg-4 text-start my-2">{{ representative.phone_number }}</div>
+    </div>
+  {% endif %}
 </div>
 {% endblock %}
