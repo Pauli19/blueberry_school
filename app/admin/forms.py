@@ -11,7 +11,7 @@ class RepresentativeForm(FlaskForm):
     """This class represents a form to create a representative."""
 
     identity_document = StringField(
-        "Identity Document", validators=[InputRequired(), Length(min=10, max=10)]
+        "Identity Document", validators=[InputRequired()]
     )
     first_name = StringField("First Name", validators=[InputRequired()])
     second_name = StringField("Second Name")
