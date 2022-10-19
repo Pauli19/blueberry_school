@@ -9,7 +9,7 @@ from sqlalchemy import select
 from .. import db
 from ..models import Class, Cycle, Payment, Representative, Student
 from . import admin
-from .forms import RepresentativeForm
+from .forms import RepresentativeForm, StudentForm
 
 
 @admin.get("/")
@@ -30,6 +30,99 @@ def student_table() -> str:
     )
 
     return render_template("admin/student/table-view.html.jinja", students=students)
+
+
+@admin.get("/student/create")
+@login_required
+def create_student_get() -> str:
+    """View function for "/student/create" when the method is GET."""
+    form = StudentForm()
+    return render_template("admin/student/create.html.jinja", form=form)
+
+
+@admin.post("/student/create")
+@login_required
+def create_student_post() -> Response:
+    """View function for "/student/create" when the method is POST."""
+    form = StudentForm()
+    if form.validate():
+        identity_document = form.identity_document.data
+        first_name = form.first_name.data
+        second_name = form.second_name.data
+        first_surname = form.first_surname.data
+        second_surname = form.second_surname.data
+        sex = form.sex.data
+        birth_date = form.birth_date.data
+        email = form.email.data
+        phone_number = form.phone_number.data
+        representative_id = form.representative.data
+        class_id = form.class_.data
+
+        student = Student(
+            identity_document=identity_document,
+            first_name=first_name,
+            second_name=second_name,
+            first_surname=first_surname,
+            second_surname=second_surname,
+            sex=sex,
+            birth_date=birth_date,
+            email=email,
+            phone_number=phone_number,
+        )
+
+        if form.representative.data != "" and form.class_.data != "":
+            student = Student(
+                identity_document=identity_document,
+                first_name=first_name,
+                second_name=second_name,
+                first_surname=first_surname,
+                second_surname=second_surname,
+                sex=sex,
+                birth_date=birth_date,
+                email=email,
+                phone_number=phone_number,
+                representative_id=representative_id,
+                class_id=class_id,
+            )
+
+        if form.representative.data != "":
+            student = Student(
+                identity_document=identity_document,
+                first_name=first_name,
+                second_name=second_name,
+                first_surname=first_surname,
+                second_surname=second_surname,
+                sex=sex,
+                birth_date=birth_date,
+                email=email,
+                phone_number=phone_number,
+                representative_id=representative_id,
+            )
+
+        if form.class_.data != "":
+            student = Student(
+                identity_document=identity_document,
+                first_name=first_name,
+                second_name=second_name,
+                first_surname=first_surname,
+                second_surname=second_surname,
+                sex=sex,
+                birth_date=birth_date,
+                email=email,
+                phone_number=phone_number,
+                class_id=class_id,
+            )
+
+        session = db.session
+        session.add(student)
+        session.commit()
+
+        return redirect(url_for("admin.student_table"))
+
+    if form.errors:
+        flash(form.errors, "danger")
+
+    return redirect(url_for("admin.create_student_get"))
 
 
 @admin.get("/student/<int:student_id>")
@@ -82,6 +175,7 @@ def create_representative_post() -> Response:
         first_name = form.first_name.data
         second_name = form.second_name.data
         first_surname = form.first_surname.data
+        second_surname = form.second_surname.data
         sex = form.sex.data
         email = form.email.data
         phone_number = form.phone_number.data
@@ -91,6 +185,7 @@ def create_representative_post() -> Response:
             first_name=first_name,
             second_name=second_name,
             first_surname=first_surname,
+            second_surname=second_surname,
             sex=sex,
             email=email,
             phone_number=phone_number,
