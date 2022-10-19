@@ -2,13 +2,14 @@
 This module contains view functions associated with `admin` blueprint.
 """
 
-from flask import render_template
+from flask import Response, flash, redirect, render_template, url_for
 from flask_login import login_required
 from sqlalchemy import select
 
 from .. import db
 from ..models import Class, Cycle, Payment, Representative, Student
 from . import admin
+from .forms import RepresentativeForm
 
 
 @admin.get("/")
@@ -61,6 +62,50 @@ def representative_table() -> str:
     return render_template(
         "admin/representative/table-view.html.jinja", representatives=representatives
     )
+
+
+@admin.get("/representative/create")
+@login_required
+def create_representative_get() -> str:
+    """View function for "/representative/create" when the method is GET."""
+    form = RepresentativeForm()
+    return render_template("admin/representative/create.html.jinja", form=form)
+
+
+@admin.post("/representative/create")
+@login_required
+def create_representative_post() -> Response:
+    """View function for "/representative/create" when the method is POST."""
+    form = RepresentativeForm()
+    if form.validate():
+        identity_document = form.identity_document.data
+        first_name = form.first_name.data
+        second_name = form.second_name.data
+        first_surname = form.first_surname.data
+        sex = form.sex.data
+        email = form.email.data
+        phone_number = form.phone_number.data
+
+        representative = Representative(
+            identity_document=identity_document,
+            first_name=first_name,
+            second_name=second_name,
+            first_surname=first_surname,
+            sex=sex,
+            email=email,
+            phone_number=phone_number,
+        )
+
+        session = db.session
+        session.add(representative)
+        session.commit()
+
+        return redirect(url_for("admin.representative_table"))
+
+    if form.errors:
+        flash(form.errors, "danger")
+
+    return redirect(url_for("admin.create_representative_get"))
 
 
 @admin.get("/cycle")
