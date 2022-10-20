@@ -108,6 +108,7 @@ class CycleForm(FlaskForm):
             (Month.NOVEMBER.name, Month.NOVEMBER.value),
             (Month.DECEMBER.name, Month.DECEMBER.value),
         ],
+        validators=[InputRequired()],
     )
     year = IntegerField("Year", validators=[InputRequired(), NumberRange(min=2022)])
     start_date = DateField("Start Date", validators=[InputRequired()])

@@ -227,6 +227,36 @@ def create_cycle_get() -> str:
     return render_template("admin/cycle/create.html.jinja", form=form)
 
 
+@admin.post("/cycle/create")
+@login_required
+def create_cycle_post() -> Response:
+    """View function for "/cycle/create" when the method is POST."""
+    form = CycleForm()
+    if form.validate():
+        month = form.month.data
+        year = form.year.data
+        start_date = form.start_date.data
+        end_date = form.end_date.data
+
+        cycle = Cycle(
+            month=month,
+            year=year,
+            start_date=start_date,
+            end_date=end_date,
+        )
+
+        session = db.session
+        session.add(cycle)
+        session.commit()
+
+        return redirect(url_for("admin.cycle_table"))
+
+    if form.errors:
+        flash(form.errors, "danger")
+
+    return redirect(url_for("admin.create_cycle_get"))
+
+
 @admin.get("/class")
 @login_required
 def class_table() -> str:
