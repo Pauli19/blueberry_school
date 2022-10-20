@@ -54,6 +54,7 @@ class StudentForm(FlaskForm):
             (Sex.FEMALE.name, Sex.FEMALE.value),
             (Sex.MALE.name, Sex.MALE.value),
         ],
+        validators=[InputRequired()],
     )
     birth_date = DateField("Birth Date", validators=[InputRequired()])
     email = EmailField("Email", validators=[Email()])
