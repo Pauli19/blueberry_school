@@ -203,6 +203,26 @@ def create_representative_post() -> Response:
     return redirect(url_for("admin.create_representative_get"))
 
 
+@admin.get("/representative/edit/<int:representative_id>")
+@login_required
+def edit_representative_get(student_id: int) -> str:
+    """
+    View function for "/representative/edit/<int:representative_id>"
+    when the method is GET.
+    """
+    representative: Representative = db.one_or_404(
+        select(Student).where(Student.id == student_id)
+    )
+    form = RepresentativeForm()
+    form.identity_document.data = representative.identity_document
+    form.first_name.data = representative.first_name
+    form.second_name.data = representative.second_name
+    form.first_surname.data = representative.first_surname
+    form.second_surname.data = representative.second_surname
+    form.email.data = representative.email
+    form.phone_number.data = representative.phone_number
+
+
 @admin.get("/cycle")
 @login_required
 def cycle_table() -> str:
