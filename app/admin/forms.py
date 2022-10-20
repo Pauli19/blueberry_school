@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from sqlalchemy import select
 from wtforms import (
     DateField,
+    DateTimeField,
     EmailField,
     IntegerField,
     SelectField,
@@ -14,7 +15,7 @@ from wtforms import (
 from wtforms.validators import Email, InputRequired, NumberRange
 
 from .. import db
-from ..models import Class, Month, Representative, Sex
+from ..models import Class, Cycle, Level, Mode, Month, Representative, Sex, SubLevel
 
 
 class RepresentativeForm(FlaskForm):
@@ -53,6 +54,7 @@ class StudentForm(FlaskForm):
             (Sex.FEMALE.name, Sex.FEMALE.value),
             (Sex.MALE.name, Sex.MALE.value),
         ],
+        validators=[InputRequired()],
     )
     birth_date = DateField("Birth Date", validators=[InputRequired()])
     email = EmailField("Email", validators=[Email()])
@@ -120,3 +122,57 @@ class CycleForm(FlaskForm):
     start_date = DateField("Start Date", validators=[InputRequired()])
     end_date = DateField("End Date", validators=[InputRequired()])
     submit = SubmitField("Create")
+
+
+class ClassForm(FlaskForm):
+    """This class represents a form to create a class for students."""
+
+    mode = SelectField(
+        "Mode",
+        choices=[
+            ("", "---"),
+            (Mode.NORMAL.name, Mode.NORMAL.value),
+            (Mode.INTENSIVE.name, Mode.INTENSIVE.value),
+        ],
+        validators=[InputRequired()],
+    )
+    start_at = DateTimeField("Start At", format="%H:%M", validators=[InputRequired()])
+    end_at = DateTimeField("End At", format="%H:%M", validators=[InputRequired()])
+    cycle = SelectField("Cycle", validators=[InputRequired()])
+    level = SelectField(
+        "Level",
+        choices=[
+            ("", "---"),
+            (Level.L1.name, Level.L1.value),
+            (Level.L2.name, Level.L2.value),
+            (Level.L3.name, Level.L3.value),
+        ],
+        validators=[InputRequired()],
+    )
+    sub_level = SelectField(
+        "SubLevel",
+        choices=[
+            ("", "---"),
+            (SubLevel.P1.name, SubLevel.P1.value),
+            (SubLevel.P2.name, SubLevel.P2.value),
+            (SubLevel.P3.name, SubLevel.P3.value),
+            (SubLevel.P4.name, SubLevel.P4.value),
+        ],
+        validators=[InputRequired()],
+    )
+    submit = SubmitField("Create")
+
+    def __init__(self) -> None:
+        super().__init__()
+        cycle_choices = [("", "---")]
+        cycle_choices.extend(
+            [
+                (cycle.id, str(cycle))
+                for cycle in (
+                    db.session.execute(select(Cycle).order_by(Cycle.created_at.desc()))
+                    .scalars()
+                    .all()
+                )
+            ]
+        )
+        self.cycle.choices = cycle_choices
