@@ -287,6 +287,7 @@ def create_class_post() -> Response:
         mode = form.mode.data
         start_at = form.start_at.data
         end_at = form.end_at.data
+        cycle_id = form.cycle.data
         level = form.level.data
         sub_level = form.sub_level.data
 
@@ -294,6 +295,7 @@ def create_class_post() -> Response:
             mode=mode,
             start_at=start_at,
             end_at=end_at,
+            cycle_id=cycle_id,
             level=level,
             sub_level=sub_level,
         )
