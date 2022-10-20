@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from sqlalchemy import select
 from wtforms import (
     DateField,
+    DateTimeField,
     EmailField,
     IntegerField,
     SelectField,
@@ -14,7 +15,7 @@ from wtforms import (
 from wtforms.validators import Email, InputRequired, NumberRange
 
 from .. import db
-from ..models import Class, Month, Representative, Sex
+from ..models import Class, Level, Mode, Month, Representative, Sex, SubLevel
 
 
 class RepresentativeForm(FlaskForm):
@@ -119,4 +120,39 @@ class CycleForm(FlaskForm):
     year = IntegerField("Year", validators=[InputRequired(), NumberRange(min=2022)])
     start_date = DateField("Start Date", validators=[InputRequired()])
     end_date = DateField("End Date", validators=[InputRequired()])
+    submit = SubmitField("Create")
+
+
+class ClassForm(FlaskForm):
+    """This class represents a form to create a class for students."""
+
+    mode = SelectField(
+        "Mode",
+        choices=[
+            ("", "---"),
+            (Mode.NORMAL.name, Mode.NORMAL.value),
+            (Mode.INTENSIVE.name, Mode.INTENSIVE.value),
+        ],
+    )
+    start_at = DateTimeField("Start At", validators=[InputRequired()])
+    end_at = DateTimeField("End At", validators=[InputRequired()])
+    level = SelectField(
+        "Level",
+        choices=[
+            ("", "---"),
+            (Level.L1.name, Level.L1.value),
+            (Level.L2.name, Level.L2.value),
+            (Level.L3.name, Level.L3.value),
+        ],
+    )
+    sub_level = SelectField(
+        "SubLevel",
+        choices=[
+            ("", "---"),
+            (SubLevel.P1.name, SubLevel.P1.value),
+            (SubLevel.P2.name, SubLevel.P2.value),
+            (SubLevel.P3.name, SubLevel.P3.value),
+            (SubLevel.P4.name, SubLevel.P4.value),
+        ],
+    )
     submit = SubmitField("Create")
