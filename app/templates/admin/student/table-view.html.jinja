@@ -4,6 +4,13 @@
 
 {% block page_content %}
 <h1>Student Table</h1>
+{# Create Student #}
+<div class="row">
+  <div class="col-lg-3 text-start my-3">
+    <a class="btn btn-primary" href="{{ url_for('admin.create_student_get')}}" role="button"><i class="bi bi-plus"></i> Create</a>
+  </div>
+</div>
+{# Student Table #}
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
