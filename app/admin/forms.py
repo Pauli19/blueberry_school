@@ -5,17 +5,29 @@ from sqlalchemy import select
 from wtforms import (
     DateField,
     DateTimeField,
+    DecimalField,
     EmailField,
     IntegerField,
     SelectField,
     StringField,
     SubmitField,
     TelField,
+    TextAreaField,
 )
 from wtforms.validators import Email, InputRequired, NumberRange
 
 from .. import db
-from ..models import Class, Cycle, Level, Mode, Month, Representative, Sex, SubLevel
+from ..models import (
+    Class,
+    Cycle,
+    Level,
+    Mode,
+    Month,
+    Representative,
+    Sex,
+    Student,
+    SubLevel,
+)
 
 
 class RepresentativeForm(FlaskForm):
@@ -164,6 +176,54 @@ class ClassForm(FlaskForm):
 
     def __init__(self) -> None:
         super().__init__()
+        cycle_choices = [("", "---")]
+        cycle_choices.extend(
+            [
+                (cycle.id, str(cycle))
+                for cycle in (
+                    db.session.execute(select(Cycle).order_by(Cycle.created_at.desc()))
+                    .scalars()
+                    .all()
+                )
+            ]
+        )
+        self.cycle.choices = cycle_choices
+
+
+class PaymentForm(FlaskForm):
+    """This class represents a form to create a payment."""
+
+    amount = DecimalField(
+        "Amount",
+        places=2,
+        rounding=None,
+        validators=[InputRequired(), NumberRange(min=0.01)],
+    )
+    discount = DecimalField(
+        "Discount", default=0, places=2, rounding=None, validators=[NumberRange(min=0)]
+    )
+    description = TextAreaField("Description")
+    student = SelectField("Student")
+    cycle = SelectField("Cycle")
+    submit = SubmitField("Create")
+
+    def __init__(self) -> None:
+        super().__init__()
+        student_choices = [("", "---")]
+        student_choices.extend(
+            [
+                (student.id, str(student))
+                for student in (
+                    db.session.execute(
+                        select(Student).order_by(Student.created_at.desc())
+                    )
+                    .scalars()
+                    .all()
+                )
+            ]
+        )
+        self.student.choices = student_choices
+
         cycle_choices = [("", "---")]
         cycle_choices.extend(
             [
