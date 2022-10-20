@@ -15,6 +15,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+        <th scope="col"></th>
         <th scope="col">ID</th>
         <th scope="col">Identity Document</th>
         <th scope="col">First Name</th>
@@ -26,6 +27,13 @@
     <tbody>
       {% for representative in representatives %}
       <tr>
+        <td>
+          <ul class="list-unstyled">
+            <li>
+              <a class="text-dark" href="{{ url_for('admin.edit_representative_get', representative_id=representative.id) }}"><i class="bi bi-eye"></i></a>
+            </li>
+          </ul>
+        </td>
         <td>{{ representative.id }}</td>
         <td>{{ representative.identity_document }}</td>
         <td>{{ representative.first_name }}</td>
