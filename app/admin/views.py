@@ -205,13 +205,13 @@ def create_representative_post() -> Response:
 
 @admin.get("/representative/edit/<int:representative_id>")
 @login_required
-def edit_representative_get(student_id: int) -> str:
+def edit_representative_get(representative_id: int) -> str:
     """
     View function for "/representative/edit/<int:representative_id>"
     when the method is GET.
     """
     representative: Representative = db.one_or_404(
-        select(Student).where(Student.id == student_id)
+        select(Representative).where(Representative.id == representative_id)
     )
     form = RepresentativeForm()
     form.identity_document.data = representative.identity_document
@@ -219,8 +219,15 @@ def edit_representative_get(student_id: int) -> str:
     form.second_name.data = representative.second_name
     form.first_surname.data = representative.first_surname
     form.second_surname.data = representative.second_surname
+    form.sex.data = representative.sex
     form.email.data = representative.email
     form.phone_number.data = representative.phone_number
+
+    return render_template(
+        "admin/representative/edit.html.jinja",
+        representative=representative,
+        form=form,
+    )
 
 
 @admin.get("/cycle")
