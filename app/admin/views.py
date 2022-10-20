@@ -230,6 +230,33 @@ def edit_representative_get(representative_id: int) -> str:
     )
 
 
+@admin.post("/representative/edit/<int:representative_id>")
+@login_required
+def edit_representative_post(representative_id: int) -> Response:
+    """
+    View function for "/representative/edit/<int:representative_id>"
+    when the method is POST.
+    """
+    form = RepresentativeForm()
+    representative: Representative = db.one_or_404(
+        select(Representative).where(Representative.id == representative_id)
+    )
+    representative.identity_document = form.identity_document.data
+    representative.first_name = form.first_name.data
+    representative.second_name = form.second_name.data
+    representative.first_surname = form.first_surname.data
+    representative.second_surname = form.second_surname.data
+    representative.sex = form.sex.data
+    representative.email = form.email.data
+    representative.phone_number = form.phone_number.data
+
+    session = db.session
+    session.add(representative)
+    session.commit()
+
+    return redirect(url_for("admin.representative_table"))
+
+
 @admin.get("/cycle")
 @login_required
 def cycle_table() -> str:

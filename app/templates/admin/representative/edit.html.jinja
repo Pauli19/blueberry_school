@@ -7,7 +7,7 @@
 <h3>Edit Representative</h3>
 <div class="row">
   <div class="col-lg-3">
-    {{ render_form(form, action=url_for('admin.edit_representative_get')) }}
+    {{ render_form(form, action=url_for('admin.edit_representative_post, representative_id=representative.id')) }}
   </div>
 </div>
 {% endblock %}
