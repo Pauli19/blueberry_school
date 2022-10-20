@@ -9,7 +9,7 @@ from sqlalchemy import select
 from .. import db
 from ..models import Class, Cycle, Payment, Representative, Student
 from . import admin
-from .forms import RepresentativeForm, StudentForm
+from .forms import CycleForm, RepresentativeForm, StudentForm
 
 
 @admin.get("/")
@@ -217,6 +217,14 @@ def cycle_table() -> str:
         "admin/cycle/table-view.html.jinja",
         cycles=cycles,
     )
+
+
+@admin.get("/cycle/create")
+@login_required
+def create_cycle_get() -> str:
+    """View function for "/cycle/create" when the method is GET."""
+    form = CycleForm()
+    return render_template("admin/cycle/create.html.jinja", form=form)
 
 
 @admin.get("/class")
