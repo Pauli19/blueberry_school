@@ -251,7 +251,6 @@ def edit_representative_post(representative_id: int) -> Response:
     representative.phone_number = form.phone_number.data
 
     session = db.session
-    session.add(representative)
     session.commit()
 
     return redirect(url_for("admin.representative_table"))
