@@ -194,7 +194,7 @@ class PaymentForm(FlaskForm):
     """This class represents a form to create a payment."""
 
     amount = DecimalField("Amount", places=2, validators=[InputRequired()])
-    discount = DecimalField("Discount", places=2, validators=[InputRequired()])
+    discount = DecimalField("Discount", places=2)
     description = TextAreaField("Description")
     student = SelectField("Student")
     cycle = SelectField("Cycle")
