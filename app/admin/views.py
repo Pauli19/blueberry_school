@@ -343,3 +343,35 @@ def create_payment_get() -> str:
     """View function for "/payment/create" when the method is GET."""
     form = PaymentForm()
     return render_template("admin/payment/create.html.jinja", form=form)
+
+
+@admin.post("/payment/create")
+@login_required
+def create_payment_post() -> Response:
+    """View function for "/payment/create" when the method is POST."""
+    form = PaymentForm()
+    if form.validate():
+        amount = form.amount.data
+        discount = form.discount.data
+        description = form.description.data
+        student_id = form.student.data
+        cycle_id = form.cycle.data
+
+        payment = Payment(
+            amount=amount,
+            discount=discount,
+            description=description,
+            student_id=student_id,
+            cycle_id=cycle_id,
+        )
+
+        session = db.session
+        session.add(payment)
+        session.commit()
+
+        return redirect(url_for("admin.payment_table"))
+
+    if form.errors:
+        flash(form.errors, "danger")
+
+    return redirect(url_for("admin.create_payment_get"))
