@@ -5,15 +5,16 @@ from sqlalchemy import select
 from wtforms import (
     DateField,
     EmailField,
+    IntegerField,
     SelectField,
     StringField,
     SubmitField,
     TelField,
 )
-from wtforms.validators import Email, InputRequired
+from wtforms.validators import Email, InputRequired, NumberRange
 
 from .. import db
-from ..models import Class, Representative, Sex
+from ..models import Class, Month, Representative, Sex
 
 
 class RepresentativeForm(FlaskForm):
@@ -91,3 +92,31 @@ class StudentForm(FlaskForm):
             ]
         )
         self.class_.choices = class_choices
+
+
+class CycleForm(FlaskForm):
+    """This class represents a form to create a cycle."""
+
+    month = SelectField(
+        "Month",
+        choices=[
+            ("", "---"),
+            (Month.JANUARY.name, Month.JANUARY.value),
+            (Month.FEBRUARY.name, Month.FEBRUARY.value),
+            (Month.MARCH.name, Month.MARCH.value),
+            (Month.APRIL.name, Month.APRIL.value),
+            (Month.MAY.name, Month.MAY.value),
+            (Month.JUNE.name, Month.JUNE.value),
+            (Month.JULY.name, Month.JULY.value),
+            (Month.AUGUST.name, Month.AUGUST.value),
+            (Month.SEPTEMBER.name, Month.SEPTEMBER.value),
+            (Month.OCTOBER.name, Month.OCTOBER.value),
+            (Month.NOVEMBER.name, Month.NOVEMBER.value),
+            (Month.DECEMBER.name, Month.DECEMBER.value),
+        ],
+        validators=[InputRequired()],
+    )
+    year = IntegerField("Year", validators=[InputRequired(), NumberRange(min=2022)])
+    start_date = DateField("Start Date", validators=[InputRequired()])
+    end_date = DateField("End Date", validators=[InputRequired()])
+    submit = SubmitField("Create")
