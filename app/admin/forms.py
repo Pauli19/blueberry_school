@@ -63,29 +63,35 @@ class StudentForm(FlaskForm):
 
     def __init__(self) -> None:
         super().__init__()
-        self.representative.choices = [("", "No representative")]
-        representative_choices = [
-            (representative.id, str(representative))
-            for representative in (
-                db.session.execute(
-                    select(Representative).order_by(Representative.created_at.desc())
+        representative_choices = [("", "No representative")]
+        representative_choices.extend(
+            [
+                (representative.id, str(representative))
+                for representative in (
+                    db.session.execute(
+                        select(Representative).order_by(
+                            Representative.created_at.desc()
+                        )
+                    )
+                    .scalars()
+                    .all()
                 )
-                .scalars()
-                .all()
-            )
-        ]
-        self.representative.choices.extend(representative_choices)
+            ]
+        )
+        self.representative.choices = representative_choices
 
-        self.class_.choices = [("", "No class")]
-        class_choices = [
-            (class_.id, str(class_))
-            for class_ in (
-                db.session.execute(select(Class).order_by(Class.created_at.desc()))
-                .scalars()
-                .all()
-            )
-        ]
-        self.class_.choices.extend(class_choices)
+        class_choices = [("", "No class")]
+        class_choices.extend(
+            [
+                (class_.id, str(class_))
+                for class_ in (
+                    db.session.execute(select(Class).order_by(Class.created_at.desc()))
+                    .scalars()
+                    .all()
+                )
+            ]
+        )
+        self.class_.choices = class_choices
 
 
 class CycleForm(FlaskForm):
