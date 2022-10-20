@@ -278,6 +278,38 @@ def create_class_get() -> str:
     return render_template("admin/class/create.html.jinja", form=form)
 
 
+@admin.post("/class/create")
+@login_required
+def create_class_post() -> Response:
+    """View function for "/class/create" when the method is POST."""
+    form = ClassForm()
+    if form.validate():
+        mode = form.mode.data
+        start_at = form.start_at.data
+        end_at = form.end_at.data
+        level = form.level.data
+        sub_level = form.sub_level.data
+
+        class_ = Class(
+            mode=mode,
+            start_at=start_at,
+            end_at=end_at,
+            level=level,
+            sub_level=sub_level,
+        )
+
+        session = db.session
+        session.add(class_)
+        session.commit()
+
+        return redirect(url_for("admin.class_table"))
+
+    if form.errors:
+        flash(form.errors, "danger")
+
+    return redirect(url_for("admin.create_class_get"))
+
+
 @admin.get("/class/<int:class_id>")
 @login_required
 def class_view(class_id: int) -> str:
