@@ -1,6 +1,9 @@
 """This module contains forms for `admin` blueprint."""
 
+from typing import Any
+
 from flask_wtf import FlaskForm
+from markupsafe import Markup
 from sqlalchemy import select
 from wtforms import (
     DateField,
@@ -28,6 +31,18 @@ from ..models import (
     Student,
     SubLevel,
 )
+
+
+class DeleteButtonWidget:  # pylint: disable=too-few-public-methods
+    """This class represents a custom delete button widget."""
+
+    def __call__(self, field: SubmitField, **kwargs: Any) -> Markup:
+        style = "padding: 0;border: none;background:none;"
+        html = (
+            f'<button id={field.name} class="text-dark" style="{style}">'
+            '<i class="bi bi-trash"></i></button>'
+        )
+        return Markup(html)
 
 
 class RepresentativeFormMixin(FlaskForm):
