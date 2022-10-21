@@ -409,6 +409,12 @@ def edit_class_get(class_id: int) -> str:
     """View function for "/class/edit/<int:class_id>" when the method is POST."""
     class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
     form = ClassEditForm()
+    form.mode.data = class_.mode.name
+    form.start_at.data = class_.start_at
+    form.end_at.data = class_.end_at
+    form.level.data = class_.level.name
+    form.sub_level.data = class_.sub_level.name
+    form.cycle.data = str(class_.cycle_id)
 
     return render_template("admin/class/edit.html.jinja", form=form, class_=class_)
 
