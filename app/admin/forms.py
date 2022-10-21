@@ -62,8 +62,8 @@ class RepresentativeEditForm(RepresentativeFormMixin):
     submit = SubmitField("Save")
 
 
-class StudentForm(FlaskForm):
-    """This class represents a form to create a student."""
+class StudentFormMixin(FlaskForm):
+    """This class is a mixin form for a student."""
 
     identity_document = StringField("Identity Document", validators=[InputRequired()])
     first_name = StringField("First Name", validators=[InputRequired()])
@@ -84,7 +84,6 @@ class StudentForm(FlaskForm):
     phone_number = TelField("Phone Number", validators=[InputRequired()])
     representative = SelectField("Representative")
     class_ = SelectField("Class")
-    submit = SubmitField("Create")
 
     def __init__(self) -> None:
         super().__init__()
@@ -117,6 +116,18 @@ class StudentForm(FlaskForm):
             ]
         )
         self.class_.choices = class_choices
+
+
+class StudentCreateForm(StudentFormMixin):
+    """This class represents a form to create a student."""
+
+    submit = SubmitField("Create")
+
+
+class StudentEditForm(StudentFormMixin):
+    """This class represents a form to edit a student."""
+
+    submit = SubmitField("Save")
 
 
 class CycleForm(FlaskForm):

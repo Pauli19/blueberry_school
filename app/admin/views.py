@@ -15,7 +15,8 @@ from .forms import (
     PaymentForm,
     RepresentativeCreateForm,
     RepresentativeEditForm,
-    StudentForm,
+    StudentCreateForm,
+    StudentEditForm,
 )
 
 
@@ -43,7 +44,7 @@ def student_table() -> str:
 @login_required
 def create_student_get() -> str:
     """View function for "/student/create" when the method is GET."""
-    form = StudentForm()
+    form = StudentCreateForm()
     return render_template("admin/student/create.html.jinja", form=form)
 
 
@@ -51,7 +52,7 @@ def create_student_get() -> str:
 @login_required
 def create_student_post() -> Response:
     """View function for "/student/create" when the method is POST."""
-    form = StudentForm()
+    form = StudentCreateForm()
     if form.validate():
         identity_document = form.identity_document.data
         first_name = form.first_name.data
@@ -77,48 +78,11 @@ def create_student_post() -> Response:
             phone_number=phone_number,
         )
 
-        if form.representative.data != "" and form.class_.data != "":
-            student = Student(
-                identity_document=identity_document,
-                first_name=first_name,
-                second_name=second_name,
-                first_surname=first_surname,
-                second_surname=second_surname,
-                sex=sex,
-                birth_date=birth_date,
-                email=email,
-                phone_number=phone_number,
-                representative_id=representative_id,
-                class_id=class_id,
-            )
-
         if form.representative.data != "":
-            student = Student(
-                identity_document=identity_document,
-                first_name=first_name,
-                second_name=second_name,
-                first_surname=first_surname,
-                second_surname=second_surname,
-                sex=sex,
-                birth_date=birth_date,
-                email=email,
-                phone_number=phone_number,
-                representative_id=representative_id,
-            )
+            student.representative_id = int(representative_id)
 
         if form.class_.data != "":
-            student = Student(
-                identity_document=identity_document,
-                first_name=first_name,
-                second_name=second_name,
-                first_surname=first_surname,
-                second_surname=second_surname,
-                sex=sex,
-                birth_date=birth_date,
-                email=email,
-                phone_number=phone_number,
-                class_id=class_id,
-            )
+            student.class_id = int(class_id)
 
         session = db.session
         session.add(student)
@@ -145,6 +109,61 @@ def student_view(student_id: int) -> str:
         representative=representative,
         class_=class_,
     )
+
+
+@admin.get("/student/edit/<int:student_id>")
+@login_required
+def edit_student_get(student_id: int) -> str:
+    """View function for "/student/edit/<int:student_id>" when the method is GET."""
+    student: Student = db.one_or_404(select(Student).where(Student.id == student_id))
+    form = StudentEditForm()
+    form.identity_document.data = student.identity_document
+    form.first_name.data = student.first_name
+    form.second_name.data = student.second_name
+    form.first_surname.data = student.first_surname
+    form.second_surname.data = student.second_surname
+    form.birth_date.data = student.birth_date
+    form.sex.data = student.sex.name
+    form.email.data = student.email
+    form.phone_number.data = student.phone_number.e164
+    form.representative.data = str(student.representative_id)
+    form.class_.data = str(student.class_id)
+
+    return render_template("admin/student/edit.html.jinja", form=form, student=student)
+
+
+@admin.post("/student/edit/<int:student_id>")
+@login_required
+def edit_student_post(student_id: int) -> Response:
+    """View function for "/student/edit/<int:student_id>" when the method is POST."""
+    form = StudentEditForm()
+    if form.validate():
+        student: Student = db.one_or_404(
+            select(Student).where(Student.id == student_id)
+        )
+        student.identity_document = form.identity_document.data
+        student.first_name = form.first_name.data
+        student.second_name = form.second_name.data
+        student.first_surname = form.first_surname.data
+        student.second_surname = form.second_surname.data
+        student.birth_date = form.birth_date.data
+        student.sex = form.sex.data
+        student.email = form.email.data
+        student.phone_number = form.phone_number.data
+
+        representative_data = form.representative.data
+        student.representative_id = (
+            int(representative_data) if representative_data != "" else None
+        )
+        class_data = form.class_.data
+        student.class_id = int(class_data) if class_data != "" else None
+
+        db.session.commit()
+
+        if form.errors:
+            flash(form.errors, "danger")
+
+    return redirect(url_for("admin.student_table"))
 
 
 @admin.get("/representative")
