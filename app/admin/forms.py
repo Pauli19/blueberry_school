@@ -158,8 +158,8 @@ class CycleForm(FlaskForm):
     submit = SubmitField("Create")
 
 
-class ClassForm(FlaskForm):
-    """This class represents a form to create a class for students."""
+class ClassFormMixin(FlaskForm):
+    """This class is a mixin form for a class for students."""
 
     mode = SelectField(
         "Mode",
@@ -210,6 +210,18 @@ class ClassForm(FlaskForm):
             ]
         )
         self.cycle.choices = cycle_choices
+
+
+class ClassCreateFrom(ClassFormMixin):
+    """This class represents a form to create a class for students."""
+
+    submit = SubmitField("Create")
+
+
+class ClassEditForm(ClassFormMixin):
+    """This class represents a form to edit a class for students."""
+
+    submit = SubmitField("Save")
 
 
 class PaymentForm(FlaskForm):
