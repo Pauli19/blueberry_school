@@ -163,8 +163,8 @@ def edit_student_get(student_id: int) -> str:
     form.sex.data = student.sex.name
     form.email.data = student.email
     form.phone_number.data = student.phone_number.e164
-    form.representative.data = student.representative_id
-    form.class_.data = student.class_id
+    form.representative.data = str(student.representative_id)
+    form.class_.data = str(student.class_id)
 
     return render_template("admin/student/edit.html.jinja", form=form, student=student)
 
@@ -184,8 +184,43 @@ def edit_student_post(student_id: int) -> Response:
     student.sex = form.sex.data
     student.email = form.email.data
     student.phone_number = form.phone_number.data
-    student.representative_id = form.representative.data
-    student.class_id = form.class_.data
+
+    if form.representative.data != "" and form.class_.data != "":
+        student.identity_document = form.identity_document.data
+        student.first_name = form.first_name.data
+        student.second_name = form.second_name.data
+        student.first_surname = form.first_surname.data
+        student.second_surname = form.second_surname.data
+        student.birth_date = form.birth_date.data
+        student.sex = form.sex.data
+        student.email = form.email.data
+        student.phone_number = form.phone_number.data
+        student.representative_id = form.representative.data
+        student.class_id = form.class_.data
+
+    if form.representative.data != "":
+        student.identity_document = form.identity_document.data
+        student.first_name = form.first_name.data
+        student.second_name = form.second_name.data
+        student.first_surname = form.first_surname.data
+        student.second_surname = form.second_surname.data
+        student.birth_date = form.birth_date.data
+        student.sex = form.sex.data
+        student.email = form.email.data
+        student.phone_number = form.phone_number.data
+        student.representative_id = form.representative.data
+
+    if form.class_.data != "":
+        student.identity_document = form.identity_document.data
+        student.first_name = form.first_name.data
+        student.second_name = form.second_name.data
+        student.first_surname = form.first_surname.data
+        student.second_surname = form.second_surname.data
+        student.birth_date = form.birth_date.data
+        student.sex = form.sex.data
+        student.email = form.email.data
+        student.phone_number = form.phone_number.data
+        student.class_id = form.class_.data
 
     db.session.commit()
 
