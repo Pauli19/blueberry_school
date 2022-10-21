@@ -174,18 +174,10 @@ def edit_student_get(student_id: int) -> str:
 def edit_student_post(student_id: int) -> Response:
     """View function for "/student/edit/<int:student_id>" when the method is POST."""
     form = StudentEditForm()
-    student: Student = db.one_or_404(select(Student).where(Student.id == student_id))
-    student.identity_document = form.identity_document.data
-    student.first_name = form.first_name.data
-    student.second_name = form.second_name.data
-    student.first_surname = form.first_surname.data
-    student.second_surname = form.second_surname.data
-    student.birth_date = form.birth_date.data
-    student.sex = form.sex.data
-    student.email = form.email.data
-    student.phone_number = form.phone_number.data
-
-    if form.representative.data != "" and form.class_.data != "":
+    if form.validate():
+        student: Student = db.one_or_404(
+            select(Student).where(Student.id == student_id)
+        )
         student.identity_document = form.identity_document.data
         student.first_name = form.first_name.data
         student.second_name = form.second_name.data
@@ -195,34 +187,23 @@ def edit_student_post(student_id: int) -> Response:
         student.sex = form.sex.data
         student.email = form.email.data
         student.phone_number = form.phone_number.data
-        student.representative_id = form.representative.data
-        student.class_id = form.class_.data
 
-    if form.representative.data != "":
-        student.identity_document = form.identity_document.data
-        student.first_name = form.first_name.data
-        student.second_name = form.second_name.data
-        student.first_surname = form.first_surname.data
-        student.second_surname = form.second_surname.data
-        student.birth_date = form.birth_date.data
-        student.sex = form.sex.data
-        student.email = form.email.data
-        student.phone_number = form.phone_number.data
-        student.representative_id = form.representative.data
+        if form.representative.data != "":
+            student.representative_id = form.representative.data
 
-    if form.class_.data != "":
-        student.identity_document = form.identity_document.data
-        student.first_name = form.first_name.data
-        student.second_name = form.second_name.data
-        student.first_surname = form.first_surname.data
-        student.second_surname = form.second_surname.data
-        student.birth_date = form.birth_date.data
-        student.sex = form.sex.data
-        student.email = form.email.data
-        student.phone_number = form.phone_number.data
-        student.class_id = form.class_.data
+        if form.class_.data != "":
+            student.class_id = form.class_.data
 
-    db.session.commit()
+        if form.representative.data == "":
+            student.representative_id = None
+
+        if form.class_.data == "":
+            student.class_id = None
+
+        db.session.commit()
+
+        if form.errors:
+            flash(form.errors, "danger")
 
     return redirect(url_for("admin.student_table"))
 
