@@ -219,7 +219,7 @@ def edit_representative_get(representative_id: int) -> str:
     form.second_name.data = representative.second_name
     form.first_surname.data = representative.first_surname
     form.second_surname.data = representative.second_surname
-    form.sex.data = representative.sex
+    form.sex.data = representative.sex.value
     form.email.data = representative.email
     form.phone_number.data = representative.phone_number
 
