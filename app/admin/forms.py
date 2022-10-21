@@ -212,7 +212,7 @@ class ClassFormMixin(FlaskForm):
         self.cycle.choices = cycle_choices
 
 
-class ClassCreateFrom(ClassFormMixin):
+class ClassCreateForm(ClassFormMixin):
     """This class represents a form to create a class for students."""
 
     submit = SubmitField("Create")

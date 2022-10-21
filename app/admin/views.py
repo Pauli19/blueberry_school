@@ -10,7 +10,8 @@ from .. import db
 from ..models import Class, Cycle, Payment, Representative, Student
 from . import admin
 from .forms import (
-    ClassForm,
+    ClassCreateForm,
+    ClassEditForm,
     CycleForm,
     PaymentForm,
     RepresentativeCreateForm,
@@ -394,7 +395,7 @@ def class_table() -> str:
 @login_required
 def create_class_get() -> str:
     """View function for "/class/create" when the method is GET."""
-    form = ClassForm()
+    form = ClassCreateForm()
     return render_template("admin/class/create.html.jinja", form=form)
 
 
@@ -402,7 +403,7 @@ def create_class_get() -> str:
 @login_required
 def create_class_post() -> Response:
     """View function for "/class/create" when the method is POST."""
-    form = ClassForm()
+    form = ClassCreateForm()
     if form.validate():
         mode = form.mode.data
         start_at = form.start_at.data
@@ -442,6 +443,16 @@ def class_view(class_id: int) -> str:
     return render_template(
         "admin/class/class.html.jinja", class_=class_, cycle=cycle, students=students
     )
+
+
+@admin.get("/class/edit/<int:class_id>")
+@login_required
+def edit_class_get(class_id: int) -> str:
+    """View function for "/class/edit/<int:class_id>" when the method is POST."""
+    class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
+    form = ClassEditForm()
+
+    return render_template("admin/class/edit.html.jinja", form=form, class_=class_)
 
 
 @admin.get("/payment")
