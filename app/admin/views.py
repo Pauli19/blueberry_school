@@ -9,7 +9,14 @@ from sqlalchemy import select
 from .. import db
 from ..models import Class, Cycle, Payment, Representative, Student
 from . import admin
-from .forms import ClassForm, CycleForm, PaymentForm, RepresentativeForm, StudentForm
+from .forms import (
+    ClassForm,
+    CycleForm,
+    PaymentForm,
+    RepresentativeCreateForm,
+    RepresentativeEditForm,
+    StudentForm,
+)
 
 
 @admin.get("/")
@@ -161,7 +168,7 @@ def representative_table() -> str:
 @login_required
 def create_representative_get() -> str:
     """View function for "/representative/create" when the method is GET."""
-    form = RepresentativeForm()
+    form = RepresentativeCreateForm()
     return render_template("admin/representative/create.html.jinja", form=form)
 
 
@@ -169,7 +176,7 @@ def create_representative_get() -> str:
 @login_required
 def create_representative_post() -> Response:
     """View function for "/representative/create" when the method is POST."""
-    form = RepresentativeForm()
+    form = RepresentativeCreateForm()
     if form.validate():
         identity_document = form.identity_document.data
         first_name = form.first_name.data
@@ -201,6 +208,58 @@ def create_representative_post() -> Response:
         flash(form.errors, "danger")
 
     return redirect(url_for("admin.create_representative_get"))
+
+
+@admin.get("/representative/edit/<int:representative_id>")
+@login_required
+def edit_representative_get(representative_id: int) -> str:
+    """
+    View function for "/representative/edit/<int:representative_id>"
+    when the method is GET.
+    """
+    representative: Representative = db.one_or_404(
+        select(Representative).where(Representative.id == representative_id)
+    )
+    form = RepresentativeEditForm()
+    form.identity_document.data = representative.identity_document
+    form.first_name.data = representative.first_name
+    form.second_name.data = representative.second_name
+    form.first_surname.data = representative.first_surname
+    form.second_surname.data = representative.second_surname
+    form.sex.data = representative.sex.name
+    form.email.data = representative.email
+    form.phone_number.data = representative.phone_number.e164
+
+    return render_template(
+        "admin/representative/edit.html.jinja",
+        representative=representative,
+        form=form,
+    )
+
+
+@admin.post("/representative/edit/<int:representative_id>")
+@login_required
+def edit_representative_post(representative_id: int) -> Response:
+    """
+    View function for "/representative/edit/<int:representative_id>"
+    when the method is POST.
+    """
+    form = RepresentativeEditForm()
+    representative: Representative = db.one_or_404(
+        select(Representative).where(Representative.id == representative_id)
+    )
+    representative.identity_document = form.identity_document.data
+    representative.first_name = form.first_name.data
+    representative.second_name = form.second_name.data
+    representative.first_surname = form.first_surname.data
+    representative.second_surname = form.second_surname.data
+    representative.sex = form.sex.data
+    representative.email = form.email.data
+    representative.phone_number = form.phone_number.data
+
+    db.session.commit()
+
+    return redirect(url_for("admin.representative_table"))
 
 
 @admin.get("/cycle")

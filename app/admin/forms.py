@@ -30,8 +30,8 @@ from ..models import (
 )
 
 
-class RepresentativeForm(FlaskForm):
-    """This class represents a form to create a representative."""
+class RepresentativeFormMixin(FlaskForm):
+    """This class is a mixin form for a representative."""
 
     identity_document = StringField("Identity Document", validators=[InputRequired()])
     first_name = StringField("First Name", validators=[InputRequired()])
@@ -48,7 +48,18 @@ class RepresentativeForm(FlaskForm):
     )
     email = EmailField("Email", validators=[Email()])
     phone_number = TelField("Phone Number", validators=[InputRequired()])
+
+
+class RepresentativeCreateForm(RepresentativeFormMixin):
+    """This class represents a form to create a representative."""
+
     submit = SubmitField("Create")
+
+
+class RepresentativeEditForm(RepresentativeFormMixin):
+    """This class represents a form to edit a representative."""
+
+    submit = SubmitField("Save")
 
 
 class StudentForm(FlaskForm):
