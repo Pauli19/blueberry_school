@@ -416,7 +416,7 @@ def edit_class_get(class_id: int) -> str:
     form.sub_level.data = class_.sub_level.name
     form.cycle.data = str(class_.cycle_id)
 
-    # return render_template("admin/class/edit.html.jinja", form=form, class_=class_)
+    return render_template("admin/class/edit.html.jinja", form=form, class_=class_)
 
 
 @admin.post("/class/edit/<int:class_id>")
