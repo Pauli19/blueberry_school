@@ -15,7 +15,8 @@ from .forms import (
     PaymentForm,
     RepresentativeCreateForm,
     RepresentativeEditForm,
-    StudentForm,
+    StudentCreateForm,
+    StudentEditForm,
 )
 
 
@@ -43,7 +44,7 @@ def student_table() -> str:
 @login_required
 def create_student_get() -> str:
     """View function for "/student/create" when the method is GET."""
-    form = StudentForm()
+    form = StudentCreateForm()
     return render_template("admin/student/create.html.jinja", form=form)
 
 
@@ -51,7 +52,7 @@ def create_student_get() -> str:
 @login_required
 def create_student_post() -> Response:
     """View function for "/student/create" when the method is POST."""
-    form = StudentForm()
+    form = StudentCreateForm()
     if form.validate():
         identity_document = form.identity_document.data
         first_name = form.first_name.data
@@ -151,9 +152,21 @@ def student_view(student_id: int) -> str:
 @login_required
 def edit_student_get(student_id: int) -> str:
     """View function for "/student/edit/<int:student_id>" when the method is GET."""
-    student = db.one_or_404(select(Student).where(Student.id == student_id))
+    student: Student = db.one_or_404(select(Student).where(Student.id == student_id))
+    form = StudentEditForm()
+    form.identity_document.data = student.identity_document
+    form.first_name.data = student.first_name
+    form.second_name.data = student.second_name
+    form.first_surname.data = student.first_surname
+    form.second_surname.data = student.second_surname
+    form.birth_date = student.birth_date
+    form.sex.data = student.sex.name
+    form.email.data = student.email
+    form.phone_number.data = student.phone_number.e164
+    form.representative.data = student.representative
+    form.class_.data = student.class_
 
-    return render_template("admin/student/edit.html.jinja", student=student)
+    return render_template("admin/student/edit.html.jinja", form=form, student=student)
 
 
 @admin.get("/representative")
