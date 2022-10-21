@@ -78,48 +78,11 @@ def create_student_post() -> Response:
             phone_number=phone_number,
         )
 
-        if form.representative.data != "" and form.class_.data != "":
-            student = Student(
-                identity_document=identity_document,
-                first_name=first_name,
-                second_name=second_name,
-                first_surname=first_surname,
-                second_surname=second_surname,
-                sex=sex,
-                birth_date=birth_date,
-                email=email,
-                phone_number=phone_number,
-                representative_id=representative_id,
-                class_id=class_id,
-            )
-
         if form.representative.data != "":
-            student = Student(
-                identity_document=identity_document,
-                first_name=first_name,
-                second_name=second_name,
-                first_surname=first_surname,
-                second_surname=second_surname,
-                sex=sex,
-                birth_date=birth_date,
-                email=email,
-                phone_number=phone_number,
-                representative_id=representative_id,
-            )
+            student = Student(representative_id=representative_id)
 
         if form.class_.data != "":
-            student = Student(
-                identity_document=identity_document,
-                first_name=first_name,
-                second_name=second_name,
-                first_surname=first_surname,
-                second_surname=second_surname,
-                sex=sex,
-                birth_date=birth_date,
-                email=email,
-                phone_number=phone_number,
-                class_id=class_id,
-            )
+            student = Student(class_id=class_id)
 
         session = db.session
         session.add(student)
@@ -189,9 +152,11 @@ def edit_student_post(student_id: int) -> Response:
         student.phone_number = form.phone_number.data
 
         representative_data = form.representative.data
-        student.representative_id = int(representative_data) if representative_data != "" else None
+        student.representative_id = (
+            int(representative_data) if representative_data != "" else None
+        )
         class_data = form.class_.data
-        student.representative_id = int(class_data) if class_data != "" else None
+        student.class_id = int(class_data) if class_data != "" else None
 
         db.session.commit()
 
