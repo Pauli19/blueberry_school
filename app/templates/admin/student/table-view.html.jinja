@@ -32,6 +32,9 @@
             <li>
               <a class="text-dark" href="{{ url_for('admin.student_view', student_id=student.id) }}"><i class="bi bi-eye"></i></a>
             </li>
+            <li>
+              <a class="text-dark" href="{{ url_for('admin.edit_student_get', student_id=student.id) }}"><i class="bi bi-pencil"></i></a>
+            </li>
           </ul>
         </td>
         <td>{{ student.id }}</td>
