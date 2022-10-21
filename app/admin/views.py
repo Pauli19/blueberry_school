@@ -175,6 +175,25 @@ def edit_student_get(student_id: int) -> str:
     return render_template("admin/student/edit.html.jinja", form=form, student=student)
 
 
+@admin.post("/student/delete/<int:student_id>")
+@login_required
+def delete_student(student_id: int) -> Response:
+    """
+    TODO: this docstring needs to be updated.
+    """
+    student = db.one_or_404(select(Student).where(Student.id == student_id))
+
+    session = db.session
+    session.delete(student)
+    session.commit()
+
+    # TODO: pylint: disable=fixme
+    # add flash message indicating student with id student_id was deleted
+    # successfully
+
+    return redirect(url_for("admin.student_table"))
+
+
 @admin.get("/representative")
 @login_required
 def representative_table() -> str:
