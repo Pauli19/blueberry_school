@@ -50,7 +50,7 @@ class RepresentativeFormMixin(FlaskForm):
     phone_number = TelField("Phone Number", validators=[InputRequired()])
 
 
-class RepresentativeFormCreate(RepresentativeFormMixin):
+class RepresentativeCreateForm(RepresentativeFormMixin):
     """This class represents a form to create a representative."""
 
     submit = SubmitField("Create")
