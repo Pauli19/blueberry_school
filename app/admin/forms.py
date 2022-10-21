@@ -31,7 +31,7 @@ from ..models import (
 
 
 class RepresentativeFormMixin(FlaskForm):
-    """This class represents a form for a representative."""
+    """This class is a mixin form for a representative."""
 
     identity_document = StringField("Identity Document", validators=[InputRequired()])
     first_name = StringField("First Name", validators=[InputRequired()])
