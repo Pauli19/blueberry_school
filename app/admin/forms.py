@@ -63,7 +63,7 @@ class RepresentativeEditForm(RepresentativeFormMixin):
 
 
 class StudentFormMixin(FlaskForm):
-    """This class represents a form for a student."""
+    """This class is a mixin form for a a student."""
 
     identity_document = StringField("Identity Document", validators=[InputRequired()])
     first_name = StringField("First Name", validators=[InputRequired()])
@@ -127,7 +127,7 @@ class StudentCreateForm(StudentFormMixin):
 class StudentEditForm(StudentFormMixin):
     """This class represents a form to edit a student."""
 
-    submit = SubmitField("Edit")
+    submit = SubmitField("Save")
 
 
 class CycleForm(FlaskForm):
