@@ -188,17 +188,10 @@ def edit_student_post(student_id: int) -> Response:
         student.email = form.email.data
         student.phone_number = form.phone_number.data
 
-        if form.representative.data != "":
-            student.representative_id = form.representative.data
-
-        if form.class_.data != "":
-            student.class_id = form.class_.data
-
-        if form.representative.data == "":
-            student.representative_id = None
-
-        if form.class_.data == "":
-            student.class_id = None
+        representative_data = form.representative.data
+        student.representative_id = int(representative_data) if representative_data != "" else None
+        class_data = form.class_.data
+        student.representative_id = int(class_data) if class_data != "" else None
 
         db.session.commit()
 
