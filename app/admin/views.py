@@ -221,7 +221,7 @@ def edit_representative_get(representative_id: int) -> str:
     form.second_surname.data = representative.second_surname
     form.sex.data = representative.sex.name
     form.email.data = representative.email
-    form.phone_number.data = representative.phone_number
+    form.phone_number.data = representative.phone_number.e164
 
     return render_template(
         "admin/representative/edit.html.jinja",
