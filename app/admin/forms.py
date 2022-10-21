@@ -56,7 +56,7 @@ class RepresentativeCreateForm(RepresentativeFormMixin):
     submit = SubmitField("Create")
 
 
-class RepresentativeFormEdit(RepresentativeFormMixin):
+class RepresentativeEditForm(RepresentativeFormMixin):
     """This class represents a form to edit a representative."""
 
     submit = SubmitField("Save")
