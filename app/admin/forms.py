@@ -48,7 +48,6 @@ class RepresentativeFormMixin(FlaskForm):
     )
     email = EmailField("Email", validators=[Email()])
     phone_number = TelField("Phone Number", validators=[InputRequired()])
-    submit = SubmitField("Create")
 
 
 class RepresentativeFormCreate(RepresentativeFormMixin):
