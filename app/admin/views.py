@@ -16,6 +16,7 @@ from .forms import (
     RepresentativeCreateForm,
     RepresentativeEditForm,
     StudentCreateForm,
+    StudentDeleteForm,
     StudentEditForm,
 )
 
@@ -36,8 +37,13 @@ def student_table() -> str:
         .scalars()
         .all()
     )
+    delete_form = StudentDeleteForm()
 
-    return render_template("admin/student/table-view.html.jinja", students=students)
+    return render_template(
+        "admin/student/table-view.html.jinja",
+        students=students,
+        delete_form=delete_form,
+    )
 
 
 @admin.get("/student/create")
