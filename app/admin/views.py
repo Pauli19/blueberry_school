@@ -79,10 +79,10 @@ def create_student_post() -> Response:
         )
 
         if form.representative.data != "":
-            student.representative_id = representative_id
+            student.representative_id = int(representative_id)
 
         if form.class_.data != "":
-            student.class_id = class_id
+            student.class_id = int(class_id)
 
         session = db.session
         session.add(student)
