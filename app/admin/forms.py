@@ -145,6 +145,14 @@ class StudentEditForm(StudentFormMixin):
     submit = SubmitField("Save")
 
 
+class StudentDeleteForm(FlaskForm):
+    """
+    TODO: add docstring.
+    """
+
+    delete = SubmitField(widget=DeleteButtonWidget())
+
+
 class CycleForm(FlaskForm):
     """This class represents a form to create a cycle."""
 
