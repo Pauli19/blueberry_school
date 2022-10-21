@@ -147,6 +147,15 @@ def student_view(student_id: int) -> str:
     )
 
 
+@admin.get("/student/edit/<int:student_id>")
+@login_required
+def edit_student_get(student_id: int) -> str:
+    """View function for "/student/edit/<int:student_id>" when the method is GET."""
+    student = db.one_or_404(select(Student).where(Student.id == student_id))
+
+    return render_template("admin/student/edit.html.jinja", student=student)
+
+
 @admin.get("/representative")
 @login_required
 def representative_table() -> str:
