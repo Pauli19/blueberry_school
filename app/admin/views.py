@@ -13,8 +13,8 @@ from .forms import (
     ClassForm,
     CycleForm,
     PaymentForm,
-    RepresentativeFormCreate,
-    RepresentativeFormEdit,
+    RepresentativeCreateForm,
+    RepresentativeEditForm,
     StudentForm,
 )
 
@@ -168,7 +168,7 @@ def representative_table() -> str:
 @login_required
 def create_representative_get() -> str:
     """View function for "/representative/create" when the method is GET."""
-    form = RepresentativeFormCreate()
+    form = RepresentativeCreateForm()
     return render_template("admin/representative/create.html.jinja", form=form)
 
 
@@ -176,7 +176,7 @@ def create_representative_get() -> str:
 @login_required
 def create_representative_post() -> Response:
     """View function for "/representative/create" when the method is POST."""
-    form = RepresentativeFormCreate()
+    form = RepresentativeCreateForm()
     if form.validate():
         identity_document = form.identity_document.data
         first_name = form.first_name.data
@@ -220,7 +220,7 @@ def edit_representative_get(representative_id: int) -> str:
     representative: Representative = db.one_or_404(
         select(Representative).where(Representative.id == representative_id)
     )
-    form = RepresentativeFormEdit()
+    form = RepresentativeEditForm()
     form.identity_document.data = representative.identity_document
     form.first_name.data = representative.first_name
     form.second_name.data = representative.second_name
@@ -244,7 +244,7 @@ def edit_representative_post(representative_id: int) -> Response:
     View function for "/representative/edit/<int:representative_id>"
     when the method is POST.
     """
-    form = RepresentativeFormEdit()
+    form = RepresentativeEditForm()
     representative: Representative = db.one_or_404(
         select(Representative).where(Representative.id == representative_id)
     )
