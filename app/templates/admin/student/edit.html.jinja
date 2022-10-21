@@ -7,7 +7,7 @@
 <h3>Edit Student</h3>
 <div class="row">
   <div class="col-lg-3">
-    {# {{ render_form(form, action=url_for('admin.edit_student_post', student_id=student.id)) }} #}
+    {{ render_form(form, action=url_for('admin.edit_student_post', student_id=student.id)) }}
   </div>
 </div>
 {% endblock %}

@@ -165,14 +165,53 @@ def edit_student_get(student_id: int) -> str:
     form.second_name.data = student.second_name
     form.first_surname.data = student.first_surname
     form.second_surname.data = student.second_surname
-    form.birth_date = student.birth_date
+    form.birth_date.data = student.birth_date
     form.sex.data = student.sex.name
     form.email.data = student.email
     form.phone_number.data = student.phone_number.e164
-    form.representative.data = student.representative
-    form.class_.data = student.class_
+    form.representative.data = str(student.representative_id)
+    form.class_.data = str(student.class_id)
 
     return render_template("admin/student/edit.html.jinja", form=form, student=student)
+
+
+@admin.post("/student/edit/<int:student_id>")
+@login_required
+def edit_student_post(student_id: int) -> Response:
+    """View function for "/student/edit/<int:student_id>" when the method is POST."""
+    form = StudentEditForm()
+    if form.validate():
+        student: Student = db.one_or_404(
+            select(Student).where(Student.id == student_id)
+        )
+        student.identity_document = form.identity_document.data
+        student.first_name = form.first_name.data
+        student.second_name = form.second_name.data
+        student.first_surname = form.first_surname.data
+        student.second_surname = form.second_surname.data
+        student.birth_date = form.birth_date.data
+        student.sex = form.sex.data
+        student.email = form.email.data
+        student.phone_number = form.phone_number.data
+
+        if form.representative.data != "":
+            student.representative_id = form.representative.data
+
+        if form.class_.data != "":
+            student.class_id = form.class_.data
+
+        if form.representative.data == "":
+            student.representative_id = None
+
+        if form.class_.data == "":
+            student.class_id = None
+
+        db.session.commit()
+
+        if form.errors:
+            flash(form.errors, "danger")
+
+    return redirect(url_for("admin.student_table"))
 
 
 @admin.post("/student/delete/<int:student_id>")
@@ -188,10 +227,8 @@ def delete_student(student_id: int) -> Response:
     session.commit()
 
     # TODO: pylint: disable=fixme
-    # add flash message indicating student with id student_id was deleted
+    # add success flash message indicating student with id student_id was deleted
     # successfully
-
-    return redirect(url_for("admin.student_table"))
 
 
 @admin.get("/representative")
