@@ -406,7 +406,7 @@ def class_view(class_id: int) -> str:
 @admin.get("/class/edit/<int:class_id>")
 @login_required
 def edit_class_get(class_id: int) -> str:
-    """View function for "/class/edit/<int:class_id>" when the method is POST."""
+    """View function for "/class/edit/<int:class_id>" when the method is GET."""
     class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
     form = ClassEditForm()
     form.mode.data = class_.mode.name
@@ -417,6 +417,28 @@ def edit_class_get(class_id: int) -> str:
     form.cycle.data = str(class_.cycle_id)
 
     return render_template("admin/class/edit.html.jinja", form=form, class_=class_)
+
+
+@admin.post("/class/edit/<int:class_id>")
+@login_required
+def edit_class_post(class_id: int) -> Response:
+    """View function for "/class/edit/<int:class_id>" when the method is POST."""
+    form = ClassEditForm()
+    if form.validate():
+        class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
+        class_.mode = form.mode.data
+        class_.start_at = form.start_at.data
+        class_.end_at = form.end_at.data
+        class_.level = form.level.data
+        class_.sub_level = form.sub_level.data
+        class_.cycle_id = form.cycle.data
+
+        db.session.commit()
+
+        if form.errors:
+            flash(form.errors, "danger")
+
+    return redirect(url_for("admin.class_table"))
 
 
 @admin.get("/payment")
