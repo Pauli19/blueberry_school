@@ -40,7 +40,7 @@ class DeleteButtonWidget:  # pylint: disable=too-few-public-methods
         style = "padding: 0;border: none;background:none;"
         html = (
             f'<button id={field.name} class="text-dark" style="{style}">'
-            '<i class="bi bi-trash"></i></button>'
+            '<i class="bi bi-trash3"></i></button>'
         )
         return Markup(html)
 
