@@ -1,4 +1,5 @@
 {% extends "base.html.jinja" %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block title %}Admin - Cycle{% endblock %}
 
@@ -15,6 +16,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+        <th scope="col"></th>
         <th scope="col">ID</th>
         <th scope="col">Month</th>
         <th scope="col">Year</th>
@@ -25,6 +27,13 @@
     <tbody>
       {% for cycle in cycles %}
       <tr>
+        <td>
+          <ul class="list-group list-group-horizontal">
+            <li class="list-group-item flex-fill text-center px-1">
+              {{ render_form(delete_form, action=url_for('admin.delete_cycle', cycle_id=cycle.id)) }}
+            </li>
+          </ul>
+        </td>
         <td>{{ cycle.id }}</td>
         <td>{{ cycle.month.value }}</td>
         <td>{{ cycle.year }}</td>

@@ -13,6 +13,7 @@ from .forms import (
     ClassCreateForm,
     ClassEditForm,
     CycleForm,
+    DeleteForm,
     PaymentForm,
     RepresentativeCreateForm,
     RepresentativeEditForm,
@@ -37,8 +38,13 @@ def student_table() -> str:
         .scalars()
         .all()
     )
+    delete_form = DeleteForm()
 
-    return render_template("admin/student/table-view.html.jinja", students=students)
+    return render_template(
+        "admin/student/table-view.html.jinja",
+        students=students,
+        delete_form=delete_form,
+    )
 
 
 @admin.get("/student/create")
@@ -169,6 +175,21 @@ def edit_student_post(student_id: int) -> Response:
     return redirect(url_for("admin.edit_student_get", student_id=student_id))
 
 
+@admin.post("/student/delete/<int:student_id>")
+@login_required
+def delete_student(student_id: int) -> Response:
+    """View function for "/student/delete/<int:student_id>" when the method is POST."""
+    student = db.one_or_404(select(Student).where(Student.id == student_id))
+
+    session = db.session
+    session.delete(student)
+    session.commit()
+
+    flash("Student was deleted succesfully!", "primary")
+
+    return redirect(url_for("admin.student_table"))
+
+
 @admin.get("/representative")
 @login_required
 def representative_table() -> str:
@@ -180,9 +201,11 @@ def representative_table() -> str:
         .scalars()
         .all()
     )
-
+    delete_form = DeleteForm()
     return render_template(
-        "admin/representative/table-view.html.jinja", representatives=representatives
+        "admin/representative/table-view.html.jinja",
+        representatives=representatives,
+        delete_form=delete_form,
     )
 
 
@@ -292,6 +315,26 @@ def edit_representative_post(representative_id: int) -> Response:
     )
 
 
+@admin.post("/representative/delete/<int:representative_id>")
+@login_required
+def delete_representative(representative_id: int) -> Response:
+    """
+    View function for "/representative/delete/<int:representative_id>"
+    when the method is POST.
+    """
+    representative = db.one_or_404(
+        select(Representative).where(Representative.id == representative_id)
+    )
+
+    session = db.session
+    session.delete(representative)
+    session.commit()
+
+    flash("Representative was deleted succesfully!", "primary")
+
+    return redirect(url_for("admin.representative_table"))
+
+
 @admin.get("/cycle")
 @login_required
 def cycle_table() -> str:
@@ -301,10 +344,9 @@ def cycle_table() -> str:
         .scalars()
         .all()
     )
-
+    delete_form = DeleteForm()
     return render_template(
-        "admin/cycle/table-view.html.jinja",
-        cycles=cycles,
+        "admin/cycle/table-view.html.jinja", cycles=cycles, delete_form=delete_form
     )
 
 
@@ -346,6 +388,21 @@ def create_cycle_post() -> Response:
     return redirect(url_for("admin.create_cycle_get"))
 
 
+@admin.post("/cycle/delete/<int:cycle_id>")
+@login_required
+def delete_cycle(cycle_id: int) -> Response:
+    """View function for "/cycle/delete/<int:cycle_id>" when the method is POST."""
+    cycle = db.one_or_404(select(Cycle).where(Cycle.id == cycle_id))
+
+    session = db.session
+    session.delete(cycle)
+    session.commit()
+
+    flash("Cycle was deleted succesfully!", "primary")
+
+    return redirect(url_for("admin.cycle_table"))
+
+
 @admin.get("/class")
 @login_required
 def class_table() -> str:
@@ -355,8 +412,12 @@ def class_table() -> str:
         .scalars()
         .all()
     )
-
-    return render_template("admin/class/table-view.html.jinja", classes=classes)
+    delete_form = DeleteForm()
+    return render_template(
+        "admin/class/table-view.html.jinja",
+        classes=classes,
+        delete_form=delete_form,
+    )
 
 
 @admin.get("/class/create")
@@ -453,6 +514,21 @@ def edit_class_post(class_id: int) -> Response:
     return redirect(url_for("admin.edit_class_get", class_id=class_id))
 
 
+@admin.post("/class/delete/<int:class_id>")
+@login_required
+def delete_class(class_id: int) -> Response:
+    """View function for "/class/delete/<int:class_id>" when the method is POST."""
+    class_ = db.one_or_404(select(Class).where(Class.id == class_id))
+
+    session = db.session
+    session.delete(class_)
+    session.commit()
+
+    flash("Class was deleted succesfully!", "primary")
+
+    return redirect(url_for("admin.class_table"))
+
+
 @admin.get("/payment")
 @login_required
 def payment_table() -> str:
@@ -462,8 +538,12 @@ def payment_table() -> str:
         .scalars()
         .all()
     )
-
-    return render_template("admin/payment/table-view.html.jinja", payments=payments)
+    delete_form = DeleteForm()
+    return render_template(
+        "admin/payment/table-view.html.jinja",
+        payments=payments,
+        delete_form=delete_form,
+    )
 
 
 @admin.get("/payment/create")
@@ -504,3 +584,18 @@ def create_payment_post() -> Response:
         flash(form.errors, "danger")
 
     return redirect(url_for("admin.create_payment_get"))
+
+
+@admin.post("/payment/delete/<int:payment_id>")
+@login_required
+def delete_payment(payment_id: int) -> Response:
+    """View function for "/payment/delete/<int:payment_id>" when the method is POST."""
+    payment = db.one_or_404(select(Payment).where(Payment.id == payment_id))
+
+    session = db.session
+    session.delete(payment)
+    session.commit()
+
+    flash("Payment was deleted succesfully!", "primary")
+
+    return redirect(url_for("admin.payment_table"))

@@ -1,4 +1,5 @@
 {% extends "base.html.jinja" %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block title %}Admin - Class{% endblock %}
 
@@ -35,6 +36,9 @@
             </li>
             <li class="list-group-item flex-fill text-center px-1">
               <a class="text-dark" href="{{ url_for('admin.edit_class_get', class_id=class_.id) }}"><i class="bi bi-pencil"></i></a>
+            </li>
+            <li class="list-group-item flex-fill text-center px-1">
+              {{ render_form(delete_form, action=url_for('admin.delete_class', class_id=class_.id)) }}
             </li>
           </ul>
         </td>

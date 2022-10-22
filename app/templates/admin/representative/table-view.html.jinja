@@ -1,4 +1,5 @@
 {% extends "base.html.jinja" %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block title %}Admin - Representative{% endblock %}
 
@@ -28,9 +29,12 @@
       {% for representative in representatives %}
       <tr>
         <td>
-          <ul class="list-unstyled">
-            <li>
+          <ul class="list-group list-group-horizontal">
+            <li class="list-group-item flex-fill text-center px-1">
               <a class="text-dark" href="{{ url_for('admin.edit_representative_get', representative_id=representative.id) }}"><i class="bi bi-pencil"></i></a>
+            </li>
+            <li class="list-group-item flex-fill text-center px-1">
+              {{ render_form(delete_form, action=url_for('admin.delete_representative', representative_id=representative.id)) }}
             </li>
           </ul>
         </td>
