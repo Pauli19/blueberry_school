@@ -160,11 +160,13 @@ def edit_student_post(student_id: int) -> Response:
         student.class_id = int(class_data) if class_data != "" else None
 
         db.session.commit()
+        flash("Student was edited succesfully!", "success")
+        return redirect(url_for("admin.student_table"))
 
     if form.errors:
         flash(form.errors, "danger")
 
-    return redirect(url_for("admin.student_table"))
+    return redirect(url_for("admin.edit_student_get", student_id=student_id))
 
 
 @admin.get("/representative")
@@ -279,11 +281,15 @@ def edit_representative_post(representative_id: int) -> Response:
         representative.phone_number = form.phone_number.data
 
         db.session.commit()
+        flash("Representative was edited succesfully!", "success")
+        return redirect(url_for("admin.representative_table"))
 
     if form.errors:
         flash(form.errors, "danger")
 
-    return redirect(url_for("admin.representative_table"))
+    return redirect(
+        url_for("admin.edit_representative_get", representative_id=representative_id)
+    )
 
 
 @admin.get("/cycle")
@@ -438,11 +444,13 @@ def edit_class_post(class_id: int) -> Response:
         class_.cycle_id = form.cycle.data
 
         db.session.commit()
+        flash("Class was edited succesfully!", "success")
+        return redirect(url_for("admin.class_table"))
 
     if form.errors:
         flash(form.errors, "danger")
 
-    return redirect(url_for("admin.class_table"))
+    return redirect(url_for("admin.edit_class_get", class_id=class_id))
 
 
 @admin.get("/payment")
