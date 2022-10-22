@@ -46,7 +46,7 @@ class DeleteButtonWidget:  # pylint: disable=too-few-public-methods
 
 
 class DeleteForm(FlaskForm):
-    """This form represents a form delete instances."""
+    """This form represents a form to delete instances."""
 
     delete = SubmitField(widget=DeleteButtonWidget())
 
