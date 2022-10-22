@@ -45,6 +45,12 @@ class DeleteButtonWidget:  # pylint: disable=too-few-public-methods
         return Markup(html)
 
 
+class DeleteForm(FlaskForm):
+    """This form represents a form delete instances."""
+
+    delete = SubmitField(widget=DeleteButtonWidget())
+
+
 class RepresentativeFormMixin(FlaskForm):
     """This class is a mixin form for a representative."""
 
@@ -143,14 +149,6 @@ class StudentEditForm(StudentFormMixin):
     """This class represents a form to edit a student."""
 
     submit = SubmitField("Save")
-
-
-class StudentDeleteForm(FlaskForm):
-    """
-    TODO: add docstring.
-    """
-
-    delete = SubmitField(widget=DeleteButtonWidget())
 
 
 class CycleForm(FlaskForm):
