@@ -191,6 +191,8 @@ def delete_student(student_id: int) -> Response:
     # add success flash message indicating student with id student_id was deleted
     # successfully
 
+    return redirect(url_for("admin.student_table"))
+
 
 @admin.get("/representative")
 @login_required
