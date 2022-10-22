@@ -185,7 +185,7 @@ def delete_student(student_id: int) -> Response:
     session.delete(student)
     session.commit()
 
-    flash("Student was deleted succesfully!", "info")
+    flash("Student was deleted succesfully!", "primary")
 
     return redirect(url_for("admin.student_table"))
 
@@ -330,7 +330,7 @@ def delete_representative(representative_id: int) -> Response:
     session.delete(representative)
     session.commit()
 
-    flash("Representative was deleted succesfully!", "info")
+    flash("Representative was deleted succesfully!", "primary")
 
     return redirect(url_for("admin.representative_table"))
 
@@ -398,7 +398,7 @@ def delete_cycle(cycle_id: int) -> Response:
     session.delete(cycle)
     session.commit()
 
-    flash("Cycle was deleted succesfully!", "info")
+    flash("Cycle was deleted succesfully!", "primary")
 
     return redirect(url_for("admin.cycle_table"))
 
@@ -524,7 +524,7 @@ def delete_class(class_id: int) -> Response:
     session.delete(class_)
     session.commit()
 
-    flash("Class was deleted succesfully!", "info")
+    flash("Class was deleted succesfully!", "primary")
 
     return redirect(url_for("admin.class_table"))
 
@@ -596,6 +596,6 @@ def delete_payment(payment_id: int) -> Response:
     session.delete(payment)
     session.commit()
 
-    flash("Payment was deleted succesfully!", "info")
+    flash("Payment was deleted succesfully!", "primary")
 
     return redirect(url_for("admin.payment_table"))
