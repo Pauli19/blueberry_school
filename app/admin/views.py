@@ -10,7 +10,8 @@ from .. import db
 from ..models import Class, Cycle, Payment, Representative, Student
 from . import admin
 from .forms import (
-    ClassForm,
+    ClassCreateForm,
+    ClassEditForm,
     CycleForm,
     PaymentForm,
     RepresentativeCreateForm,
@@ -165,11 +166,13 @@ def edit_student_post(student_id: int) -> Response:
         student.class_id = int(class_data) if class_data != "" else None
 
         db.session.commit()
+        flash("Student was edited succesfully!", "success")
+        return redirect(url_for("admin.student_table"))
 
-        if form.errors:
-            flash(form.errors, "danger")
+    if form.errors:
+        flash(form.errors, "danger")
 
-    return redirect(url_for("admin.student_table"))
+    return redirect(url_for("admin.edit_student_get", student_id=student_id))
 
 
 @admin.post("/student/delete/<int:student_id>")
@@ -287,21 +290,29 @@ def edit_representative_post(representative_id: int) -> Response:
     when the method is POST.
     """
     form = RepresentativeEditForm()
-    representative: Representative = db.one_or_404(
-        select(Representative).where(Representative.id == representative_id)
+    if form.validate():
+        representative: Representative = db.one_or_404(
+            select(Representative).where(Representative.id == representative_id)
+        )
+        representative.identity_document = form.identity_document.data
+        representative.first_name = form.first_name.data
+        representative.second_name = form.second_name.data
+        representative.first_surname = form.first_surname.data
+        representative.second_surname = form.second_surname.data
+        representative.sex = form.sex.data
+        representative.email = form.email.data
+        representative.phone_number = form.phone_number.data
+
+        db.session.commit()
+        flash("Representative was edited succesfully!", "success")
+        return redirect(url_for("admin.representative_table"))
+
+    if form.errors:
+        flash(form.errors, "danger")
+
+    return redirect(
+        url_for("admin.edit_representative_get", representative_id=representative_id)
     )
-    representative.identity_document = form.identity_document.data
-    representative.first_name = form.first_name.data
-    representative.second_name = form.second_name.data
-    representative.first_surname = form.first_surname.data
-    representative.second_surname = form.second_surname.data
-    representative.sex = form.sex.data
-    representative.email = form.email.data
-    representative.phone_number = form.phone_number.data
-
-    db.session.commit()
-
-    return redirect(url_for("admin.representative_table"))
 
 
 @admin.get("/cycle")
@@ -375,7 +386,7 @@ def class_table() -> str:
 @login_required
 def create_class_get() -> str:
     """View function for "/class/create" when the method is GET."""
-    form = ClassForm()
+    form = ClassCreateForm()
     return render_template("admin/class/create.html.jinja", form=form)
 
 
@@ -383,7 +394,7 @@ def create_class_get() -> str:
 @login_required
 def create_class_post() -> Response:
     """View function for "/class/create" when the method is POST."""
-    form = ClassForm()
+    form = ClassCreateForm()
     if form.validate():
         mode = form.mode.data
         start_at = form.start_at.data
@@ -423,6 +434,46 @@ def class_view(class_id: int) -> str:
     return render_template(
         "admin/class/class.html.jinja", class_=class_, cycle=cycle, students=students
     )
+
+
+@admin.get("/class/edit/<int:class_id>")
+@login_required
+def edit_class_get(class_id: int) -> str:
+    """View function for "/class/edit/<int:class_id>" when the method is GET."""
+    class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
+    form = ClassEditForm()
+    form.mode.data = class_.mode.name
+    form.start_at.data = class_.start_at
+    form.end_at.data = class_.end_at
+    form.level.data = class_.level.name
+    form.sub_level.data = class_.sub_level.name
+    form.cycle.data = str(class_.cycle_id)
+
+    return render_template("admin/class/edit.html.jinja", form=form, class_=class_)
+
+
+@admin.post("/class/edit/<int:class_id>")
+@login_required
+def edit_class_post(class_id: int) -> Response:
+    """View function for "/class/edit/<int:class_id>" when the method is POST."""
+    form = ClassEditForm()
+    if form.validate():
+        class_: Class = db.one_or_404(select(Class).where(Class.id == class_id))
+        class_.mode = form.mode.data
+        class_.start_at = form.start_at.data
+        class_.end_at = form.end_at.data
+        class_.level = form.level.data
+        class_.sub_level = form.sub_level.data
+        class_.cycle_id = form.cycle.data
+
+        db.session.commit()
+        flash("Class was edited succesfully!", "success")
+        return redirect(url_for("admin.class_table"))
+
+    if form.errors:
+        flash(form.errors, "danger")
+
+    return redirect(url_for("admin.edit_class_get", class_id=class_id))
 
 
 @admin.get("/payment")
