@@ -161,8 +161,8 @@ def edit_student_post(student_id: int) -> Response:
 
         db.session.commit()
 
-        if form.errors:
-            flash(form.errors, "danger")
+    if form.errors:
+        flash(form.errors, "danger")
 
     return redirect(url_for("admin.student_table"))
 
@@ -265,19 +265,23 @@ def edit_representative_post(representative_id: int) -> Response:
     when the method is POST.
     """
     form = RepresentativeEditForm()
-    representative: Representative = db.one_or_404(
-        select(Representative).where(Representative.id == representative_id)
-    )
-    representative.identity_document = form.identity_document.data
-    representative.first_name = form.first_name.data
-    representative.second_name = form.second_name.data
-    representative.first_surname = form.first_surname.data
-    representative.second_surname = form.second_surname.data
-    representative.sex = form.sex.data
-    representative.email = form.email.data
-    representative.phone_number = form.phone_number.data
+    if form.validate():
+        representative: Representative = db.one_or_404(
+            select(Representative).where(Representative.id == representative_id)
+        )
+        representative.identity_document = form.identity_document.data
+        representative.first_name = form.first_name.data
+        representative.second_name = form.second_name.data
+        representative.first_surname = form.first_surname.data
+        representative.second_surname = form.second_surname.data
+        representative.sex = form.sex.data
+        representative.email = form.email.data
+        representative.phone_number = form.phone_number.data
 
-    db.session.commit()
+        db.session.commit()
+
+    if form.errors:
+        flash(form.errors, "danger")
 
     return redirect(url_for("admin.representative_table"))
 
@@ -435,8 +439,8 @@ def edit_class_post(class_id: int) -> Response:
 
         db.session.commit()
 
-        if form.errors:
-            flash(form.errors, "danger")
+    if form.errors:
+        flash(form.errors, "danger")
 
     return redirect(url_for("admin.class_table"))
 
