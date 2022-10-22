@@ -178,18 +178,14 @@ def edit_student_post(student_id: int) -> Response:
 @admin.post("/student/delete/<int:student_id>")
 @login_required
 def delete_student(student_id: int) -> Response:
-    """
-    TODO: this docstring needs to be updated.
-    """
+    """View function for "/student/delete/<int:student_id>" when the method is POST."""
     student = db.one_or_404(select(Student).where(Student.id == student_id))
 
     session = db.session
     session.delete(student)
     session.commit()
 
-    # TODO: pylint: disable=fixme
-    # add success flash message indicating student with id student_id was deleted
-    # successfully
+    flash("Student was deleted succesfully!", "info")
 
     return redirect(url_for("admin.student_table"))
 
