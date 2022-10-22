@@ -194,7 +194,6 @@ class ClassFormMixin(FlaskForm):
         ],
         validators=[InputRequired()],
     )
-    submit = SubmitField("Create")
 
     def __init__(self) -> None:
         super().__init__()
