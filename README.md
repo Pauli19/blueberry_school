@@ -8,7 +8,7 @@ This project is an online school for lifelong learners.
 
 #### Required:
 
-- [Python 3.10.5](https://www.python.org/downloads/)
+- [Python 3.11](https://www.python.org/downloads/)
 - [PostgreSQL 14](https://www.postgresql.org/download/)
 - [pre-commit](https://pre-commit.com/)
 

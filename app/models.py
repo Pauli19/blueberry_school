@@ -1,6 +1,6 @@
 """This module contains models and database utilities."""
 
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 import sqlalchemy as sa
@@ -98,7 +98,7 @@ def load_user(user_id: str) -> User | None:
     ).scalar_one_or_none()
 
 
-class Sex(str, Enum):  # pylint: disable=too-few-public-methods
+class Sex(StrEnum):  # pylint: disable=too-few-public-methods
     """This enumeration is used to represent biological sex."""
 
     FEMALE = "Female"
@@ -162,7 +162,7 @@ class Representative(BaseModel):  # pylint: disable=too-few-public-methods
         )
 
 
-class Month(str, Enum):  # pylint: disable=too-few-public-methods
+class Month(StrEnum):  # pylint: disable=too-few-public-methods
     """This enumeration is used to represent months."""
 
     JANUARY = "January"
@@ -198,14 +198,14 @@ class Cycle(BaseModel):  # pylint: disable=too-few-public-methods
         return f'Cycle(month="{self.month}", year={self.year})'
 
 
-class Mode(str, Enum):  # pylint: disable=too-few-public-methods
+class Mode(StrEnum):  # pylint: disable=too-few-public-methods
     """This enumeration is used to represent class modes."""
 
     NORMAL = "Normal"
     INTENSIVE = "Intensive"
 
 
-class Level(str, Enum):  # pylint: disable=too-few-public-methods
+class Level(StrEnum):  # pylint: disable=too-few-public-methods
     """This enumeration is used to represent class levels."""
 
     L1 = "L1"
@@ -213,7 +213,7 @@ class Level(str, Enum):  # pylint: disable=too-few-public-methods
     L3 = "L3"
 
 
-class SubLevel(str, Enum):  # pylint: disable=too-few-public-methods
+class SubLevel(StrEnum):  # pylint: disable=too-few-public-methods
     """This enumeration is used to represent class sub levels."""
 
     P1 = "P1"
